@@ -6,5 +6,19 @@
         xmlns:local="clr-namespace:PicSimulator"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+    <Grid>
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Datei" FlowDirection="RightToLeft">
+                <MenuItem Header="Öffnen" IsCheckable="False"/>
+            </MenuItem>
+            <MenuItem Header="Einstellungen" FlowDirection="RightToLeft">
+                <MenuItem Header="Quarzfrequenz" FlowDirection="RightToLeft" IsCheckable="False">
+                    <MenuItem Header="4MHz" IsCheckable="True"/>
+                    <MenuItem Header="8MHz" IsCheckable="True"/>
+                    <MenuItem Header="16MHz" IsCheckable="True"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <StatusBar Background="red" Height="20px" VerticalAlignment="Bottom"/>
+    </Grid>
 </Window>
