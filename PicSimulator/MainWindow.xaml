@@ -8,11 +8,11 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Menu VerticalAlignment="Top">
-            <MenuItem Header="Datei" FlowDirection="RightToLeft">
+            <MenuItem Header="Datei" FlowDirection="LeftToRight">
                 <MenuItem Header="Öffnen" IsCheckable="False"/>
             </MenuItem>
-            <MenuItem Header="Einstellungen" FlowDirection="RightToLeft">
-                <MenuItem Header="Quarzfrequenz" FlowDirection="RightToLeft" IsCheckable="False">
+            <MenuItem Header="Einstellungen" FlowDirection="LeftToRight">
+                <MenuItem Header="Quarzfrequenz" FlowDirection="LeftToRight" IsCheckable="False">
                     <MenuItem Header="4MHz" IsCheckable="True"/>
                     <MenuItem Header="8MHz" IsCheckable="True"/>
                     <MenuItem Header="16MHz" IsCheckable="True"/>
