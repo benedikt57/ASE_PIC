@@ -6,19 +6,35 @@
         xmlns:local="clr-namespace:PicSimulator"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Menu VerticalAlignment="Top">
-            <MenuItem Header="Datei" FlowDirection="LeftToRight">
-                <MenuItem Header="Öffnen" IsCheckable="False"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Datei">
+                <MenuItem Header="Laden" IsCheckable="False"/>
             </MenuItem>
-            <MenuItem Header="Einstellungen" FlowDirection="LeftToRight">
-                <MenuItem Header="Quarzfrequenz" FlowDirection="LeftToRight" IsCheckable="False">
-                    <MenuItem Header="4MHz" IsCheckable="True"/>
-                    <MenuItem Header="8MHz" IsCheckable="True"/>
-                    <MenuItem Header="16MHz" IsCheckable="True"/>
+            <MenuItem Header="Einstellung">
+                <MenuItem Header="Quarzfrequenz">
+                    <MenuItem Header="8 MHz" IsCheckable="True"/>
+                    <MenuItem Header="4 MHz" IsCheckable="True"/>
+                    <MenuItem Header="16 MHz" IsCheckable="True"/>
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <StatusBar Background="red" Height="20px" VerticalAlignment="Bottom"/>
-    </Grid>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock>Datei: Pfad</TextBlock>
+        </StatusBar>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100px"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100px"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100px"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30px"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </DockPanel>
 </Window>
