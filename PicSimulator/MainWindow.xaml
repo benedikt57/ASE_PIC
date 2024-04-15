@@ -127,44 +127,49 @@
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
             <DataGrid x:Name="OutputRegister" AutoGenerateColumns="False" Grid.Column="3">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="RA"> </DataGridTextColumn>
+                    <DataGridTextColumn Header="7"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0"  ></DataGridTextColumn>
                 </DataGrid.Columns>
+                
+                
+                        <!--<TextBlock Text="0"></TextBlock>-->
+
+                  
                 
             </DataGrid>
             <!--2.Output Register-->
             <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,30,0,0" Grid.RowSpan="2" Grid.Row="2">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" ></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <!--3.Output Register-->
             <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,131,0,101" Grid.RowSpan="3">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" ></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
