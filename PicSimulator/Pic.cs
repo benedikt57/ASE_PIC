@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PicSimulator
 {
@@ -10,19 +12,25 @@ namespace PicSimulator
     {
         public Pic()
         {
+            LoadFile();
         }
-        public string TestString { get; set; } = "Test";
-        public void Click()
+        public List<string> Code { get; set; } = new List<string>();
+        private async void LoadFile()
         {
-            TestString = "Hallo";
-        }
-        public void Click2()
-        {
-            TestString = "Tschau";
-        }
-        public void Click3()
-        {
-            TestString = "Passt";
+            try
+            {
+                using (var sr = new StreamReader("C:\\Users\\jonas\\Downloads\\TestProg_PicSim_20230413\\TPicSim1.LST", Encoding.Default))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        Code.Add(await sr.ReadLineAsync());
+                    }
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                Code = Code.DefaultIfEmpty("File not found").ToList();
+            }
         }
     }
 }

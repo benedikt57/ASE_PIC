@@ -15,43 +15,26 @@ namespace PicSimulator
         {
             pic = new Pic();
             //Commands
-            ButtonClick = new RelayCommand(_ => Click());
-            ButtonClick2 = new RelayCommand(_ => Click2());
-            ButtonClick3 = new RelayCommand(_ => Click3());
+            //ButtonClick = new RelayCommand(_ => Click());
         }
 
-        //Variablem
-        public string TestString
+        //Variablen
+        public List<string> Code
         {
-            get { return pic.TestString; }
+            get { return pic.Code; }
             set
             {
-                pic.TestString = value;
-                OnPropertyChanged(nameof(TestString));
+                pic.Code = value;
+                OnPropertyChanged(nameof(Code));
             }
         }
         //Commands
-        public ICommand ButtonClick { get; }
-        public void Click()
-        {
-            pic.Click();
-            OnPropertyChanged(nameof(TestString));
-        }
-        public ICommand ButtonClick2 { get; }
-
-        public void Click2()
-        {
-            pic.Click2();
-            OnPropertyChanged(nameof(TestString));
-        }
-
-        public ICommand ButtonClick3 { get; }
-
-        public void Click3()
-        {
-            pic.Click3();
-            OnPropertyChanged(nameof(TestString));
-        }
+        //public ICommand ButtonClick { get; }
+        //public void Click()
+        //{
+        //    pic.Click();
+        //    OnPropertyChanged(nameof(TestString));
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
