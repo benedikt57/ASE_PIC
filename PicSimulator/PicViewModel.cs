@@ -14,9 +14,12 @@ namespace PicSimulator
         public PicViewModel()
         {
             pic = new Pic();
+            //Commands
             ButtonClick = new RelayCommand(_ => Click());
             ButtonClick2 = new RelayCommand(_ => Click2());
         }
+
+        //Variablem
         public string TestString
         {
             get { return pic.TestString; }
@@ -26,14 +29,15 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(TestString));
             }
         }
+        //Commands
         public ICommand ButtonClick { get; }
-        public ICommand ButtonClick2 { get; }
-
         public void Click()
         {
             pic.Click();
             OnPropertyChanged(nameof(TestString));
         }
+        public ICommand ButtonClick2 { get; }
+
         public void Click2()
         {
             pic.Click2();
