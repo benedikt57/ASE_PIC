@@ -24,10 +24,10 @@
         </StatusBar>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100px"/>
+                <ColumnDefinition Width="200px"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100px"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -35,6 +35,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30px"/>
             </Grid.RowDefinitions>
+            <DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,4,0"/>
+            <StackPanel Grid.Row="2"/>
         </Grid>
     </DockPanel>
 </Window>
