@@ -19,9 +19,18 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+        
         <StatusBar DockPanel.Dock="Bottom">
-            <TextBlock>Datei: Pfad</TextBlock>
+            <StatusBarItem Width="*">
+                <TextBlock>Datei: Pfad</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Width="*">
+                <TextBlock>Die 2 Hellsten Leuchten</TextBlock> 
+            </StatusBarItem>
+            
         </StatusBar>
+        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200px"/>
