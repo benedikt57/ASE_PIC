@@ -20,5 +20,9 @@ namespace PicSimulator
         {
             TestString = "Tschau";
         }
+        public void Click3()
+        {
+            TestString = "Passt";
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace PicSimulator
             //Commands
             ButtonClick = new RelayCommand(_ => Click());
             ButtonClick2 = new RelayCommand(_ => Click2());
+            ButtonClick3 = new RelayCommand(_ => Click3());
         }
 
         //Variablem
@@ -41,6 +42,14 @@ namespace PicSimulator
         public void Click2()
         {
             pic.Click2();
+            OnPropertyChanged(nameof(TestString));
+        }
+
+        public ICommand ButtonClick3 { get; }
+
+        public void Click3()
+        {
+            pic.Click3();
             OnPropertyChanged(nameof(TestString));
         }
 

@@ -38,6 +38,7 @@
             <Label Grid.Column="0" Grid.Row="0" Content="{Binding TestString}"/>
             <Button Grid.Column="1" Grid.Row="4" Content="Start" Command="{Binding ButtonClick}"/>
             <Button Grid.Column="2" Grid.Row="4" Content="Start" Command="{Binding ButtonClick2}"/>
+            <Button Grid.Column="3" Grid.Row="4" Content="Sebastian" Command="{Binding ButtonClick3}"/>
         </Grid>
     </DockPanel>
 </Window>
