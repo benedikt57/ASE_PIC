@@ -123,13 +123,50 @@
                     <TextBox Grid.Row="8" Grid.Column="0"/>
                 </Grid>
             </StackPanel>
+
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <!--Erstes Output Register-->
-            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,0,0,40"/>
-            <!--Zweites Output Register-->
-            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,89,0,40" Grid.RowSpan="2"/>
-            <!--Drittes Output Register-->
-            <DataGrid Grid.Column="3" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,45,0,104" Grid.RowSpan="2"/>
+            <DataGrid x:Name="OutputRegister" AutoGenerateColumns="False" Grid.Column="3">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                
+            </DataGrid>
+            <!--2.Output Register-->
+            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,30,0,0" Grid.RowSpan="2" Grid.Row="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--3.Output Register-->
+            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,131,0,101" Grid.RowSpan="3">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" Binding="{Binding TargetNullValue=}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
 </Window>
