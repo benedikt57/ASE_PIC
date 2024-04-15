@@ -19,21 +19,20 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        
+        <!--StatusBar-->
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock>Datei: </TextBlock>
+                <TextBlock>Datei:</TextBlock>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock>PFAD</TextBlock>
             </StatusBarItem>
             <StatusBarItem FlowDirection="RightToLeft">
-                <TextBlock>Die 2 Hellsten Leuchten</TextBlock> 
+                <TextBlock>Die 2 Hellsten Leuchten</TextBlock>
             </StatusBarItem>
-            
         </StatusBar>
-        
 
+        <!--Gesamt Grid-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200px"/>
@@ -47,6 +46,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30px"/>
             </Grid.RowDefinitions>
+            <!--Spezial Register-->
             <DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,0,0"/>
             <StackPanel Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="3">
                 <Grid>
@@ -67,7 +67,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!-- Horizontal Fields -->
+
                     <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
                     <TextBox Grid.Row="0" Grid.Column="2"  IsReadOnly="True"/>
@@ -113,7 +113,6 @@
                     <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True"/>
                     <TextBox Grid.Row="8" Grid.Column="4" IsReadOnly="True"/>
 
-                    <!-- Vertical Fields -->
                     <TextBox Grid.Row="1" Grid.Column="0"/>
                     <TextBox Grid.Row="2" Grid.Column="0"/>
                     <TextBox Grid.Row="3" Grid.Column="0"/>
@@ -124,6 +123,13 @@
                     <TextBox Grid.Row="8" Grid.Column="0"/>
                 </Grid>
             </StackPanel>
+            <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
+            <!--Erstes Output Register-->
+            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,0,0,40"/>
+            <!--Zweites Output Register-->
+            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,89,0,40" Grid.RowSpan="2"/>
+            <!--Drittes Output Register-->
+            <DataGrid Grid.Column="3" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,45,0,104" Grid.RowSpan="2"/>
         </Grid>
     </DockPanel>
 </Window>
