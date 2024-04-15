@@ -21,10 +21,10 @@
         </Menu>
         
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem Width="*">
+            <StatusBarItem>
                 <TextBlock>Datei: Pfad</TextBlock>
             </StatusBarItem>
-            <StatusBarItem Width="*">
+            <StatusBarItem>
                 <TextBlock>Die 2 Hellsten Leuchten</TextBlock> 
             </StatusBarItem>
             
