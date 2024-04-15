@@ -35,8 +35,83 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30px"/>
             </Grid.RowDefinitions>
-            <DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,4,0"/>
-            <StackPanel Grid.Row="2"/>
+            <DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Horizontal Fields -->
+                    <TextBox Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1"/>
+                    <TextBox Grid.Row="0" Grid.Column="2"/>
+                    <TextBox Grid.Row="0" Grid.Column="3"/>
+
+                    <TextBox Grid.Row="1" Grid.Column="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="2"/>
+                    <TextBox Grid.Row="1" Grid.Column="3"/>
+                    <TextBox Grid.Row="1" Grid.Column="4"/>
+                    
+                    <TextBox Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3"/>
+                    <TextBox Grid.Row="2" Grid.Column="4"/>
+                    
+                    <TextBox Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Grid.Row="3" Grid.Column="2"/>
+                    <TextBox Grid.Row="3" Grid.Column="3"/>
+                    <TextBox Grid.Row="3" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="4" Grid.Column="1"/>
+                    <TextBox Grid.Row="4" Grid.Column="2"/>
+                    <TextBox Grid.Row="4" Grid.Column="3"/>
+                    <TextBox Grid.Row="4" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="5" Grid.Column="1"/>
+                    <TextBox Grid.Row="5" Grid.Column="2"/>
+                    <TextBox Grid.Row="5" Grid.Column="3"/>
+                    <TextBox Grid.Row="5" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="6" Grid.Column="1"/>
+                    <TextBox Grid.Row="6" Grid.Column="2"/>
+                    <TextBox Grid.Row="6" Grid.Column="3"/>
+                    <TextBox Grid.Row="6" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="7" Grid.Column="1"/>
+                    <TextBox Grid.Row="7" Grid.Column="2"/>
+                    <TextBox Grid.Row="7" Grid.Column="3"/>
+                    <TextBox Grid.Row="7" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="8" Grid.Column="1"/>
+                    <TextBox Grid.Row="8" Grid.Column="2"/>
+                    <TextBox Grid.Row="8" Grid.Column="3"/>
+                    <TextBox Grid.Row="8" Grid.Column="4"/>
+
+                    <!-- Vertical Fields -->
+                    <TextBox Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Grid.Row="6" Grid.Column="0"/>
+                    <TextBox Grid.Row="7" Grid.Column="0"/>
+                    <TextBox Grid.Row="8" Grid.Column="0"/>
+                </Grid>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>
