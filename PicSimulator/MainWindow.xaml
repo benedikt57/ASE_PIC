@@ -35,6 +35,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30px"/>
             </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="{Binding TestString}"/>
+            <Button Grid.Column="1" Grid.Row="4" Content="Start" Command="{Binding ButtonClick}"/>
         </Grid>
     </DockPanel>
 </Window>
