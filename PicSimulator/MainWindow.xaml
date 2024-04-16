@@ -125,9 +125,9 @@
             </StackPanel>
 
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <DataGrid x:Name="OutputRegister" AutoGenerateColumns="False" Grid.Column="3">
+            <DataGrid x:Name="OutputRegister" AutoGenerateColumns="False" Grid.Column="3" Height="50" VerticalAlignment="Top">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="RA"> </DataGridTextColumn>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="6"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="5"  ></DataGridTextColumn>
@@ -137,15 +137,15 @@
                     <DataGridTextColumn Header="1"  ></DataGridTextColumn>
                     <DataGridTextColumn Header="0"  ></DataGridTextColumn>
                 </DataGrid.Columns>
-                
-                
-                        <!--<TextBlock Text="0"></TextBlock>-->
 
-                  
-                
+
+                <!--<TextBlock Text="0"></TextBlock>-->
+
+
+
             </DataGrid>
             <!--2.Output Register-->
-            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,30,0,0" Grid.RowSpan="2" Grid.Row="2">
+            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,100,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7" ></DataGridTextColumn>
@@ -159,7 +159,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <!--3.Output Register-->
-            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,131,0,101" Grid.RowSpan="3">
+            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="3" Margin="0,50,0,50" Grid.RowSpan="2" Height="50" VerticalAlignment="Top">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7" ></DataGridTextColumn>
