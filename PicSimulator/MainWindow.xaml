@@ -125,7 +125,7 @@
             </StackPanel>
 
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <DataGrid x:Name="OutputRegister" AutoGenerateColumns="False" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="190,0,0,0" HorizontalAlignment="Right">
+            <DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="190,0,0,0" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7"  ></DataGridTextColumn>
@@ -145,7 +145,7 @@
 
             </DataGrid>
             <!--2.Output Register-->
-            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,100,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right">
+            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,50,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7" ></DataGridTextColumn>
@@ -159,7 +159,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <!--3.Output Register-->
-            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="190,50,0,0" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right">
+            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,100,0,0" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True" Grid.RowSpan="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7" ></DataGridTextColumn>
