@@ -1,21 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace PicSimulator
 {
-    public class Pic
+    public class Pic : INotifyPropertyChanged
     {
+        private List<int> hexCode = new List<int>();
+        public List<int> HexCode
+        {
+            get { return hexCode; }
+            set
+            {
+                hexCode = value;
+                OnPropertyChanged(nameof(hexCode));
+            }
+        }
+        private List<string> code = new List<string>();
+        public List<string> Code
+        {
+            get { return code; }
+            set
+            {
+                code = value;
+                OnPropertyChanged(nameof(Code));
+            }
+        }
+
+
+
         public Pic()
         {
             LoadFile();
         }
-        public List<string> Code { get; set; } = new List<string>();
-        private async void LoadFile()
+        private void LoadFile()
         {
             try
             {
@@ -23,14 +47,29 @@ namespace PicSimulator
                 {
                     while (!sr.EndOfStream)
                     {
-                        Code.Add(await sr.ReadLineAsync());
+                        Match match = Regex.Match(sr.ReadLine(), @"^ *(([0-9A-F]{4}) ([0-9A-F]{4}) *)?([0-9]{5}) *(.*)$");
+                        if(match.Success)
+                        {
+
+                            Code.Add(match.Groups[4].Value + "    " + match.Groups[5].Value);
+                            if (match.Groups[1].Success)
+                            {
+                                HexCode.Add(Convert.ToInt32(match.Groups[2].Value + match.Groups[3].Value, 16));
+                            }
+                        }
                     }
                 }
             }
             catch (FileNotFoundException ex)
             {
-                Code = Code.DefaultIfEmpty("File not found").ToList();
+                MessageBox.Show(ex.Message);
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
