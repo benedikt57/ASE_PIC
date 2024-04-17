@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -14,8 +15,8 @@ namespace PicSimulator
 {
     public class Pic : INotifyPropertyChanged
     {
-        private List<int> hexCode = new List<int>();
-        public List<int> HexCode
+        private ObservableCollection<int> hexCode = new ObservableCollection<int>();
+        public ObservableCollection<int> HexCode
         {
             get { return hexCode; }
             set
@@ -24,8 +25,8 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(hexCode));
             }
         }
-        private List<string> code = new List<string>();
-        public List<string> Code
+        private ObservableCollection<string> code = new ObservableCollection<string>();
+        public ObservableCollection<string> Code
         {
             get { return code; }
             set
@@ -53,6 +54,8 @@ namespace PicSimulator
         }
         public void LoadFile()
         {
+            Code.Clear();
+            HexCode.Clear();
             string filename = string.Empty;
             // Konfiguriere das Dialogfeld "Datei öffnen"
             var dialog = new OpenFileDialog();
@@ -88,10 +91,17 @@ namespace PicSimulator
                         Match match = Regex.Match(sr.ReadLine(), @"^ *(([0-9A-F]{4}) ([0-9A-F]{4}) *)?([0-9]{5}) *(.*)$");
                         if(match.Success)
                         {
-                            Code.Add(match.Groups[4].Value + "    " + match.Groups[5].Value);
+                            Code.Add(
+                                match.Groups[2].Value.PadRight(8) +
+                                match.Groups[3].Value.PadRight(8) +
+                                match.Groups[4].Value.PadRight(9) +
+                                match.Groups[5].Value);
                             if (match.Groups[1].Success)
                             {
                                 HexCode.Add(Convert.ToInt32(match.Groups[2].Value + match.Groups[3].Value, 16));
+                            }else
+                            {
+                                HexCode.Add(0);
                             }
                         }
                     }

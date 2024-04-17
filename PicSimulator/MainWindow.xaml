@@ -130,7 +130,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0"/>
-                            <TextBlock Text="{Binding}" Grid.Column="1"/>
+                            <TextBlock Text="{Binding}" Grid.Column="1" FontFamily="Courier New" Margin="5 0 0 0"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

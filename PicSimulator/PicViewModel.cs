@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace PicSimulator
@@ -25,8 +28,8 @@ namespace PicSimulator
         }
 
         //Variablen
-        private List<int> hexCode;
-        public List<int> HexCode
+        private ObservableCollection<int> hexCode;
+        public ObservableCollection<int> HexCode
         {
             get { return hexCode; }
             set
@@ -35,8 +38,8 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(HexCode));
             }
         }
-        private List<string> code;
-        public List<string> Code
+        private ObservableCollection<string> code;
+        public ObservableCollection<string> Code
         {
             get { return code; }
             set
@@ -45,6 +48,7 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Code));
             }
         }
+        
 
         private string testString;
         public string TestString
@@ -61,9 +65,10 @@ namespace PicSimulator
         public void LoadFileButton()
         {
             pic.LoadFile();
+            Code = pic.Code;
+            HexCode = pic.HexCode;
             pic.ChangeString();
             TestString = pic.TestString;
-            Code = pic.Code;
         }
 
         //PropertyChanged
