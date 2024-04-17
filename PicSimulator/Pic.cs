@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,7 +53,25 @@ namespace PicSimulator
         }
         public void LoadFile()
         {
-            Load("C:\\Users\\jonas\\Downloads\\TestProg_PicSim_20230413\\TPicSim1.LST");
+            string filename = string.Empty;
+            // Konfiguriere das Dialogfeld "Datei öffnen"
+            var dialog = new OpenFileDialog();
+            dialog.FileName = "Document"; // Standarddateiname
+            dialog.DefaultExt = ".LST"; // Standarddateierweiterung
+            dialog.Filter = "Textdokumente (.LST)|*.LST"; // Filter für Dateierweiterungen
+
+            // Zeige das Dialogfeld "Datei öffnen" an
+            bool? result = dialog.ShowDialog();
+
+            // Verarbeite die Ergebnisse des Dialogfelds
+            if (result == true)
+            {
+                // Der ausgewählte Dateipfad
+                filename = dialog.FileName;
+                // Verwende den Dateipfad in deiner Anwendung
+            }
+
+            Load(filename);
         }
         public void ChangeString()
         {
