@@ -9,7 +9,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Datei">
-                <MenuItem Header="Laden" IsCheckable="False"/>
+                <MenuItem Header="Laden" Command="{Binding LoadFileCommand}" IsCheckable="False"/>
             </MenuItem>
             <MenuItem Header="Einstellung">
                 <MenuItem Header="Quarzfrequenz">
@@ -135,6 +135,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding TestString}"/>
         </Grid>
     </DockPanel>
 </Window>
