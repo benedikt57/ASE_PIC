@@ -28,23 +28,13 @@ namespace PicSimulator
         }
 
         //Variablen
-        private ObservableCollection<int> hexCode;
-        public ObservableCollection<int> HexCode
+        private ObservableCollection<CodeLine> code1;
+        public ObservableCollection<CodeLine> Code
         {
-            get { return hexCode; }
+            get { return code1; }
             set
             {
-                hexCode = value;
-                OnPropertyChanged(nameof(HexCode));
-            }
-        }
-        private ObservableCollection<string> code;
-        public ObservableCollection<string> Code
-        {
-            get { return code; }
-            set
-            {
-                code = value;
+                code1 = value;
                 OnPropertyChanged(nameof(Code));
             }
         }
@@ -66,7 +56,6 @@ namespace PicSimulator
         {
             pic.LoadFile();
             Code = pic.Code;
-            HexCode = pic.HexCode;
             pic.ChangeString();
             TestString = pic.TestString;
         }
@@ -76,9 +65,6 @@ namespace PicSimulator
         {
             switch (e.PropertyName)
             {
-                case nameof(pic.HexCode):
-                    HexCode = pic.HexCode;
-                    break;
                 case nameof(pic.Code):
                     Code = pic.Code;
                     break;
