@@ -139,12 +139,53 @@
             </ListBox>
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding TestString}"/>
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <!--Erstes Output Register-->
-            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,0,0,40"/>
-            <!--Zweites Output Register-->
-            <DataGrid Grid.Column="3" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,89,0,40" Grid.RowSpan="2"/>
-            <!--Drittes Output Register-->
-            <DataGrid Grid.Column="3" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="0,45,0,104" Grid.RowSpan="2"/>
+            <DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="190,0,0,0" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1"  ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0"  ></DataGridTextColumn>
+                </DataGrid.Columns>
+
+
+                <!--<TextBlock Text="0"></TextBlock>-->
+
+
+
+            </DataGrid>
+            <!--2.Output Register-->
+            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,50,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" ></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--3.Output Register-->
+            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,100,0,0" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True" Grid.RowSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
+                    <DataGridTextColumn Header="7" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="6" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="5" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="4" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="3" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="2" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="1" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="0" ></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
 </Window>

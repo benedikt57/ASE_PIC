@@ -108,5 +108,18 @@ namespace PicSimulator
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        //Array
+        public void BoolArray()
+        {
+            int[] array = new int[8];
+            array[0] = 1;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 1;
+        }
     }
 }
