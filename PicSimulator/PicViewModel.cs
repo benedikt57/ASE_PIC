@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace PicSimulator
@@ -14,45 +18,61 @@ namespace PicSimulator
         public PicViewModel()
         {
             pic = new Pic();
+            pic.PropertyChanged += Pic_PropertyChanged;
             //Commands
-            ButtonClick = new RelayCommand(_ => Click());
-            ButtonClick2 = new RelayCommand(_ => Click2());
-            ButtonClick3 = new RelayCommand(_ => Click3());
+            LoadFileCommand = new RelayCommand(_ => LoadFileButton());
+        }
+        private void Pic_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(e.PropertyName);
         }
 
-        //Variablem
-        public string TestString
+        //Variablen
+        private ObservableCollection<CodeLine> code1;
+        public ObservableCollection<CodeLine> Code
         {
-            get { return pic.TestString; }
+            get { return code1; }
             set
             {
-                pic.TestString = value;
+                code1 = value;
+                OnPropertyChanged(nameof(Code));
+            }
+        }
+        
+
+        private string testString;
+        public string TestString
+        {
+            get { return testString; }
+            set
+            {
+                testString = value;
                 OnPropertyChanged(nameof(TestString));
             }
         }
         //Commands
-        public ICommand ButtonClick { get; }
-        public void Click()
+        public ICommand LoadFileCommand { get; }
+        public void LoadFileButton()
         {
-            pic.Click();
-            OnPropertyChanged(nameof(TestString));
-        }
-        public ICommand ButtonClick2 { get; }
-
-        public void Click2()
-        {
-            pic.Click2();
-            OnPropertyChanged(nameof(TestString));
+            pic.LoadFile();
+            Code = pic.Code;
+            pic.ChangeString();
+            TestString = pic.TestString;
         }
 
-        public ICommand ButtonClick3 { get; }
-
-        public void Click3()
+        //PropertyChanged
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            pic.Click3();
-            OnPropertyChanged(nameof(TestString));
+            switch (e.PropertyName)
+            {
+                case nameof(pic.Code):
+                    Code = pic.Code;
+                    break;
+                case nameof(pic.TestString):
+                    TestString = pic.TestString;
+                    break;
+            }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
