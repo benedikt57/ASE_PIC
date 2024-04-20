@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PicSimulator" d:DataContext="{d:DesignInstance Type=local:PicViewModel}"
+        xmlns:my="clr-namespace:CustomControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
     <DockPanel>
@@ -47,7 +48,7 @@
                 <RowDefinition Height="30px"/>
             </Grid.RowDefinitions>
             <!--Spezial Register-->
-            <DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,0,0"/>
+            <!--<DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,0,0"/>-->
             <StackPanel Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="3">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -70,7 +71,7 @@
 
                     <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
-                    <TextBox Grid.Row="0" Grid.Column="2"  IsReadOnly="True"/>
+                    <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True"/>
                     <TextBox Grid.Row="0" Grid.Column="3" IsReadOnly="True"/>
 
                     <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
@@ -123,6 +124,11 @@
                     <TextBox Grid.Row="8" Grid.Column="0"/>
                 </Grid>
             </StackPanel>
+
+            <ScrollViewer>
+                <my:RAMGrid Grid.Row="0" Grid.Column="0"/>
+            </ScrollViewer>
+
             <ListBox ItemsSource="{Binding Code}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

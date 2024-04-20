@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="CodeLine.cs" />
     <Compile Include="Pic.cs" />
+    <Compile Include="RAMGrid.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

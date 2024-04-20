@@ -25,6 +25,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Code));
             }
         }
+        private int[] ram = new int[256];
+        public int[] Ram
+        {
+            get { return ram; }
+            set
+            {
+                ram = value;
+                OnPropertyChanged(nameof(Ram));
+            }
+        }
         private string testString = "blabla";
         public string TestString
         {

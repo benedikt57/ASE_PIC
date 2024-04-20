@@ -28,14 +28,24 @@ namespace PicSimulator
         }
 
         //Variablen
-        private ObservableCollection<CodeLine> code1;
+        private ObservableCollection<CodeLine> code;
         public ObservableCollection<CodeLine> Code
         {
-            get { return code1; }
+            get { return code; }
             set
             {
-                code1 = value;
+                code = value;
                 OnPropertyChanged(nameof(Code));
+            }
+        }
+        private int[] ram = new int[256];
+        public int[] Ram
+        {
+            get { return ram; }
+            set
+            {
+                ram = value;
+                OnPropertyChanged(nameof(Ram));
             }
         }
         
@@ -70,6 +80,9 @@ namespace PicSimulator
                     break;
                 case nameof(pic.TestString):
                     TestString = pic.TestString;
+                    break;
+                case nameof(pic.Ram):
+                    Ram = pic.Ram;
                     break;
             }
         }
