@@ -92,42 +92,54 @@ namespace PicSimulator
             return false;
         }
 
-        private bool is4MHzChecked;
+        private bool _is4MHzChecked;
         public bool Is4MHzChecked
         {
-            get => is4MHzChecked;
+            get { return _is4MHzChecked; }
             set
             {
-                if (SetProperty(ref is4MHzChecked, value) && value)
+                if (value == true)
                 {
-                    AusgewaehlteQuarzfrequenz = "4 MHz";
+                    Is8MHzChecked = false;
+                    Is16MHzChecked = false;
                 }
+                _is4MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "4 MHz";
+                OnPropertyChanged("Is4MHzChecked");
             }
         }
 
-        private bool is8MHzChecked;
+        private bool _is8MHzChecked;
         public bool Is8MHzChecked
         {
-            get => is8MHzChecked;
+            get { return _is8MHzChecked; }
             set
             {
-                if (SetProperty(ref is8MHzChecked, value) && value)
+                if (value == true)
                 {
-                    AusgewaehlteQuarzfrequenz = "8 MHz";
+                    Is4MHzChecked = false;
+                    Is16MHzChecked = false;
                 }
+                _is8MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "8 MHz";
+                OnPropertyChanged("Is8MHzChecked");
             }
         }
 
-        private bool is16MHzChecked;
+        private bool _is16MHzChecked;
         public bool Is16MHzChecked
         {
-            get => is16MHzChecked;
+            get { return _is16MHzChecked; }
             set
             {
-                if (SetProperty(ref is16MHzChecked, value) && value)
+                if (value == true)
                 {
-                    AusgewaehlteQuarzfrequenz = "16 MHz";
+                    Is4MHzChecked = false;
+                    Is8MHzChecked = false;
                 }
+                _is16MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "16 MHz";
+                OnPropertyChanged("Is16MHzChecked");
             }
         }
 
