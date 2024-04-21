@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -79,7 +80,62 @@ namespace PicSimulator
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
 
-        
+            return false;
+        }
+
+        private bool is4MHzChecked;
+        public bool Is4MHzChecked
+        {
+            get => is4MHzChecked;
+            set
+            {
+                if (SetProperty(ref is4MHzChecked, value) && value)
+                {
+                    AusgewaehlteQuarzfrequenz = "4 MHz";
+                }
+            }
+        }
+
+        private bool is8MHzChecked;
+        public bool Is8MHzChecked
+        {
+            get => is8MHzChecked;
+            set
+            {
+                if (SetProperty(ref is8MHzChecked, value) && value)
+                {
+                    AusgewaehlteQuarzfrequenz = "8 MHz";
+                }
+            }
+        }
+
+        private bool is16MHzChecked;
+        public bool Is16MHzChecked
+        {
+            get => is16MHzChecked;
+            set
+            {
+                if (SetProperty(ref is16MHzChecked, value) && value)
+                {
+                    AusgewaehlteQuarzfrequenz = "16 MHz";
+                }
+            }
+        }
+
+
+        private string ausgewaehlteQuarzfrequenz;
+        public string AusgewaehlteQuarzfrequenz { get => ausgewaehlteQuarzfrequenz; set => SetProperty(ref ausgewaehlteQuarzfrequenz, value); }
+
+
+
     }
 }
