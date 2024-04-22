@@ -90,6 +90,7 @@ namespace PicSimulator
         {
             pic.Step();
             Ram = pic.Ram;
+            WReg = pic.WReg;
         }
 
         //PropertyChanged
