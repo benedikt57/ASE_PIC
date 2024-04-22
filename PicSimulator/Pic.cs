@@ -15,7 +15,7 @@ namespace PicSimulator
 {
     public class Pic : INotifyPropertyChanged
     {
-        private int aktivLine = 0;
+        private int activLine = 0;
 
         private ObservableCollection<CodeLine> code = new ObservableCollection<CodeLine>();
         public ObservableCollection<CodeLine> Code
@@ -67,6 +67,7 @@ namespace PicSimulator
         public void LoadFile()
         {
             Code.Clear();
+            activLine = 0;
             string filename = string.Empty;
             // Konfiguriere das Dialogfeld "Datei öffnen"
             var dialog = new OpenFileDialog();
@@ -147,9 +148,9 @@ namespace PicSimulator
         {
             do
             {
-                aktivLine++;
-            } while (Code[aktivLine].ProgAdrress == -1);
-            Decode(Code[aktivLine].HexCode);
+                activLine++;
+            } while (Code[activLine].ProgAdrress == -1);
+            Decode(Code[activLine].HexCode);
         }
         private void Decode(int code)
         {
@@ -158,27 +159,21 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
-                    MessageBox.Show("MOVLW");
                     Commands.MOVLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1001_0000_0000:
-                    MessageBox.Show("ANDLW");
                     Commands.ANDLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1000_0000_0000:
-                    MessageBox.Show("IORLW");
                     Commands.IORLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1100_0000_0000:
-                    MessageBox.Show("SUBLW");
                     Commands.SUBLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1010_0000_0000:
-                    MessageBox.Show("XORLW");
                     Commands.XORLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1110_0000_0000:
-                    MessageBox.Show("ADDLW");
                     Commands.ADDLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 default:
