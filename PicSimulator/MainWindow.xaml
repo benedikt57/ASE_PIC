@@ -129,7 +129,7 @@
                 <my:RAMGrid/>
             </ScrollViewer>
 
-            <ListBox ItemsSource="{Binding Code}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <ListBox ItemsSource="{Binding Code}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="5,0,0,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -145,7 +145,7 @@
             </ListBox>
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding TestString}"/>
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="190,0,0,0" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True">
+            <DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True" Width="185">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7"  ></DataGridTextColumn>
