@@ -53,6 +53,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Ram));
             }
         }
+        private int wReg;
+        public int WReg
+        {
+            get { return wReg; }
+            set
+            {
+                wReg = value;
+                OnPropertyChanged(nameof(WReg));
+            }
+        }
         
 
         private string testString;
@@ -94,6 +104,9 @@ namespace PicSimulator
                     break;
                 case nameof(pic.Ram):
                     Ram = pic.Ram;
+                    break;
+                case nameof(pic.WReg):
+                    WReg = pic.WReg;
                     break;
             }
         }

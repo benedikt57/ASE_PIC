@@ -37,6 +37,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Ram));
             }
         }
+        private int wReg;
+        public int WReg
+        {
+            get { return wReg; }
+            set
+            {
+                wReg = value;
+                OnPropertyChanged(nameof(WReg));
+            }
+        }
         private string testString = "blabla";
         public string TestString
         {
@@ -125,11 +135,38 @@ namespace PicSimulator
         }
         private void Decode(int code)
         {
+            //erste 6 Bit Maskieren
             int opcode = code & 0b0011_1111_0000_0000;
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
                     MessageBox.Show("MOVLW");
+                    Commands.MOVLW(code & 0b0000_0000_1111_1111, this);
+                    break;
+                case 0b0011_1001_0000_0000:
+                    MessageBox.Show("ANDLW");
+                    break;
+                case 0b0011_1000_0000_0000:
+                    MessageBox.Show("IORLW");
+                    break;
+                case 0b0011_1100_0000_0000:
+                    MessageBox.Show("SUBLW");
+                    break;
+                case 0b0011_1010_0000_0000:
+                    MessageBox.Show("XORLW");
+                    break;
+                case 0b0011_1110_0000_0000:
+                    MessageBox.Show("ADDLW");
+                    break;
+                default:
+                    break;
+            }
+            //erste 7 Bit Maskieren
+            opcode = code & 0b0011_1111_1000_0000;
+            switch (opcode)
+            {
+                case 0b0010_0000_0000_0000:
+                    MessageBox.Show("MOVLB");
                     break;
                 default:
                     break;
