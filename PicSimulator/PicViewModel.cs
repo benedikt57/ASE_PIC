@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +22,9 @@ namespace PicSimulator
             pic.PropertyChanged += Pic_PropertyChanged;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
+
+            // Set default value to 4 MHz
+            Is4MHzChecked = true;
         }
         private void Pic_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -92,7 +96,81 @@ namespace PicSimulator
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
 
-        
+            return false;
+        }
+
+        private bool _is4MHzChecked;
+        public bool Is4MHzChecked
+        {
+            get { return _is4MHzChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    Is8MHzChecked = false;
+                    Is16MHzChecked = false;
+                }
+                _is4MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "4 MHz";
+                OnPropertyChanged("Is4MHzChecked");
+            }
+        }
+
+        private bool _is8MHzChecked;
+        public bool Is8MHzChecked
+        {
+            get { return _is8MHzChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    Is4MHzChecked = false;
+                    Is16MHzChecked = false;
+                }
+                _is8MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "8 MHz";
+                OnPropertyChanged("Is8MHzChecked");
+            }
+        }
+
+        private bool _is16MHzChecked;
+        public bool Is16MHzChecked
+        {
+            get { return _is16MHzChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    Is4MHzChecked = false;
+                    Is8MHzChecked = false;
+                }
+                _is16MHzChecked = value;
+                if (value) AusgewaehlteQuarzfrequenz = "16 MHz";
+                OnPropertyChanged("Is16MHzChecked");
+            }
+        }
+
+
+        private string ausgewaehlteQuarzfrequenz;
+        public string AusgewaehlteQuarzfrequenz
+        {
+            get => ausgewaehlteQuarzfrequenz;
+            set
+            {
+                SetProperty(ref ausgewaehlteQuarzfrequenz, value);
+            }
+        }
+
+
+
     }
 }
