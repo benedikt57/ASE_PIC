@@ -125,8 +125,8 @@
                 </Grid>
             </StackPanel>
 
-            <ScrollViewer>
-                <my:RAMGrid Grid.Row="0" Grid.Column="0"/>
+            <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+                <my:RAMGrid/>
             </ScrollViewer>
 
             <ListBox ItemsSource="{Binding Code}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
