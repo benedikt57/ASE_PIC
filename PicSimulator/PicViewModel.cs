@@ -22,6 +22,7 @@ namespace PicSimulator
             pic.PropertyChanged += Pic_PropertyChanged;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
+            StepCommand = new RelayCommand(_ => StepButton());
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -72,6 +73,12 @@ namespace PicSimulator
             Code = pic.Code;
             pic.ChangeString();
             TestString = pic.TestString;
+        }
+        public ICommand StepCommand { get; }
+        public void StepButton()
+        {
+            pic.Step();
+            Ram = pic.Ram;
         }
 
         //PropertyChanged

@@ -10,6 +10,7 @@ namespace PicSimulator
     public class CodeLine
     {
         public bool Breakpoint { get; set; }
+        public int ProgAdrress { get; set; }
         public int HexCode { get; set; }
         public string Code { get; set; }
         public CodeLine()

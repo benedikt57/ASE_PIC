@@ -15,6 +15,8 @@ namespace PicSimulator
 {
     public class Pic : INotifyPropertyChanged
     {
+        private int aktivLine = 0;
+
         private ObservableCollection<CodeLine> code = new ObservableCollection<CodeLine>();
         public ObservableCollection<CodeLine> Code
         {
@@ -50,7 +52,6 @@ namespace PicSimulator
 
         public Pic()
         {
-            //Load("C:\\Users\\jonas\\Downloads\\TestProg_PicSim_20230413\\TPicSim1.LST");
         }
         public void LoadFile()
         {
@@ -97,10 +98,12 @@ namespace PicSimulator
                                 match.Groups[5].Value);
                             if (match.Groups[1].Success)
                             {
-                                line.HexCode = Convert.ToInt32(match.Groups[2].Value + match.Groups[3].Value, 16);
+                                line.ProgAdrress = Convert.ToInt32(match.Groups[2].Value, 16);
+                                line.HexCode = Convert.ToInt32(match.Groups[3].Value, 16);
                             }else
                             {
-                                line.HexCode = 0;
+                                line.ProgAdrress = -1;
+                                line.HexCode = -1;
                             }
                             Code.Add(line);
                         }
@@ -110,6 +113,26 @@ namespace PicSimulator
             catch (FileNotFoundException ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        public void Step()
+        {
+            do
+            {
+                aktivLine++;
+            } while (Code[aktivLine].ProgAdrress == -1);
+            Decode(Code[aktivLine].HexCode);
+        }
+        private void Decode(int code)
+        {
+            int opcode = code & 0b0011_1111_0000_0000;
+            switch (opcode)
+            {
+                case 0b0011_0000_0000_0000:
+                    MessageBox.Show("MOVLW");
+                    break;
+                default:
+                    break;
             }
         }
 
