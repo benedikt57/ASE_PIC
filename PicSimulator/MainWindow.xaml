@@ -194,6 +194,16 @@
             </DataGrid>
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="5,10,0,2" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Height="18" Text="Quarzfrequenz: "/>
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="95,10,0,2" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="18" Text="{Binding AusgewaehlteQuarzfrequenz}"/>
+
+
+            <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="2" Margin="5,307,5,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Button DockPanel.Dock="Left" Content=" Start " Command="{Binding StartCommand}" Margin="10,2,10,2"/>
+                <Button DockPanel.Dock="Left" Content=" Pause " Command="{Binding PauseCommand}" Margin="10,2,10,2"/>
+                <Button DockPanel.Dock="Left" Content=" Stop " Command="{Binding StopCommand}" Margin="10,2,10,2"/>
+                <Button DockPanel.Dock="Left" Content=" Step " Command="{Binding StepCommand}" Margin="10,2,10,2"/>
+                
+                </DockPanel>
+
         </Grid>
     </DockPanel>
 </Window>
