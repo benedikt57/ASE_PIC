@@ -22,6 +22,7 @@ namespace PicSimulator
             pic.PropertyChanged += Pic_PropertyChanged;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
+            StepCommand = new RelayCommand(_ => StepButton());
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -52,6 +53,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Ram));
             }
         }
+        private int wReg;
+        public int WReg
+        {
+            get { return wReg; }
+            set
+            {
+                wReg = value;
+                OnPropertyChanged(nameof(WReg));
+            }
+        }
         
 
         private string testString;
@@ -74,6 +85,12 @@ namespace PicSimulator
             pic.ChangeString();
             TestString = pic.TestString;
         }
+        public ICommand StepCommand { get; }
+        public void StepButton()
+        {
+            pic.Step();
+            Ram = pic.Ram;
+        }
 
         //PropertyChanged
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -88,6 +105,9 @@ namespace PicSimulator
                     break;
                 case nameof(pic.Ram):
                     Ram = pic.Ram;
+                    break;
+                case nameof(pic.WReg):
+                    WReg = pic.WReg;
                     break;
                 case nameof (pic.SourceFilePath):
                     DateiPfad = pic.SourceFilePath;
