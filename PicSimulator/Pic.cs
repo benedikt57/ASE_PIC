@@ -46,6 +46,7 @@ namespace PicSimulator
             }
         }
 
+        
 
 
         public Pic()
@@ -71,10 +72,27 @@ namespace PicSimulator
                 // Der ausgewählte Dateipfad
                 filename = dialog.FileName;
                 // Verwende den Dateipfad in deiner Anwendung
+                SourceFilePath = filename;
             }
-
             Load(filename);
+        
         }
+        
+            private string _sourceFilePath;
+            public string SourceFilePath
+            {
+                get { return _sourceFilePath; }
+            set
+            {
+                _sourceFilePath = value;
+                OnPropertyChanged(nameof(SourceFilePath));
+                    }
+            }
+        
+
+
+
+
         public void ChangeString()
         {
             TestString = "Hallo";

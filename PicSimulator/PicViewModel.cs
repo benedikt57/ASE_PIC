@@ -70,6 +70,7 @@ namespace PicSimulator
         {
             pic.LoadFile();
             Code = pic.Code;
+            DateiPfad = pic.SourceFilePath;
             pic.ChangeString();
             TestString = pic.TestString;
         }
@@ -87,6 +88,9 @@ namespace PicSimulator
                     break;
                 case nameof(pic.Ram):
                     Ram = pic.Ram;
+                    break;
+                case nameof (pic.SourceFilePath):
+                    DateiPfad = pic.SourceFilePath;
                     break;
             }
         }
@@ -169,6 +173,10 @@ namespace PicSimulator
                 SetProperty(ref ausgewaehlteQuarzfrequenz, value);
             }
         }
+
+        private string dateiPfad;
+
+        public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
 
 
 

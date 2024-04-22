@@ -23,10 +23,10 @@
         <!--StatusBar-->
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock>Datei:</TextBlock>
+                <TextBlock>Datei: </TextBlock>
             </StatusBarItem>
             <StatusBarItem>
-                <TextBlock>PFAD</TextBlock>
+                <TextBlock Text="{Binding DateiPfad}" Width="1000"/>
             </StatusBarItem>
             <StatusBarItem FlowDirection="RightToLeft">
                 <TextBlock>Die 2 Hellsten Leuchten</TextBlock>
