@@ -22,6 +22,9 @@ namespace PicSimulator
             pic.PropertyChanged += Pic_PropertyChanged;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
+
+            // Set default value to 4 MHz
+            Is4MHzChecked = true;
         }
         private void Pic_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -145,7 +148,14 @@ namespace PicSimulator
 
 
         private string ausgewaehlteQuarzfrequenz;
-        public string AusgewaehlteQuarzfrequenz { get => ausgewaehlteQuarzfrequenz; set => SetProperty(ref ausgewaehlteQuarzfrequenz, value); }
+        public string AusgewaehlteQuarzfrequenz
+        {
+            get => ausgewaehlteQuarzfrequenz;
+            set
+            {
+                SetProperty(ref ausgewaehlteQuarzfrequenz, value);
+            }
+        }
 
 
 
