@@ -163,18 +163,23 @@ namespace PicSimulator
                     break;
                 case 0b0011_1001_0000_0000:
                     MessageBox.Show("ANDLW");
+                    Commands.ANDLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1000_0000_0000:
                     MessageBox.Show("IORLW");
+                    Commands.IORLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1100_0000_0000:
                     MessageBox.Show("SUBLW");
+                    Commands.SUBLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1010_0000_0000:
                     MessageBox.Show("XORLW");
+                    Commands.XORLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 case 0b0011_1110_0000_0000:
                     MessageBox.Show("ADDLW");
+                    Commands.ADDLW(code & 0b0000_0000_1111_1111, this);
                     break;
                 default:
                     break;

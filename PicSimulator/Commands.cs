@@ -12,5 +12,25 @@ namespace PicSimulator
         {
             pic.WReg = literal;
         }
+        public static void ANDLW(int literal, Pic pic)
+        {
+            pic.WReg = pic.WReg & literal;
+        }
+        public static void IORLW(int literal, Pic pic)
+        {
+            pic.WReg = pic.WReg | literal;
+        }
+        public static void SUBLW(int literal, Pic pic)
+        {
+            pic.WReg = literal - pic.WReg;
+        }
+        public static void XORLW(int literal, Pic pic)
+        {
+            pic.WReg = pic.WReg ^ literal;
+        }
+        public static void ADDLW(int literal, Pic pic)
+        {
+            pic.WReg = pic.WReg + literal;
+        }
     }
 }
