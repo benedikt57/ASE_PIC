@@ -49,7 +49,7 @@
             </Grid.RowDefinitions>
             <!--Spezial Register-->
             <!--<DataGrid d:ItemsSource="{d:SampleData ItemCount=16}" Grid.RowSpan="2" Margin="0,0,0,0"/>-->
-            <StackPanel Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="3">
+            <StackPanel Grid.Row="2" Margin="0,20,0,0" Grid.RowSpan="3">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -69,8 +69,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Text="W-Reg:"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding WReg, StringFormat='{}{0:X}h'}"/>
+
                     <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True"/>
                     <TextBox Grid.Row="0" Grid.Column="3" IsReadOnly="True"/>
 
