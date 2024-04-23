@@ -49,6 +49,14 @@ namespace PicSimulator
             get { return ram; }
             set
             {
+                if (ram[3] != value[3])
+                {
+                    value[131] = value[3];
+                }
+                if (ram[131] != value[131])
+                {
+                    value[3] = value[131];
+                }
                 ram = value;
                 OnPropertyChanged(nameof(Ram));
             }
