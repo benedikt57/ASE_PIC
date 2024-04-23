@@ -59,7 +59,22 @@ namespace PicSimulator
                 }
                 ram = value;
                 OnPropertyChanged(nameof(Ram));
+                OnPropertyChanged(nameof(CarryBit));
+                OnPropertyChanged(nameof(DCBit));
+                OnPropertyChanged(nameof(ZeroBit));
             }
+        }
+        public int CarryBit
+        {
+            get { return ram[3] & 1; }
+        }
+        public int DCBit
+        {
+            get { return (ram[3] & 2) >> 1; }
+        }
+        public int ZeroBit
+        {
+            get { return (ram[3] & 4) >> 2; }
         }
         private int wReg;
         public int WReg

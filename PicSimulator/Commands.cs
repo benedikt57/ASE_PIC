@@ -104,6 +104,18 @@ namespace PicSimulator
                 clearDigitCarryFlag(pic);
             }
         }
+        private static void setBit(int bit, int address, Pic pic)
+        {
+            if ((pic.Ram[3] & 32) == 32)
+                address += 128;
+            pic.Ram[address] |= 1 << bit;
+        }
+        private static void clearBit(int bit, int address, Pic pic)
+        {
+            if ((pic.Ram[3] & 32) == 32)
+                address += 128;
+            pic.Ram[address] &= ~(1 << bit);
+        }
         private static void setZeroFlag(Pic pic)
         {
             pic.Ram[3] |= 4;

@@ -149,6 +149,8 @@ namespace PicSimulator
             do
             {
                 activLine++;
+                if (activLine >= Code.Count)
+                    return;
             } while (Code[activLine].ProgAdrress == -1);
             Decode(Code[activLine].HexCode);
         }
