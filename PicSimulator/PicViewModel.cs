@@ -114,6 +114,8 @@ namespace PicSimulator
             pic.Step();
             Ram = pic.Ram;
             WReg = pic.WReg;
+            Code = pic.Code;
+            OnPropertyChanged(nameof(Code));
         }
 
         //PropertyChanged

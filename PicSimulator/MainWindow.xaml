@@ -7,6 +7,10 @@
         xmlns:my="clr-namespace:CustomControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
+    <Window.Resources>
+        <local:BooleanToBrushConverter x:Key="BooleanToBrushConverter"/>
+        <!-- Hier wird der Konverter als Ressource deklariert -->
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Datei">
@@ -130,7 +134,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding Breakpoint}"/>
-                            <TextBlock Text="{Binding Code}" Grid.Column="2" FontFamily="Courier New" Margin="5 0 0 0"/>
+                            <TextBlock Text="{Binding Code}" Grid.Column="2" FontFamily="Courier New" Margin="5 0 0 0" Background="{Binding IsHighlighted, Converter={StaticResource BooleanToBrushConverter}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
