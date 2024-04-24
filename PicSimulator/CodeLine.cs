@@ -13,6 +13,8 @@ namespace PicSimulator
         public int ProgAdrress { get; set; }
         public int HexCode { get; set; }
         public string Code { get; set; }
+        public bool IsActive { get; internal set; }
+
         public CodeLine()
         {
             Breakpoint = false;

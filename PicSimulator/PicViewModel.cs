@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PicSimulator
 {
@@ -222,7 +224,25 @@ namespace PicSimulator
 
         public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
 
+        public class ActiveLineConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if ((int)value == (int)parameter)
+                {
+                    return Brushes.LightBlue; // oder eine andere Farbe Ihrer Wahl
+                }
+                else
+                {
+                    return Brushes.Transparent; // oder die Standardfarbe Ihrer Wahl
+                }
+            }
 
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
     }
 }
