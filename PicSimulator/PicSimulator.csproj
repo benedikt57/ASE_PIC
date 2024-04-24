@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BooleanToBrushConverter.cs" />
     <Compile Include="CodeLine.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Pic.cs" />

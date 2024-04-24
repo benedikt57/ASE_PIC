@@ -148,9 +148,11 @@ namespace PicSimulator
         {
             do
             {
-                activLine++;
-                if (activLine >= Code.Count)
+                if (activLine >= Code.Count - 1)
                     return;
+                Code[activLine].IsHighlighted = false;
+                activLine++;
+                Code[activLine].IsHighlighted = true;
             } while (Code[activLine].ProgAdrress == -1);
             Decode(Code[activLine].HexCode);
         }
