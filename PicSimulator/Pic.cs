@@ -160,25 +160,32 @@ namespace PicSimulator
         {
             //erste 6 Bit Maskieren
             int opcode = code & 0b0011_1111_0000_0000;
+            int CodeTimer = 0;
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
                     Commands.MOVLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;
                     return;
                 case 0b0011_1001_0000_0000:
                     Commands.ANDLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;
                     return;
                 case 0b0011_1000_0000_0000:
                     Commands.IORLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;
                     return;
                 case 0b0011_1100_0000_0000:
                     Commands.SUBLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;
                     return;
                 case 0b0011_1010_0000_0000:
                     Commands.XORLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;  
                     break;
                 case 0b0011_1110_0000_0000:
                     Commands.ADDLW(code & 0b0000_0000_1111_1111, this);
+                    CodeTimer = CodeTimer + 1;
                     return;
                 default:
                     return;
