@@ -222,6 +222,18 @@ namespace PicSimulator
             }
         }
 
+        private int codeTimer;
+
+        public int CodeTimer
+        {
+            get { return codeTimer; }
+            set
+            {
+                codeTimer = value;
+                OnPropertyChanged(nameof(CodeTimer));
+            }
+        }
+
         private string dateiPfad;
 
         public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
