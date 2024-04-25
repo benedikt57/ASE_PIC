@@ -23,6 +23,7 @@ namespace PicSimulator
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
             StepCommand = new RelayCommand(_ => StepButton());
+            StartCommand = new RelayCommand(_ => StartButton());
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -31,6 +32,7 @@ namespace PicSimulator
         {
             OnPropertyChanged(e.PropertyName);
         }
+        private bool started = false;
 
         //Variablen
         private ObservableCollection<CodeLine> code;
@@ -49,19 +51,24 @@ namespace PicSimulator
             get { return ram; }
             set
             {
-                if (ram[3] != value[3])
-                {
-                    value[131] = value[3];
-                }
-                if (ram[131] != value[131])
-                {
-                    value[3] = value[131];
-                }
                 ram = value;
                 OnPropertyChanged(nameof(Ram));
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
+            }
+        }
+        private int pcl;
+        public int PCL
+        {
+            get { return pcl; }
+            set
+            {
+                pcl = value;
+                Ram[2] = pcl & 255;
+                Ram[130] = Ram[2];
+                OnPropertyChanged(nameof(Ram));
+                OnPropertyChanged(nameof(PCL));
             }
         }
         public int CarryBit
@@ -116,6 +123,22 @@ namespace PicSimulator
             WReg = pic.WReg;
             Code = pic.Code;
             OnPropertyChanged(nameof(Code));
+        }
+        public ICommand StartCommand { get; }
+        public async void StartButton()
+        {
+            started = !started;
+            await Task.Run(() =>
+            { 
+                while (started)
+                {
+                    pic.Step();
+                    Ram = pic.Ram;
+                    WReg = pic.WReg;
+                    Code = pic.Code;
+                    OnPropertyChanged(nameof(Code)); 
+                }
+            });
         }
 
         //PropertyChanged

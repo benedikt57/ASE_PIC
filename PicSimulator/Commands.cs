@@ -104,6 +104,34 @@ namespace PicSimulator
                 clearDigitCarryFlag(pic);
             }
         }
+        public static void GOTO(int literal, Pic pic)
+        {
+            pic.PCL &= 0b1111_1000_0000_0000;
+            pic.PCL += literal;
+        }
+        public static void CALL(int literal, Pic pic)
+        {
+            pic.Stack[pic.StackPointer] = pic.PCL;
+            pic.StackPointer++;
+            if(pic.StackPointer > 7)
+                pic.StackPointer = 0;
+            GOTO(literal, pic);
+        }
+        public static void RETURN(Pic pic)
+        {
+            pic.StackPointer--;
+            if (pic.StackPointer < 0)
+                pic.StackPointer = 7;
+            pic.PCL = pic.Stack[pic.StackPointer];
+        }
+        public static void RETLW(int literal, Pic pic)
+        {
+            pic.WReg = literal;
+            RETURN(pic);
+        }
+        public static void NOP()
+        {
+        }
         private static void setBit(int bit, int address, Pic pic)
         {
             if ((pic.Ram[3] & 32) == 32)
@@ -146,5 +174,6 @@ namespace PicSimulator
             pic.Ram[3] &= 253;
             pic.Ram[131] = pic.Ram[3];
         }
+
     }
 }

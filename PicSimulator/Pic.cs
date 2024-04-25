@@ -37,6 +37,30 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Ram));
             }
         }
+        private int[] stack = new int[8];
+        public int[] Stack
+        {
+            get { return stack; }
+            set
+            {
+                stack = value;
+                OnPropertyChanged(nameof(Stack));
+            }
+        }
+        public int StackPointer { get; set; }
+        private int pcl;
+        public int PCL
+        {
+            get { return pcl; }
+            set
+            {
+                pcl = value;
+                Ram[2] = pcl & 255;
+                Ram[130] = Ram[2];
+                OnPropertyChanged(nameof(Ram));
+                OnPropertyChanged(nameof(PCL));
+            }
+        }
         private int wReg;
         public int WReg
         {
@@ -148,18 +172,30 @@ namespace PicSimulator
         {
             do
             {
-                if (activLine >= Code.Count - 1)
-                    return;
                 Code[activLine].IsHighlighted = false;
                 activLine++;
+                if(activLine >= Code.Count)
+                    activLine = 0;
                 Code[activLine].IsHighlighted = true;
-            } while (Code[activLine].ProgAdrress == -1);
+            } while (Code[activLine].ProgAdrress != PCL);
+            PCL++;
             Decode(Code[activLine].HexCode);
         }
         private void Decode(int code)
         {
+            //ertse 3 Bit Maskieren
+            int opcode = code & 0b0011_1000_0000_0000;
+            switch (opcode)
+            {
+                case 0b0010_1000_0000_0000:
+                    Commands.GOTO(code & 0b0000_0111_1111_1111, this);
+                    return;
+                case 0b0010_0000_0000_0000:
+                    Commands.CALL(code & 0b0000_0111_1111_1111, this);
+                    return;
+            }
             //erste 6 Bit Maskieren
-            int opcode = code & 0b0011_1111_0000_0000;
+            opcode = code & 0b0011_1111_0000_0000;
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
@@ -180,6 +216,9 @@ namespace PicSimulator
                 case 0b0011_1110_0000_0000:
                     Commands.ADDLW(code & 0b0000_0000_1111_1111, this);
                     break;
+                case 0b0011_0100_0000_0000:
+                    Commands.RETLW(code & 0b0000_0000_1111_1111, this);
+                    return;
                 default:
                     break;
             }
@@ -192,6 +231,17 @@ namespace PicSimulator
                     break;
                 default:
                     break;
+            }
+            //erste 14 Bit Maskieren
+            opcode = code;
+            switch (opcode)
+            {
+                case 0b0000_0000_0000_1000:
+                    Commands.RETURN(this);
+                    return;
+                case 0b0000_0000_0000_0000:
+                    Commands.NOP();
+                    return;
             }
         }
 
