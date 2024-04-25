@@ -202,6 +202,51 @@ namespace PicSimulator
             }
         }
 
+
+    //Alle Befehle die ich gefunden habe:                       Hier Hinten mit den Zeiten
+    //        //BYTE-ORIENTED FILE REGISTER OPERATIONS         
+    //    {"ADDWF", "00 0111 dfff ffff"},                       Zeit:1
+    //    {"ANDWF", "00 0101 dfff ffff"},                       Zeit:1
+    //    { "CLRF", "00 0001 1fff ffff "},                      Zeit:1
+    //    { "CLRW", "00 0001 oxxx xxxx"},                       Zeit:1
+    //    { "COMF", "00 1001 dfff ffff"},                       Zeit:1
+    //    { "DECF", "00 0011 dfff ffff"},                       Zeit:1
+    //    { "DECFSZ", "00 1011 dfff ffff"},                     Zeit:1(2)
+    //    { "INCF", "00 1010 dfff ffff"},                       Zeit:1
+    //    { "INCFSZ", "00 1111 dfff ffff"},                     Zeit:1(2)
+    //    { "IORWF", "00 0100 dfff ffff"},                      Zeit:1
+    //    { "MOVF", "00 1000 dfff ffff"},                       Zeit:1
+    //    { "MOVWF", "00 000 1fff ffff"},                       Zeit:1
+    //    { "NOP", "00 0000 0xx0 0000"},                        Zeit:1
+    //    { "RLF", "00 1101 dfff ffff"},                        Zeit:1
+    //    { "RRF", "00 1100 dfff ffff"},                        Zeit:1
+    //    { "SUBWF", "00 0010 dfff ffff"},                      Zeit:1
+    //    { "SWAPF", "00 1110 dfff ffff"},                      Zeit:1
+    //    { "XORWF", "00 0110 dfff ffff"},                      Zeit:1
+                                                              //Zeit:1
+    //    //BIT-ORIENTED FILE REGISTER OPERATIONS               Zeit:1
+    //    { "BCF", "01 00bb bfff ffff"},                        Zeit:1
+    //    { "BSF", "01 01bb bfff ffff"},                        Zeit:1
+    //    { "BTFSC", "01 10bb bfff ffff"},                      Zeit:1(2)
+    //    { "BTFSS", "01 11bb bfff ffff"},                      Zeit:1(2)
+                                                              //Zeit:1
+    //    //Literal and control operation                       Zeit:1
+    //    { "ADDLW", "11 111x kkkk kkkk"},                      Zeit:1
+    //    { "ANDLW", "11 1001 kkkk kkkk"},                      Zeit:1
+    //    { "CALL", "10 0kkk kkkk kkkk"},                       Zeit:2
+    //    { "CLRWDT", "00 0000 0110 0100"},                     Zeit:1
+    //    { "GOTO", "10 1kkkk kkkk kkkk"},                      Zeit:2
+    //    { "IORLW", "11 1000 kkkk kkkk" },                     Zeit:1
+    //    { "MOVLW", "11 00xx kkkk kkkk" },                     Zeit:1
+    //    { "RETFIE", "00 0000 0000 1001" },                    Zeit:2
+    //    { "RETLW", "11 01xx kkkk kkkk" },                     Zeit:2
+    //    { "RETURN", "00 0000 0000 1000" },                    Zeit:2
+    //    { "SLEEP", "00 0000 0110 0011" },                     Zeit:1
+    //    { "SUBLW", "11 110x kkkk kkkk" },                     Zeit:1
+    //    { "XORLW", "11 1010 kkkk kkkk" },                     Zeit:1
+                                                              
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
