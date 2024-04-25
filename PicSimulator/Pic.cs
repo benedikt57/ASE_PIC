@@ -57,6 +57,17 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(TestString));
             }
         }
+        private int codeTimer = 8;
+
+        public int CodeTimer
+        {
+            get { return codeTimer; }
+            set
+            {
+                codeTimer = value;
+                OnPropertyChanged(nameof(CodeTimer));
+            }
+        }
 
         
 
@@ -153,6 +164,7 @@ namespace PicSimulator
                 Code[activLine].IsHighlighted = false;
                 activLine++;
                 Code[activLine].IsHighlighted = true;
+                CodeTimer = CodeTimer +1 ;
             } while (Code[activLine].ProgAdrress == -1);
             Decode(Code[activLine].HexCode);
         }
@@ -160,7 +172,7 @@ namespace PicSimulator
         {
             //erste 6 Bit Maskieren
             int opcode = code & 0b0011_1111_0000_0000;
-            int CodeTimer = 0;
+            int CodeTimer = 7;
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
