@@ -172,7 +172,6 @@ namespace PicSimulator
         {
             //erste 6 Bit Maskieren
             int opcode = code & 0b0011_1111_0000_0000;
-            int CodeTimer = 7;
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:

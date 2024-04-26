@@ -140,6 +140,9 @@ namespace PicSimulator
                 case nameof (pic.SourceFilePath):
                     DateiPfad = pic.SourceFilePath;
                     break;
+                case nameof(pic.CodeTimer):
+                    CodeTimer = pic.CodeTimer;
+                    break;
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
