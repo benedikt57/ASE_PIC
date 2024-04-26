@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PicSimulator
 {
@@ -132,6 +133,7 @@ namespace PicSimulator
         public static void NOP()
         {
         }
+        //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
             if ((pic.Ram[3] & 32) == 32)
