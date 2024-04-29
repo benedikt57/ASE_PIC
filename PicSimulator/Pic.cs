@@ -81,7 +81,7 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(TestString));
             }
         }
-        private int codeTimer = 8;
+        private int codeTimer = 0;
 
         public int CodeTimer
         {
@@ -235,7 +235,8 @@ namespace PicSimulator
                 case 0b0011_0100_0000_0000:
                     Commands.RETLW(code & 0b0000_0000_1111_1111, this);
                     return;
-                default:
+                case 0b0000_0111_0000_0000:
+                    Commands.ADDWF(code & 0b0000_0000_1111_1111, this);
                     return;
             }
             //erste 7 Bit Maskieren
@@ -244,9 +245,6 @@ namespace PicSimulator
             {
                 case 0b0000_0000_1000_0000:
                     Commands.MOVWF(code & 0b0000_0000_0111_1111, this);
-                    return;
-
-                default:
                     return;
             }
             //erste 14 Bit Maskieren

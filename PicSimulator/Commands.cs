@@ -138,6 +138,18 @@ namespace PicSimulator
         {
             writeByte(pic.WReg, file, pic);
         }
+        public static void ADDWF(int file, Pic pic)
+        {
+            int tempADDWF = pic.WReg + pic.Ram[file & 0b0111_1111];
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempADDWF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempADDWF;
+            }
+        }
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
