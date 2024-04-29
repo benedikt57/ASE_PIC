@@ -141,6 +141,30 @@ namespace PicSimulator
         public static void ADDWF(int file, Pic pic)
         {
             int tempADDWF = pic.WReg + pic.Ram[file & 0b0111_1111];
+            if (tempADDWF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+            if (tempADDWF > 255)
+            {
+                setCarryFlag(pic);
+            }
+            else
+            {
+                clearCarryFlag(pic);
+            }
+            if ((pic.WReg & 15) + (pic.Ram[file & 0b0111_1111] & 15) > 15)
+            {
+                setDigitCarryFlag(pic);
+            }
+            else
+            {
+                clearDigitCarryFlag(pic);
+            }
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempADDWF;
