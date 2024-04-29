@@ -150,6 +150,18 @@ namespace PicSimulator
                 pic.Ram[file & 0b0111_1111] = tempADDWF;
             }
         }
+        public static void ANDWF(int file, Pic pic)
+        {
+            int tempANDWF = pic.WReg & pic.Ram[file & 0b0111_1111];
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempANDWF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempANDWF;
+            }
+        }
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
