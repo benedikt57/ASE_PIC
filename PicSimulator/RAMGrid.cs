@@ -53,7 +53,10 @@ namespace CustomControl
                 {
                     var bd = new Border();
                     var txt = new TextBlock();
-                    txt.SetBinding(TextBlock.TextProperty, new System.Windows.Data.Binding("Ram[" + ((j - 1) * 8 + i - 1) + "]"));
+                    txt.SetBinding(TextBlock.TextProperty, new System.Windows.Data.Binding("Ram[" + ((j - 1) * 8 + i - 1) + "]")
+                    {
+                        StringFormat = "X2"
+                    });
                     txt.TextAlignment = System.Windows.TextAlignment.Center;
                     bd.BorderBrush = System.Windows.Media.Brushes.Gray;
                     bd.BorderThickness = new System.Windows.Thickness(.1);
