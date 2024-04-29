@@ -259,6 +259,9 @@ namespace PicSimulator
                 case 0b0000_0010_0000_0000:
                     Commands.SUBWF(code & 0b0000_0000_1111_1111, this);
                     return;
+                case 0b0000_1110_0000_0000:
+                    Commands.SWAPF(code & 0b0000_0000_1111_1111, this);
+                    return;
             }
             //erste 7 Bit Maskieren
             opcode = code & 0b0011_1111_1000_0000;

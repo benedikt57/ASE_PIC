@@ -347,6 +347,27 @@ namespace PicSimulator
                 pic.Ram[file & 0b0111_1111] = tempSUBWF;
             }
         }
+        public static void SWAPF(int file, Pic pic)
+        {
+            int tempSWAPF = pic.Ram[file & 0b0111_1111];
+            tempSWAPF = ((tempSWAPF & 0b0000_1111) << 4) | ((tempSWAPF & 0b1111_0000) >> 4);
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempSWAPF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempSWAPF;
+            }
+            if (tempSWAPF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+        }
 
 
 
