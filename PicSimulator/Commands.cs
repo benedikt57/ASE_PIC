@@ -388,6 +388,11 @@ namespace PicSimulator
                 clearZeroFlag(pic);
             }
         }
+        public static void CLRW(int file, Pic pic)
+        {
+            pic.WReg = 0;
+            setZeroFlag(pic);
+        }
 
 
 

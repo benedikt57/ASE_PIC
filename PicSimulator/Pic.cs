@@ -276,6 +276,9 @@ namespace PicSimulator
                 case 0b0000_0001_1000_0000:
                     Commands.CLRF(code & 0b0000_0000_0111_1111, this);
                     return;
+                case 0b0000_0001_0000_0000:
+                    Commands.CLRW(code & 0b0000_0000_0111_1111, this);
+                    return;
             }
             //erste 14 Bit Maskieren
             opcode = code;
