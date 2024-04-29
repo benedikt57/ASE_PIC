@@ -253,6 +253,9 @@ namespace PicSimulator
                 case 0b0000_1000_0000_0000:
                     Commands.MOVF(code & 0b0000_0000_1111_1111, this);
                     return;
+                case 0b0000_0100_0000_0000:
+                    Commands.IORWF(code & 0b0000_00000_1111_1111, this);
+                    return;
             }
             //erste 7 Bit Maskieren
             opcode = code & 0b0011_1111_1000_0000;

@@ -291,6 +291,26 @@ namespace PicSimulator
             }
 
         }
+        public static void IORWF(int file, Pic pic)
+        {
+            int tempIORWF = pic.Ram[file & 0b0111_1111] | pic.WReg;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempIORWF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempIORWF;
+            }
+            if (tempIORWF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+        }
 
 
 
