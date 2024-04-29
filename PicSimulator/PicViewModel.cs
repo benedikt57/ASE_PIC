@@ -265,25 +265,5 @@ namespace PicSimulator
 
         public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
 
-        public class ActiveLineConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                if ((int)value == (int)parameter)
-                {
-                    return Brushes.LightBlue; // oder eine andere Farbe Ihrer Wahl
-                }
-                else
-                {
-                    return Brushes.Transparent; // oder die Standardfarbe Ihrer Wahl
-                }
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
     }
 }
