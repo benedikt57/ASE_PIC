@@ -40,7 +40,8 @@ namespace PicSimulator
         }
         public static void SUBLW(int literal, Pic pic)
         {
-            pic.WReg = literal - pic.WReg;
+            int tempSUBLW = literal - pic.WReg;
+            
             if (pic.WReg == 0)
             {
                 setZeroFlag(pic);
@@ -65,6 +66,7 @@ namespace PicSimulator
             {
                 setDigitCarryFlag(pic);
             }
+            pic.WReg &= tempSUBLW;
         }
         public static void XORLW(int literal, Pic pic)
         {
@@ -338,6 +340,7 @@ namespace PicSimulator
             {
                 setDigitCarryFlag(pic);
             }
+            tempSUBWF &= 255;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempSUBWF;
