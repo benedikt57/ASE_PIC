@@ -311,6 +311,42 @@ namespace PicSimulator
                 clearZeroFlag(pic);
             }
         }
+        public static void SUBWF(int file, Pic pic)
+        {
+            int tempSUBWF = pic.Ram[file & 0b0111_1111] - pic.WReg;
+            if (tempSUBWF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+            if (tempSUBWF < 0)
+            {
+                clearCarryFlag(pic);
+            }
+            else
+            {
+                setCarryFlag(pic);
+            }
+            if ((pic.Ram[file & 0b0111_1111] & 15) - (pic.WReg & 15) < 0)
+            {
+                clearDigitCarryFlag(pic);
+            }
+            else
+            {
+                setDigitCarryFlag(pic);
+            }
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempSUBWF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempSUBWF;
+            }
+        }
 
 
 
