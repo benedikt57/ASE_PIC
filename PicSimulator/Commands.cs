@@ -177,6 +177,14 @@ namespace PicSimulator
         public static void ANDWF(int file, Pic pic)
         {
             int tempANDWF = pic.WReg & pic.Ram[file & 0b0111_1111];
+            if (tempANDWF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempANDWF;
