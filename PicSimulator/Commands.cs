@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -133,6 +134,10 @@ namespace PicSimulator
         public static void NOP()
         {
         }
+        public static void MOVWF(int file, Pic pic)
+        {
+            writeByte(pic.WReg, file, pic);
+        }
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
@@ -145,6 +150,12 @@ namespace PicSimulator
             if ((pic.Ram[3] & 32) == 32)
                 address += 128;
             pic.Ram[address] &= ~(1 << bit);
+        }
+        private static void writeByte(int value, int address, Pic pic)
+        {
+            if ((pic.Ram[3] & 32) == 32)
+                address += 128;
+            pic.Ram[address] = value;
         }
         private static void setZeroFlag(Pic pic)
         {

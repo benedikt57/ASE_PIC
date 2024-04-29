@@ -242,11 +242,12 @@ namespace PicSimulator
             opcode = code & 0b0011_1111_1000_0000;
             switch (opcode)
             {
-                case 0b0010_0000_0000_0000:
-                    MessageBox.Show("MOVLB");
-                    break;
+                case 0b0000_0000_1000_0000:
+                    Commands.MOVWF(code & 0b0000_0000_0111_1111, this);
+                    return;
+
                 default:
-                    break;
+                    return;
             }
             //erste 14 Bit Maskieren
             opcode = code;
