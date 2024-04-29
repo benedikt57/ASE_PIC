@@ -167,6 +167,39 @@ namespace PicSimulator
             pic.Ram[file & 0b0111_1111] = 0;
             setZeroFlag(pic);
         }
+
+        //public static void CLRW(Pic pic)
+        //{
+        //    pic.WReg = 0;
+        //    setZeroFlag(pic);
+        //}
+
+        public static void COMF(int file, Pic pic)
+        {
+            int tempCOMF = pic.Ram[file & 0b0111_1111];
+            tempCOMF = ~tempCOMF;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempCOMF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempCOMF;
+            }
+            if (tempCOMF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+        }
+
+
+
+
+
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
