@@ -124,6 +124,7 @@ namespace PicSimulator
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
+            CodeTimer = pic.CodeTimer;
             OnPropertyChanged(nameof(Code));
         }
         public ICommand StartCommand { get; }
