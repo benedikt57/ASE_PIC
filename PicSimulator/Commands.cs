@@ -162,6 +162,11 @@ namespace PicSimulator
                 pic.Ram[file & 0b0111_1111] = tempANDWF;
             }
         }
+        public static void CLRF(int file, Pic pic)
+        {
+            pic.Ram[file & 0b0111_1111] = 0;
+            setZeroFlag(pic);
+        }
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
