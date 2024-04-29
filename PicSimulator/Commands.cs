@@ -368,6 +368,26 @@ namespace PicSimulator
                 clearZeroFlag(pic);
             }
         }
+        public static void XORWF(int file, Pic pic)
+        {
+            int tempXORWF = pic.Ram[file & 0b0111_1111] ^ pic.WReg;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempXORWF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempXORWF;
+            }
+            if (tempXORWF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+        }
 
 
 
