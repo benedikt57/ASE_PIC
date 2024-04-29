@@ -258,6 +258,37 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempINCF;
             }
+            if (tempINCF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+
+        }
+
+        public static void MOVF(int file, Pic pic)
+        {
+            int tempMOVF = pic.Ram[file & 0b0111_1111];
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempMOVF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempMOVF;
+            }
+
+            if (tempMOVF == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
 
         }
 
