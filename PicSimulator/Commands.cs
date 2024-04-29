@@ -210,14 +210,6 @@ namespace PicSimulator
         {
             int tempCOMF = pic.Ram[file & 0b0111_1111];
             tempCOMF = ~tempCOMF;
-            if ((file & 0b1000_0000) == 0)
-            {
-                pic.WReg = tempCOMF;
-            }
-            else
-            {
-                pic.Ram[file & 0b0111_1111] = tempCOMF;
-            }
             if (tempCOMF == 0)
             {
                 setZeroFlag(pic);
@@ -225,6 +217,14 @@ namespace PicSimulator
             else
             {
                 clearZeroFlag(pic);
+            }
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempCOMF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempCOMF;
             }
         }
         public static void DECF(int file, Pic pic)
