@@ -247,6 +247,19 @@ namespace PicSimulator
                 pic.Ram[file & 0b0111_1111] = tempDECF;
             }
         }
+        public static void INCF(int file, Pic pic)
+        {
+            int tempINCF = pic.Ram[file & 0b0111_1111] + 1;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempINCF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempINCF;
+            }
+
+        }
 
 
 

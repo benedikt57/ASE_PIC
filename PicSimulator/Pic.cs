@@ -247,6 +247,9 @@ namespace PicSimulator
                 case 0b0000_0011_0000_0000:
                     Commands.DECF(code & 0b0000_0000_1111_1111, this);
                     return;
+                case 0b0000_1010_0000_0000:
+                    Commands.INCF(code & 0b0000_0000_1111_1111, this);
+                    return;
             }
             //erste 7 Bit Maskieren
             opcode = code & 0b0011_1111_1000_0000;
