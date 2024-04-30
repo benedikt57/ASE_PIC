@@ -81,7 +81,7 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(TestString));
             }
         }
-        private int codeTimer = 0;
+        private int codeTimer;
 
         public int CodeTimer
         {
@@ -125,16 +125,16 @@ namespace PicSimulator
         
         }
         
-            private string _sourceFilePath;
-            public string SourceFilePath
-            {
-                get { return _sourceFilePath; }
-            set
-            {
-                _sourceFilePath = value;
-                OnPropertyChanged(nameof(SourceFilePath));
-                    }
-            }
+        private string _sourceFilePath;
+        public string SourceFilePath
+        {
+            get { return _sourceFilePath; }
+        set
+        {
+            _sourceFilePath = value;
+            OnPropertyChanged(nameof(SourceFilePath));
+                }
+        }
         
 
 

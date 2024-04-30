@@ -111,9 +111,12 @@ namespace PicSimulator
         public ICommand LoadFileCommand { get; }
         public void LoadFileButton()
         {
+            pic = new Pic();
             pic.LoadFile();
             Code = pic.Code;
             DateiPfad = pic.SourceFilePath;
+            Ram = pic.Ram;
+            WReg = pic.WReg;
             pic.ChangeString();
             TestString = pic.TestString;
         }
@@ -125,6 +128,7 @@ namespace PicSimulator
             WReg = pic.WReg;
             Code = pic.Code;
             CodeTimer = pic.CodeTimer;
+            CodeTimerFormat();
             OnPropertyChanged(nameof(Code));
         }
         public ICommand StartCommand { get; }
@@ -135,11 +139,7 @@ namespace PicSimulator
             { 
                 while (started)
                 {
-                    pic.Step();
-                    Ram = pic.Ram;
-                    WReg = pic.WReg;
-                    Code = pic.Code;
-                    OnPropertyChanged(nameof(Code)); 
+                    StepButton();
                 }
             });
         }
@@ -199,7 +199,11 @@ namespace PicSimulator
                     Is16MHzChecked = false;
                 }
                 _is4MHzChecked = value;
-                if (value) AusgewaehlteQuarzfrequenz = "4 MHz";
+                if (value)
+                {
+                    AusgewaehlteQuarzfrequenz = "4 MHz";
+                    AusgewaehlteQuarzfrequenzInt = 4;
+                }
                 OnPropertyChanged("Is4MHzChecked");
             }
         }
@@ -216,7 +220,11 @@ namespace PicSimulator
                     Is16MHzChecked = false;
                 }
                 _is8MHzChecked = value;
-                if (value) AusgewaehlteQuarzfrequenz = "8 MHz";
+                if (value)
+                {
+                    AusgewaehlteQuarzfrequenz = "8 MHz";
+                    AusgewaehlteQuarzfrequenzInt = 8;
+                }
                 OnPropertyChanged("Is8MHzChecked");
             }
         }
@@ -233,7 +241,11 @@ namespace PicSimulator
                     Is8MHzChecked = false;
                 }
                 _is16MHzChecked = value;
-                if (value) AusgewaehlteQuarzfrequenz = "16 MHz";
+                if (value)
+                {
+                    AusgewaehlteQuarzfrequenz = "16 MHz";
+                    AusgewaehlteQuarzfrequenzInt = 16;
+                }
                 OnPropertyChanged("Is16MHzChecked");
             }
         }
@@ -248,6 +260,15 @@ namespace PicSimulator
                 SetProperty(ref ausgewaehlteQuarzfrequenz, value);
             }
         }
+        private int ausgewaehlteQuarzfrequenzInt;
+        public int AusgewaehlteQuarzfrequenzInt
+        {
+            get => ausgewaehlteQuarzfrequenzInt;
+            set
+            {
+                SetProperty(ref ausgewaehlteQuarzfrequenzInt, value);
+            }
+        }
 
         private int codeTimer;
 
@@ -260,30 +281,31 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(CodeTimer));
             }
         }
+        private string codeTimerString;
+        public string CodeTimerString
+        {
+            get { return codeTimerString; }
+            set
+            {
+                codeTimerString = value;
+                OnPropertyChanged(nameof(CodeTimerString));
+            
+            }
+        }
+        private void CodeTimerFormat()
+        {
+            var tmp = ((4/(AusgewaehlteQuarzfrequenzInt * 1e6))*CodeTimer);
+            if(tmp >= 1e3)
+                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
+            if(tmp >= 1)
+                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+            else
+                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " µs";
+        }
 
         private string dateiPfad;
 
         public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
-
-        public class ActiveLineConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                if ((int)value == (int)parameter)
-                {
-                    return Brushes.LightBlue; // oder eine andere Farbe Ihrer Wahl
-                }
-                else
-                {
-                    return Brushes.Transparent; // oder die Standardfarbe Ihrer Wahl
-                }
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-        }
 
     }
 }
