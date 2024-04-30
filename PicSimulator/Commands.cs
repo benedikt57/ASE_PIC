@@ -397,6 +397,51 @@ namespace PicSimulator
             setZeroFlag(pic);
         }
 
+        public static void RLF(int file, Pic pic)
+        {
+            int tempRLF = pic.Ram[file & 0b0111_1111];
+            tempRLF = (tempRLF << 1) | ((pic.Ram[3] & 1) == 1 ? 1 : 0);
+            if ((tempRLF & 256) == 256)
+            {
+                setCarryFlag(pic);
+            }
+            else
+            {
+                clearCarryFlag(pic);
+            }
+            tempRLF &= 255;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempRLF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempRLF;
+            }
+        }
+
+        public static void RRF(int file, Pic pic)
+        {
+            int tempRRF = pic.Ram[file & 0b0111_1111];
+            tempRRF = (tempRRF >> 1) | ((pic.Ram[3] & 1) == 1 ? 128 : 0);
+            if ((pic.Ram[file & 0b0111_1111] & 1) == 1)
+            {
+                setCarryFlag(pic);
+            }
+            else
+            {
+                clearCarryFlag(pic);
+            }
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempRRF;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempRRF;
+            }
+        }
+
 
 
 
