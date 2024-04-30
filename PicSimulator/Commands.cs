@@ -442,6 +442,31 @@ namespace PicSimulator
             }
         }
 
+        public static void DECFSZ(int file, Pic pic)
+        {
+            int tempDECFSZ = pic.Ram[file & 0b0111_1111] - 1;
+            if (tempDECFSZ == 0)
+            {
+                setZeroFlag(pic);
+            }
+            else
+            {
+                clearZeroFlag(pic);
+            }
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempDECFSZ;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempDECFSZ;
+            }
+            if (tempDECFSZ == 0)
+            {
+                pic.PCL++;
+            }
+        }
+
 
 
 
