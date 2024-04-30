@@ -295,12 +295,16 @@ namespace PicSimulator
         private void CodeTimerFormat()
         {
             var tmp = ((4/(AusgewaehlteQuarzfrequenzInt * 1e6))*CodeTimer);
-            if(tmp >= 1e3)
-                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
             if(tmp >= 1)
-                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
+            else if(tmp >= 1e-1)
+                CodeTimerString = (tmp * 1e3).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+            else if(tmp >= 1e-2)
+                CodeTimerString = (tmp * 1e3).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+            else if(tmp >= 1e-3)
+                CodeTimerString = (tmp * 1e3).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
             else
-                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " µs";
+                CodeTimerString = (tmp * 1e6).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " µs";
         }
 
         private string dateiPfad;

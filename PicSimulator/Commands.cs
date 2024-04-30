@@ -13,6 +13,7 @@ namespace PicSimulator
         public static void MOVLW(int literal, Pic pic)
         {
             pic.WReg = literal;
+            pic.CodeTimer++;
         }
         public static void ANDLW(int literal, Pic pic)
         {
@@ -25,6 +26,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void IORLW(int literal, Pic pic)
         {
@@ -37,6 +39,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void SUBLW(int literal, Pic pic)
         {
@@ -67,6 +70,7 @@ namespace PicSimulator
                 setDigitCarryFlag(pic);
             }
             pic.WReg &= tempSUBLW;
+            pic.CodeTimer++;
         }
         public static void XORLW(int literal, Pic pic)
         {
@@ -79,6 +83,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void ADDLW(int literal, Pic pic)
         {
@@ -107,11 +112,13 @@ namespace PicSimulator
             {
                 clearDigitCarryFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void GOTO(int literal, Pic pic)
         {
             pic.PCL &= 0b1111_1000_0000_0000;
             pic.PCL += literal;
+            pic.CodeTimer += 2;
         }
         public static void CALL(int literal, Pic pic)
         {
@@ -120,6 +127,7 @@ namespace PicSimulator
             if(pic.StackPointer > 7)
                 pic.StackPointer = 0;
             GOTO(literal, pic);
+            //Codetimer wird in GOTO() erhöht
         }
         public static void RETURN(Pic pic)
         {
@@ -127,14 +135,17 @@ namespace PicSimulator
             if (pic.StackPointer < 0)
                 pic.StackPointer = 7;
             pic.PCL = pic.Stack[pic.StackPointer];
+            pic.CodeTimer += 2;
         }
         public static void RETLW(int literal, Pic pic)
         {
             pic.WReg = literal;
             RETURN(pic);
+            //Codetimer wird in RETURN() erhöht
         }
-        public static void NOP()
+        public static void NOP(Pic pic)
         {
+            pic.CodeTimer++;
         }
         public static void MOVWF(int file, Pic pic)
         {
