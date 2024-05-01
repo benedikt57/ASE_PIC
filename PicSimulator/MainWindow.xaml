@@ -10,6 +10,7 @@
     <Window.Resources>
         <local:BooleanToBrushConverter x:Key="BooleanToBrushConverter"/>
         <local:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
+        <local:InOutToBoolConverter x:Key="InOutToBoolConverter"/>
         <!-- Hier wird der Konverter als Ressource deklariert -->
     </Window.Resources>
     <DockPanel>
@@ -44,7 +45,7 @@
                 <ColumnDefinition Width="200px"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -142,7 +143,7 @@
             </ListBox>
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding TestString}"/>
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
-            <DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True" Width="185">
+            <!--<DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True" Width="185">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7"  ></DataGridTextColumn>
@@ -156,13 +157,16 @@
                 </DataGrid.Columns>
 
 
-                <!--<TextBlock Text="0"></TextBlock>-->
+                --><!--<TextBlock Text="0"></TextBlock>--><!--
 
 
 
-            </DataGrid>
+            </DataGrid>-->
+            <StackPanel Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="1" Margin="5,0,5,0">
+                <my:InOutputGrid/>
+            </StackPanel>
             <!--2.Output Register-->
-            <DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,50,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True">
+            <!--<DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,50,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="RA"></DataGridTextColumn>
                     <DataGridTextColumn Header="7" ></DataGridTextColumn>
@@ -174,21 +178,7 @@
                     <DataGridTextColumn Header="1" ></DataGridTextColumn>
                     <DataGridTextColumn Header="0" ></DataGridTextColumn>
                 </DataGrid.Columns>
-            </DataGrid>
-            <!--3.Output Register-->
-            <DataGrid x:Name="ThirdOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,100,0,0" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True" Grid.RowSpan="2">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="RA"></DataGridTextColumn>
-                    <DataGridTextColumn Header="7" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="6" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="5" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="4" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="3" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="2" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="1" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="0" ></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="5,10,0,2" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Height="18" Text="Quarzfrequenz: "/>
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="95,10,0,2" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="18" Text="{Binding AusgewaehlteQuarzfrequenz}"/>
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="5,30,0,2" Grid.Row="1" TextWrapping="Wrap" Text="ProgrammTimer:" VerticalAlignment="Top" Width="90"/>

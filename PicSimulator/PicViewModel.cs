@@ -26,6 +26,7 @@ namespace PicSimulator
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
             StepCommand = new RelayCommand(_ => StepButton());
             StartCommand = new RelayCommand(_ => StartButton());
+            InputCommand = new RelayCommand(parameter => InputButton(parameter));
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -55,6 +56,8 @@ namespace PicSimulator
             {
                 ram = value;
                 OnPropertyChanged(nameof(Ram));
+                OnPropertyChanged(nameof(InOutA));
+                OnPropertyChanged(nameof(WertA));
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
@@ -71,6 +74,30 @@ namespace PicSimulator
                 Ram[130] = Ram[2];
                 OnPropertyChanged(nameof(Ram));
                 OnPropertyChanged(nameof(PCL));
+            }
+        }
+        public ObservableCollection<string> InOutA
+        {
+            get
+            {
+                ObservableCollection<string> inOut = new ObservableCollection<string>();
+                for (int i = 0; i < 8; i++)
+                {
+                    inOut.Add((Ram[0x85] & (1 << i)) == 0 ? "Out" : "In");
+                }
+                return inOut;
+            }
+        }
+        public ObservableCollection<int> WertA
+        {
+            get
+            {
+                ObservableCollection<int> wert = new ObservableCollection<int>();
+                for (int i = 0; i < 8; i++)
+                {
+                    wert.Add((Ram[0x5] & (1 << i)) == 0 ? 0 : 1);
+                }
+                return wert;
             }
         }
         public int CarryBit
@@ -142,6 +169,16 @@ namespace PicSimulator
                     StepButton();
                 }
             });
+        }
+        public ICommand InputCommand { get; }
+        public void InputButton(object parameter)
+        {
+            if (parameter is string str)
+            {
+                int index = int.Parse(str.Substring(3));
+                Ram[0x5] ^= 1 << index;
+                Ram = Ram;
+            }
         }
 
         //PropertyChanged

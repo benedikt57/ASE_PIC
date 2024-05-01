@@ -98,6 +98,7 @@ namespace PicSimulator
 
         public Pic()
         {
+            Ram[0x85] = 0xFF;
         }
         public void LoadFile()
         {
