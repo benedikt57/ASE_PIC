@@ -500,21 +500,23 @@ namespace PicSimulator
             }
             if (tempINCFSZ == 0)
             {
-                //Fehler er skippt nicht!!!
-                //Es wird 
                 pic.PCL++;
                 NOP(pic);
             }
             pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
         }
 
-        public static void BCF(int file, int bit, Pic pic)
+        public static void BCF(int arg, Pic pic)
         {
+            int file = arg & 0b0111_1111;
+            int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             clearBit(bit, file, pic);
             pic.CodeTimer++;
         }
-        public static void BSF(int file, int bit, Pic pic)
+        public static void BSF(int arg, Pic pic)
         {
+            int file = arg & 0b0111_1111;
+            int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             setBit(bit, file, pic);
             pic.CodeTimer++;
         }

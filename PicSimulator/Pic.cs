@@ -199,16 +199,8 @@ namespace PicSimulator
         }
         private void Decode(int code)
         {
-            //erste 2 Bit Maskieren
-            int opcode = code & 0b0111_0000_0000_0000;
-            switch (opcode)
-            {
-                case 0b0100_0000_0000_0000:
-                    //Commands.BSF(code & 0b0000_0111_1111_1111, this);
-                    return;
-            }
-            //ertse 3 Bit Maskieren
-            opcode = code & 0b0011_1000_0000_0000;
+            //erste 3 Bit Maskieren
+            int opcode = code & 0b0011_1000_0000_0000;
             switch (opcode)
             {
                 case 0b0010_1000_0000_0000:
@@ -216,6 +208,17 @@ namespace PicSimulator
                     return;
                 case 0b0010_0000_0000_0000:
                     Commands.CALL(code & 0b0000_0111_1111_1111, this);
+                    return;
+            }
+            //erste 4 Bit Maskieren
+            opcode = code & 0b0011_1100_0000_0000;
+            switch (opcode)
+            {
+                case 0b0001_0100_0000_0000:
+                    Commands.BSF(code & 0b0000_0011_1111_1111, this);
+                    return;
+                case 0b0001_0000_0000_0000:
+                    Commands.BCF(code & 0b0000_0011_1111_1111, this);
                     return;
             }
             //erste 6 Bit Maskieren
