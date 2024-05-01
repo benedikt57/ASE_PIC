@@ -179,7 +179,7 @@ namespace PicSimulator
                 MessageBox.Show(ex.Message);
             }
         }
-        public void Step()
+        public bool Step()
         {
             do
             {
@@ -187,10 +187,15 @@ namespace PicSimulator
                 activLine++;
                 if(activLine >= Code.Count)
                     activLine = 0;
-                Code[activLine].IsHighlighted = true;
             } while (Code[activLine].ProgAdrress != PCL);
             PCL++;
+            Code[activLine].IsHighlighted = true;
             Decode(Code[activLine].HexCode);
+            if (Code[activLine].Breakpoint)
+            {
+                return false;
+            }
+            return true;
         }
         private void Decode(int code)
         {

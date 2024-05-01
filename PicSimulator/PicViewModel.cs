@@ -34,7 +34,7 @@ namespace PicSimulator
         {
             OnPropertyChanged(e.PropertyName);
         }
-        private bool started = false;
+        public bool started = false;
 
         //Variablen
         private ObservableCollection<CodeLine> code;
@@ -123,7 +123,7 @@ namespace PicSimulator
         public ICommand StepCommand { get; }
         public void StepButton()
         {
-            pic.Step();
+            started = pic.Step();
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;

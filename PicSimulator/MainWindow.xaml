@@ -9,6 +9,7 @@
         Title="MainWindow" Height="800" Width="1200">
     <Window.Resources>
         <local:BooleanToBrushConverter x:Key="BooleanToBrushConverter"/>
+        <local:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
         <!-- Hier wird der Konverter als Ressource deklariert -->
     </Window.Resources>
     <DockPanel>
@@ -133,7 +134,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding Breakpoint}"/>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding Breakpoint}" Visibility="{Binding HexCode, Converter={StaticResource NumberToVisibilityConverter}}"/>
                             <TextBlock Text="{Binding Code}" Grid.Column="2" FontFamily="Courier New" Margin="5 0 0 0" Background="{Binding IsHighlighted, Converter={StaticResource BooleanToBrushConverter}}"/>
                         </Grid>
                     </DataTemplate>
