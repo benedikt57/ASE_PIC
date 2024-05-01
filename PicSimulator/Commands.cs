@@ -467,6 +467,25 @@ namespace PicSimulator
             }
         }
 
+        public static void INCFSZ(int file, Pic pic)
+        {
+            int tempINCFSZ = pic.Ram[file & 0b0111_1111] + 1;
+            if ((file & 0b1000_0000) == 0)
+            {
+                pic.WReg = tempINCFSZ;
+            }
+            else
+            {
+                pic.Ram[file & 0b0111_1111] = tempINCFSZ;
+            }
+            if (tempINCFSZ == 0)
+            {
+                //Fehler er skippt nicht!!!
+                //Es wird 
+                pic.PCL++;
+            }
+        }
+
 
 
 
