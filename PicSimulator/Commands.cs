@@ -489,7 +489,7 @@ namespace PicSimulator
 
         public static void INCFSZ(int file, Pic pic)
         {
-            int tempINCFSZ = pic.Ram[file & 0b0111_1111] + 1;
+            int tempINCFSZ = (pic.Ram[file & 0b0111_1111] + 1) & 255;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempINCFSZ;
@@ -506,6 +506,17 @@ namespace PicSimulator
                 NOP(pic);
             }
             pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
+        }
+
+        public static void BCF(int file, int bit, Pic pic)
+        {
+            clearBit(bit, file, pic);
+            pic.CodeTimer++;
+        }
+        public static void BSF(int file, int bit, Pic pic)
+        {
+            setBit(bit, file, pic);
+            pic.CodeTimer++;
         }
 
 

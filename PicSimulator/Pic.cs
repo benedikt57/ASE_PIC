@@ -199,8 +199,16 @@ namespace PicSimulator
         }
         private void Decode(int code)
         {
+            //erste 2 Bit Maskieren
+            int opcode = code & 0b0111_0000_0000_0000;
+            switch (opcode)
+            {
+                case 0b0100_0000_0000_0000:
+                    //Commands.BSF(code & 0b0000_0111_1111_1111, this);
+                    return;
+            }
             //ertse 3 Bit Maskieren
-            int opcode = code & 0b0011_1000_0000_0000;
+            opcode = code & 0b0011_1000_0000_0000;
             switch (opcode)
             {
                 case 0b0010_1000_0000_0000:
@@ -304,139 +312,6 @@ namespace PicSimulator
                     return;
             }
         }
-
-
-        //private void Decode(int code)
-        //{
-        //    //erste 6 Bit Maskieren
-        //    int opcode = code & 0b0011_1111_0000_0000;
-        //    switch (opcode)
-        //    {
-        //        case 0b0011_0000_0000_0000:
-        //            Commands.MOVLW(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0111_0000_0000:
-        //            Commands.ADDWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0101_0000_0000:
-        //            Commands.ANDWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0001_0000_0000:
-        //            Commands.CLRF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0001_0000_0000:
-        //            Commands.CLRW(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1001_0000_0000:
-        //            Commands.COMF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0011_0000_0000:
-        //            Commands.DECF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1011_0000_0000:
-        //            Commands.DECFSZ(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 2; //1(2)
-        //            return;
-        //        case 0b00_1010_0000_0000:
-        //            Commands.INCF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1111_0000_0000:
-        //            Commands.INCFSZ(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 2; //1(2)
-        //            return;
-        //        case 0b00_0100_0000_0000:
-        //            Commands.IORWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1000_0000_0000:
-        //            Commands.MOVF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0000_1000_0000:
-        //            Commands.MOVWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0000_0000_0000:
-        //            Commands.NOP(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1101_0000_0000:
-        //            Commands.RLF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1100_0000_0000:
-        //            Commands.RRF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0010_0000_0000:
-        //            Commands.SUBWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_1110_0000_0000:
-        //            Commands.SWAPF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-        //        case 0b00_0110_0000_0000:
-        //            Commands.XORWF(code & 0b0000_0000_1111_1111, this);
-        //            CodeTimer = CodeTimer + 1;
-        //            return;
-
-        //         default:
-        //            return;
-        //            }
-
-
-                    //            Alle Befehle die ich gefunden habe:                       Hier Hinten mit den Zeiten
-                    //    //BYTE-ORIENTED FILE REGISTER OPERATIONS         
-                    //{"ADDWF", "00 0111 dfff ffff"},                       Zeit:1
-                    //{"ANDWF", "00 0101 dfff ffff"},                       Zeit: 1
-                    //{ "CLRF", "00 0001 1fff ffff "},                      Zeit: 1
-                    //{ "CLRW", "00 0001 oxxx xxxx"},                       Zeit: 1
-                    //{ "COMF", "00 1001 dfff ffff"},                       Zeit: 1
-                    //{ "DECF", "00 0011 dfff ffff"},                       Zeit: 1
-                    //{ "DECFSZ", "00 1011 dfff ffff"},                     Zeit: 1(2)
-                    //{ "INCF", "00 1010 dfff ffff"},                       Zeit: 1
-                    //{ "INCFSZ", "00 1111 dfff ffff"},                     Zeit: 1(2)
-                    //{ "IORWF", "00 0100 dfff ffff"},                      Zeit: 1
-                    //{ "MOVF", "00 1000 dfff ffff"},                       Zeit: 1
-                    //{ "MOVWF", "00 000 1fff ffff"},                       Zeit: 1
-                    //{ "NOP", "00 0000 0xx0 0000"},                        Zeit: 1
-                    //{ "RLF", "00 1101 dfff ffff"},                        Zeit: 1
-                    //{ "RRF", "00 1100 dfff ffff"},                        Zeit: 1
-                    //{ "SUBWF", "00 0010 dfff ffff"},                      Zeit: 1
-                    //{ "SWAPF", "00 1110 dfff ffff"},                      Zeit: 1
-                    //{ "XORWF", "00 0110 dfff ffff"},                      Zeit: 1
-                    //                                                      Zeit: 1
-                    ////BIT-ORIENTED FILE REGISTER OPERATIONS               Zeit:1
-                    //{ "BCF", "01 00bb bfff ffff"},                        Zeit: 1
-                    //{ "BSF", "01 01bb bfff ffff"},                        Zeit: 1
-                    //{ "BTFSC", "01 10bb bfff ffff"},                      Zeit: 1(2)
-                    //{ "BTFSS", "01 11bb bfff ffff"},                      Zeit: 1(2)
-                    //                                                      Zeit: 1
-                    ////Literal and control operation                       Zeit:1
-                    //{ "ADDLW", "11 111x kkkk kkkk"},                      Zeit: 1
-                    //{ "ANDLW", "11 1001 kkkk kkkk"},                      Zeit: 1
-                    //{ "CALL", "10 0kkk kkkk kkkk"},                       Zeit: 2
-                    //{ "CLRWDT", "00 0000 0110 0100"},                     Zeit: 1
-                    //{ "GOTO", "10 1kkkk kkkk kkkk"},                      Zeit: 2
-                    //{ "IORLW", "11 1000 kkkk kkkk" },                     Zeit: 1
-                    //{ "MOVLW", "11 00xx kkkk kkkk" },                     Zeit: 1
-                    //{ "RETFIE", "00 0000 0000 1001" },                    Zeit: 2
-                    //{ "RETLW", "11 01xx kkkk kkkk" },                     Zeit: 2
-                    //{ "RETURN", "00 0000 0000 1000" },                    Zeit: 2
-                    //{ "SLEEP", "00 0000 0110 0011" },                     Zeit: 1
-                    //{ "SUBLW", "11 110x kkkk kkkk" },                     Zeit: 1
-                    //{ "XORLW", "11 1010 kkkk kkkk" },                     Zeit: 1
-
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;
