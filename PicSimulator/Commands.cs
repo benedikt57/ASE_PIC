@@ -150,6 +150,7 @@ namespace PicSimulator
         public static void MOVWF(int file, Pic pic)
         {
             writeByte(pic.WReg, file, pic);
+            pic.CodeTimer++;
         }
         public static void ADDWF(int file, Pic pic)
         {
@@ -186,6 +187,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempADDWF;
             }
+            pic.CodeTimer++;
         }
         public static void ANDWF(int file, Pic pic)
         {
@@ -206,18 +208,14 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempANDWF;
             }
+            pic.CodeTimer++;
         }
         public static void CLRF(int file, Pic pic)
         {
             pic.Ram[file & 0b0111_1111] = 0;
             setZeroFlag(pic);
+            pic.CodeTimer++;
         }
-
-        //public static void CLRW(Pic pic)
-        //{
-        //    pic.WReg = 0;
-        //    setZeroFlag(pic);
-        //}
 
         public static void COMF(int file, Pic pic)
         {
@@ -239,6 +237,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempCOMF;
             }
+            pic.CodeTimer++;
         }
         public static void DECF(int file, Pic pic)
         {
@@ -259,6 +258,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempDECF;
             }
+            pic.CodeTimer++;
         }
         public static void INCF(int file, Pic pic)
         {
@@ -279,7 +279,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-
+            pic.CodeTimer++;
         }
 
         public static void MOVF(int file, Pic pic)
@@ -302,7 +302,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-
+            pic.CodeTimer++;
         }
         public static void IORWF(int file, Pic pic)
         {
@@ -323,6 +323,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void SUBWF(int file, Pic pic)
         {
@@ -360,6 +361,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempSUBWF;
             }
+            pic.CodeTimer++;
         }
         public static void SWAPF(int file, Pic pic)
         {
@@ -381,6 +383,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void XORWF(int file, Pic pic)
         {
@@ -401,11 +404,13 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
+            pic.CodeTimer++;
         }
         public static void CLRW(int file, Pic pic)
         {
             pic.WReg = 0;
             setZeroFlag(pic);
+            pic.CodeTimer++;
         }
 
         public static void RLF(int file, Pic pic)
@@ -429,6 +434,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempRLF;
             }
+            pic.CodeTimer++;
         }
 
         public static void RRF(int file, Pic pic)
@@ -451,6 +457,7 @@ namespace PicSimulator
             {
                 pic.Ram[file & 0b0111_1111] = tempRRF;
             }
+            pic.CodeTimer++;
         }
 
         public static void DECFSZ(int file, Pic pic)
@@ -459,6 +466,7 @@ namespace PicSimulator
             if (tempDECFSZ == 0)
             {
                 setZeroFlag(pic);
+                NOP(pic);
             }
             else
             {
@@ -476,6 +484,7 @@ namespace PicSimulator
             {
                 pic.PCL++;
             }
+            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei DECFSZ ein NOP() ausgeführt wird
         }
 
         public static void INCFSZ(int file, Pic pic)
@@ -494,7 +503,9 @@ namespace PicSimulator
                 //Fehler er skippt nicht!!!
                 //Es wird 
                 pic.PCL++;
+                NOP(pic);
             }
+            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
         }
 
 
