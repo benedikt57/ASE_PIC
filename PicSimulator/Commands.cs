@@ -520,6 +520,28 @@ namespace PicSimulator
             setBit(bit, file, pic);
             pic.CodeTimer++;
         }
+        public static void BTFSC(int arg, Pic pic)
+        {
+            int file = arg & 0b0111_1111;
+            int bit = (arg & 0b0000_0011_1000_0000) >> 7;
+            if ((pic.Ram[file] & (1 << bit)) == 0)
+            {
+                pic.PCL++;
+                NOP(pic);
+            }
+            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei BTFSC ein NOP() ausgeführt wird
+        }
+        public static void BTFSS(int arg, Pic pic)
+        {
+            int file = arg & 0b0111_1111;
+            int bit = (arg & 0b0000_0011_1000_0000) >> 7;
+            if ((pic.Ram[file] & (1 << bit)) != 0)
+            {
+                pic.PCL++;
+                NOP(pic);
+            }
+            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei BTFSS ein NOP() ausgeführt wird
+        }
 
 
 

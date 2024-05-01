@@ -220,6 +220,12 @@ namespace PicSimulator
                 case 0b0001_0000_0000_0000:
                     Commands.BCF(code & 0b0000_0011_1111_1111, this);
                     return;
+                case 0b0001_1100_0000_0000:
+                    Commands.BTFSS(code & 0b0000_0011_1111_1111, this);
+                    return;
+                case 0b0001_1000_0000_0000:
+                    Commands.BTFSC(code & 0b0000_0011_1111_1111, this);
+                    return;
             }
             //erste 6 Bit Maskieren
             opcode = code & 0b0011_1111_0000_0000;
