@@ -265,6 +265,18 @@ namespace PicSimulator
                 case 0b0000_0110_0000_0000:
                     Commands.XORWF(code & 0b0000_0000_1111_1111, this);
                     return;
+                case 0b0000_1101_0000_0000:
+                    Commands.RLF(code & 0b0000_0000_1111_1111, this);
+                    return;
+                case 0b0000_1100_0000_0000:
+                    Commands.RRF(code & 0b0000_0000_1111_1111, this);
+                    return;
+                case 0b0000_1011_0000_0000:
+                    Commands.DECFSZ(code & 0b0000_0000_1111_1111, this);
+                    return;
+                case 0b0000_1111_0000_0000:
+                    Commands.INCFSZ(code & 0b0000_0000_1111_1111, this);
+                    return;
             }
             //erste 7 Bit Maskieren
             opcode = code & 0b0011_1111_1000_0000;
