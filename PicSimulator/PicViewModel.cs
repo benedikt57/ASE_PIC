@@ -150,7 +150,8 @@ namespace PicSimulator
         public ICommand StepCommand { get; }
         public void StepButton()
         {
-            started = pic.Step();
+            if(!pic.Step() && started)
+                started = false;
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
