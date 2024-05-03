@@ -61,6 +61,7 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
+                //OnPropertyChanged(nameof(Stack));
             }
         }
         private int pcl;
