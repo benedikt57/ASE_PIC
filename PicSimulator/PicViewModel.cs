@@ -61,7 +61,6 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
-                //OnPropertyChanged(nameof(Stack));
             }
         }
         private int[] stack = new int[8];
