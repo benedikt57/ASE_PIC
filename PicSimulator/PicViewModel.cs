@@ -64,6 +64,16 @@ namespace PicSimulator
                 //OnPropertyChanged(nameof(Stack));
             }
         }
+        private int[] stack = new int[8];
+        public int[] Stack
+        {
+            get { return stack; }
+            set
+            {
+                stack = value;
+                OnPropertyChanged(nameof(Stack));
+            }
+        }
         private int pcl;
         public int PCL
         {
@@ -151,7 +161,8 @@ namespace PicSimulator
         public ICommand StepCommand { get; }
         public void StepButton()
         {
-            started = pic.Step();
+            if(!pic.Step() && started)
+                started = false;
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
