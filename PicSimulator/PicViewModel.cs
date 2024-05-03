@@ -235,6 +235,28 @@ namespace PicSimulator
             return false;
         }
 
+        private bool _is032MHzChecked;
+        public bool Is032MHzChecked
+        {
+            get { return _is032MHzChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    Is4MHzChecked = false;
+                    Is8MHzChecked = false;
+                    Is16MHzChecked = false;
+                }
+                _is032MHzChecked = value;
+                if (value)
+                {
+                    AusgewaehlteQuarzfrequenz = "32 KHz";
+                    AusgewaehlteQuarzfrequenzInt = (int)0.032;
+                }
+                OnPropertyChanged("Is032MHzChecked");
+            }
+        }
+
         private bool _is4MHzChecked;
         public bool Is4MHzChecked
         {
@@ -243,6 +265,7 @@ namespace PicSimulator
             {
                 if (value == true)
                 {
+                    Is032MHzChecked = false;
                     Is8MHzChecked = false;
                     Is16MHzChecked = false;
                 }
@@ -264,6 +287,7 @@ namespace PicSimulator
             {
                 if (value == true)
                 {
+                    Is032MHzChecked = false;
                     Is4MHzChecked = false;
                     Is16MHzChecked = false;
                 }
@@ -285,6 +309,7 @@ namespace PicSimulator
             {
                 if (value == true)
                 {
+                    Is032MHzChecked = false;
                     Is4MHzChecked = false;
                     Is8MHzChecked = false;
                 }

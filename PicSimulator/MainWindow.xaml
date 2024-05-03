@@ -20,6 +20,7 @@
             </MenuItem>
             <MenuItem Header="Einstellung">
                 <MenuItem Header="Quarzfrequenz">
+                    <MenuItem Header="32 KHz" IsCheckable="True" IsChecked="{Binding Is032MHzChecked}"/>
                     <MenuItem Header="4 MHz" IsCheckable="True" IsChecked="{Binding Is4MHzChecked}"/>
                     <MenuItem Header="8 MHz" IsCheckable="True" IsChecked="{Binding Is8MHzChecked}"/>
                     <MenuItem Header="16 MHz" IsCheckable="True" IsChecked="{Binding Is16MHzChecked}"/>
