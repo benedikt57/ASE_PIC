@@ -63,6 +63,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(ZeroBit));
             }
         }
+        private int[] stack = new int[8];
+        public int[] Stack
+        {
+            get { return stack; }
+            set
+            {
+                stack = value;
+                OnPropertyChanged(nameof(Stack));
+            }
+        }
         private int pcl;
         public int PCL
         {
