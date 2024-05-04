@@ -13,7 +13,7 @@ namespace PicSimulator
         public static void MOVLW(int literal, Pic pic)
         {
             pic.WReg = literal;
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void ANDLW(int literal, Pic pic)
         {
@@ -26,7 +26,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void IORLW(int literal, Pic pic)
         {
@@ -39,7 +39,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void SUBLW(int literal, Pic pic)
         {
@@ -70,7 +70,7 @@ namespace PicSimulator
                 setDigitCarryFlag(pic);
             }
             pic.WReg &= tempSUBLW;
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void XORLW(int literal, Pic pic)
         {
@@ -83,7 +83,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void ADDLW(int literal, Pic pic)
         {
@@ -112,7 +112,7 @@ namespace PicSimulator
             {
                 clearDigitCarryFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void GOTO(int literal, Pic pic)
         {
@@ -145,12 +145,12 @@ namespace PicSimulator
         }
         public static void NOP(Pic pic)
         {
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void MOVWF(int file, Pic pic)
         {
             writeByte(pic.WReg, file, pic);
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void ADDWF(int file, Pic pic)
         {
@@ -187,7 +187,7 @@ namespace PicSimulator
             {
                 writeByte(tempADDWF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void ANDWF(int file, Pic pic)
         {
@@ -208,13 +208,13 @@ namespace PicSimulator
             {
                 writeByte(tempANDWF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void CLRF(int file, Pic pic)
         {
             writeByte(0, file & 0b0111_1111, pic);
             setZeroFlag(pic);
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
 
         public static void COMF(int file, Pic pic)
@@ -237,7 +237,7 @@ namespace PicSimulator
             {
                 writeByte(tempCOMF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void DECF(int file, Pic pic)
         {
@@ -258,7 +258,7 @@ namespace PicSimulator
             {
                 writeByte(tempDECF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void INCF(int file, Pic pic)
         {
@@ -279,7 +279,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
 
         public static void MOVF(int file, Pic pic)
@@ -302,7 +302,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void IORWF(int file, Pic pic)
         {
@@ -323,7 +323,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void SUBWF(int file, Pic pic)
         {
@@ -361,7 +361,7 @@ namespace PicSimulator
             {
                 writeByte(tempSUBWF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void SWAPF(int file, Pic pic)
         {
@@ -383,7 +383,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void XORWF(int file, Pic pic)
         {
@@ -404,13 +404,13 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void CLRW(int file, Pic pic)
         {
             pic.WReg = 0;
             setZeroFlag(pic);
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
 
         public static void RLF(int file, Pic pic)
@@ -434,7 +434,7 @@ namespace PicSimulator
             {
                 writeByte(tempRLF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
 
         public static void RRF(int file, Pic pic)
@@ -457,7 +457,7 @@ namespace PicSimulator
             {
                 writeByte(tempRRF, file & 0b0111_1111, pic);
             }
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
 
         public static void DECFSZ(int file, Pic pic)
@@ -484,7 +484,7 @@ namespace PicSimulator
             {
                 pic.PCL++;
             }
-            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei DECFSZ ein NOP() ausgeführt wird
+            IncTimer(pic); //Timer wird nur um 1 erhöht da bei DECFSZ ein NOP() ausgeführt wird
         }
 
         public static void INCFSZ(int file, Pic pic)
@@ -503,7 +503,7 @@ namespace PicSimulator
                 pic.PCL++;
                 NOP(pic);
             }
-            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
+            IncTimer(pic); //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
         }
 
         public static void BCF(int arg, Pic pic)
@@ -511,14 +511,14 @@ namespace PicSimulator
             int file = arg & 0b0111_1111;
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             clearBit(bit, file, pic);
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void BSF(int arg, Pic pic)
         {
             int file = arg & 0b0111_1111;
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             setBit(bit, file, pic);
-            pic.CodeTimer++;
+            IncTimer(pic);
         }
         public static void BTFSC(int arg, Pic pic)
         {
@@ -529,7 +529,7 @@ namespace PicSimulator
                 pic.PCL++;
                 NOP(pic);
             }
-            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei BTFSC ein NOP() ausgeführt wird
+            IncTimer(pic); //Timer wird nur um 1 erhöht da bei BTFSC ein NOP() ausgeführt wird
         }
         public static void BTFSS(int arg, Pic pic)
         {
@@ -540,7 +540,7 @@ namespace PicSimulator
                 pic.PCL++;
                 NOP(pic);
             }
-            pic.CodeTimer++; //Timer wird nur um 1 erhöht da bei BTFSS ein NOP() ausgeführt wird
+            IncTimer(pic); //Timer wird nur um 1 erhöht da bei BTFSS ein NOP() ausgeführt wird
         }
 
 
@@ -576,6 +576,9 @@ namespace PicSimulator
                     pic.Ram[address] |= 1 << bit;
                     pic.Ram[address - 128] = pic.Ram[address];
                     break;
+                case 1:
+                    pic.Ram[address] |= 1 << (bit - 1);   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
+                    break;
                 default:
                     pic.Ram[address] |= 1 << bit;
                     break;
@@ -609,6 +612,9 @@ namespace PicSimulator
                     pic.Ram[address] &= ~(1 << bit);
                     pic.Ram[address - 128] = pic.Ram[address];
                     break;
+                case 1:
+                    pic.Ram[address] &= ~(1 << (bit - 1));   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
+                    break;
                 default:
                     pic.Ram[address] &= ~(1 << bit);
                     break;
@@ -641,6 +647,9 @@ namespace PicSimulator
                 case 0x8B:
                     pic.Ram[address] = value;
                     pic.Ram[address - 128] = pic.Ram[address];
+                    break;
+                case 1:
+                    pic.Ram[address] = value - 1;   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
                     break;
                 default:
                     pic.Ram[address] = value;
@@ -686,6 +695,11 @@ namespace PicSimulator
         {
             pic.Ram[3] &= 253;
             pic.Ram[131] = pic.Ram[3];
+        }
+        private static void IncTimer(Pic pic)
+        {
+            pic.CodeTimer++;
+            pic.Ram[1] = (pic.Ram[1] + 1) & 255;
         }
 
     }
