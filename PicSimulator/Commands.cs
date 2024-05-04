@@ -556,7 +556,30 @@ namespace PicSimulator
             }
             else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
-            pic.Ram[address] |= 1 << bit;
+            switch (address)
+            {
+                case 0:
+                case 2:
+                case 3:
+                case 4:
+                case 10:
+                case 11:
+                    pic.Ram[address] |= 1 << bit;
+                    pic.Ram[address + 128] = pic.Ram[address];
+                    break;
+                case 0x80:
+                case 0x82:
+                case 0x83:
+                case 0x84:
+                case 0x8A:
+                case 0x8B:
+                    pic.Ram[address] |= 1 << bit;
+                    pic.Ram[address - 128] = pic.Ram[address];
+                    break;
+                default:
+                    pic.Ram[address] |= 1 << bit;
+                    break;
+            }
         }
         private static void clearBit(int bit, int address, Pic pic)
         {
@@ -566,7 +589,30 @@ namespace PicSimulator
             }
             else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
-            pic.Ram[address] &= ~(1 << bit);
+            switch (address)
+            {
+                case 0:
+                case 2:
+                case 3:
+                case 4:
+                case 10:
+                case 11:
+                    pic.Ram[address] &= ~(1 << bit);
+                    pic.Ram[address + 128] = pic.Ram[address];
+                    break;
+                case 0x80:
+                case 0x82:
+                case 0x83:
+                case 0x84:
+                case 0x8A:
+                case 0x8B:
+                    pic.Ram[address] &= ~(1 << bit);
+                    pic.Ram[address - 128] = pic.Ram[address];
+                    break;
+                default:
+                    pic.Ram[address] &= ~(1 << bit);
+                    break;
+            }
         }
         private static void writeByte(int value, int address, Pic pic)
         {
@@ -576,7 +622,30 @@ namespace PicSimulator
             }
             else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
-            pic.Ram[address] = value;
+            switch (address)
+            {
+                case 0:
+                case 2:
+                case 3:
+                case 4:
+                case 10:
+                case 11:
+                    pic.Ram[address] = value;
+                    pic.Ram[address + 128] = pic.Ram[address];
+                    break;
+                case 0x80:
+                case 0x82:
+                case 0x83:
+                case 0x84:
+                case 0x8A:
+                case 0x8B:
+                    pic.Ram[address] = value;
+                    pic.Ram[address - 128] = pic.Ram[address];
+                    break;
+                default:
+                    pic.Ram[address] = value;
+                    break;
+            }
         }
         private static int readByte(int address, Pic pic)
         {
