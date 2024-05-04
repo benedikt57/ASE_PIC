@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,7 +59,8 @@
     <Compile Include="BooleanToBrushConverter.cs" />
     <Compile Include="CodeLine.cs" />
     <Compile Include="Commands.cs" />
-    <Compile Include="InOutputGrid.cs" />
+    <Compile Include="InOutputGridA.cs" />
+    <Compile Include="InOutputGridB.cs" />
     <Compile Include="InOutToBoolConverter.cs" />
     <Compile Include="NumberToVisibilityConverter.cs" />
     <Compile Include="Pic.cs" />

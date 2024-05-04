@@ -9,9 +9,9 @@ using System.Windows.Controls;
 
 namespace CustomControl
 {
-    public class InOutputGrid : UserControl
+    public class InOutputGridA : UserControl
     {
-        public InOutputGrid()
+        public InOutputGridA()
         {
             var myGrid = new Grid();
             // Definition der Spalten
@@ -43,6 +43,13 @@ namespace CustomControl
                 Grid.SetColumn(txt, i + 1);
                 myGrid.Children.Add(txt);
             }
+            var port = new TextBlock { Text = "PortA" };
+            port.Background = System.Windows.Media.Brushes.DarkGray;
+            port.TextAlignment = System.Windows.TextAlignment.Center;
+            Grid.SetRow(port, 0);
+            Grid.SetColumn(port, 0);
+            myGrid.Children.Add(port);
+
             var inOut = new TextBlock { Text = "In/Out" };
             inOut.Background = System.Windows.Media.Brushes.LightGray;
             inOut.TextAlignment = System.Windows.TextAlignment.Center;
@@ -87,7 +94,7 @@ namespace CustomControl
                                        {
                                            Converter = new InOutToBoolConverter()
                                        });
-                btn.CommandParameter = "btn" + (7-i);
+                btn.CommandParameter = "btnA" + (7-i);
                 btn.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                 btn.Background = System.Windows.Media.Brushes.White;
                 btn.BorderBrush = System.Windows.Media.Brushes.Transparent;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,6 +28,7 @@ namespace PicSimulator
             StepCommand = new RelayCommand(_ => StepButton());
             StartCommand = new RelayCommand(_ => StartButton());
             InputCommand = new RelayCommand(parameter => InputButton(parameter));
+            RamEditCommand = new RelayCommand(parameter => RamEdit(parameter));
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -58,6 +60,8 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Ram));
                 OnPropertyChanged(nameof(InOutA));
                 OnPropertyChanged(nameof(WertA));
+                OnPropertyChanged(nameof(InOutB));
+                OnPropertyChanged(nameof(WertB));
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
@@ -106,6 +110,30 @@ namespace PicSimulator
                 for (int i = 0; i < 8; i++)
                 {
                     wert.Add((Ram[0x5] & (1 << i)) == 0 ? 0 : 1);
+                }
+                return wert;
+            }
+        }
+        public ObservableCollection<string> InOutB
+        {
+            get
+            {
+                ObservableCollection<string> inOut = new ObservableCollection<string>();
+                for (int i = 0; i < 8; i++)
+                {
+                    inOut.Add((Ram[0x86] & (1 << i)) == 0 ? "Out" : "In");
+                }
+                return inOut;
+            }
+        }
+        public ObservableCollection<int> WertB
+        {
+            get
+            {
+                ObservableCollection<int> wert = new ObservableCollection<int>();
+                for (int i = 0; i < 8; i++)
+                {
+                    wert.Add((Ram[0x6] & (1 << i)) == 0 ? 0 : 1);
                 }
                 return wert;
             }
@@ -186,9 +214,31 @@ namespace PicSimulator
         {
             if (parameter is string str)
             {
-                int index = int.Parse(str.Substring(3));
-                Ram[0x5] ^= 1 << index;
+                var port = str.Substring(3, 1);
+                int index = int.Parse(str.Substring(4));
+                if (port == "A")
+                    Ram[0x5] ^= 1 << index;
+                else if (port == "B")
+                    Ram[0x6] ^= 1 << index;
                 Ram = Ram;
+            }
+        }
+        public ICommand RamEditCommand { get; }
+        public void RamEdit(object parameter)
+        {
+            if (parameter is string str)
+            {
+                int index = int.Parse(str.Substring(3));
+                string input = Interaction.InputBox("Wert für Register " + index, "Input", Ram[index].ToString("X"));
+                if (int.TryParse(input, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int result))
+                {
+                    if (result > 255)
+                        result = 255;
+                    if (result < 0)
+                        result = 0;
+                    Ram[index] = result;
+                    Ram = Ram;
+                }
             }
         }
 

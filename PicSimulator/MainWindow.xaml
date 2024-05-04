@@ -165,7 +165,8 @@
 
             </DataGrid>-->
             <StackPanel Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="1" Margin="5,0,5,0">
-                <my:InOutputGrid/>
+                <my:InOutputGridA Margin="0, 0, 0, 5"/>
+                <my:InOutputGridB/>
             </StackPanel>
             <!--2.Output Register-->
             <!--<DataGrid x:Name="SecondOutputRegister" AutoGenerateColumns="False" Grid.Column="2" Margin="0,50,0,0" Grid.RowSpan="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="185" HorizontalAlignment="Right" IsManipulationEnabled="True">
