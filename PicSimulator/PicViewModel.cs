@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,6 +28,7 @@ namespace PicSimulator
             StepCommand = new RelayCommand(_ => StepButton());
             StartCommand = new RelayCommand(_ => StartButton());
             InputCommand = new RelayCommand(parameter => InputButton(parameter));
+            RamEditCommand = new RelayCommand(parameter => RamEdit(parameter));
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -189,6 +191,24 @@ namespace PicSimulator
                 int index = int.Parse(str.Substring(3));
                 Ram[0x5] ^= 1 << index;
                 Ram = Ram;
+            }
+        }
+        public ICommand RamEditCommand { get; }
+        public void RamEdit(object parameter)
+        {
+            if (parameter is string str)
+            {
+                int index = int.Parse(str.Substring(3));
+                string input = Interaction.InputBox("Wert für Register " + index, "Input", Ram[index].ToString("X"));
+                if (int.TryParse(input, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int result))
+                {
+                    if (result > 255)
+                        result = 255;
+                    if (result < 0)
+                        result = 0;
+                    Ram[index] = result;
+                    Ram = Ram;
+                }
             }
         }
 
