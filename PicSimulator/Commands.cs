@@ -41,6 +41,7 @@ namespace PicSimulator
             }
             IncTimer(pic);
         }
+ 
         public static void SUBLW(int literal, Pic pic)
         {
             int tempSUBLW = literal - pic.WReg;
@@ -61,7 +62,7 @@ namespace PicSimulator
             {
                 setCarryFlag(pic);
             }
-            if ((pic.WReg & 15) + (literal & 15) > 15)
+            if ((pic.WReg & 15) - (literal & 15) < 0)
             {
                 clearDigitCarryFlag(pic);
             }
@@ -69,7 +70,7 @@ namespace PicSimulator
             {
                 setDigitCarryFlag(pic);
             }
-            pic.WReg &= tempSUBLW;
+            pic.WReg = tempSUBLW;
             IncTimer(pic);
         }
         public static void XORLW(int literal, Pic pic)
