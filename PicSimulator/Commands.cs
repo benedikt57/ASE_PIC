@@ -154,7 +154,7 @@ namespace PicSimulator
         }
         public static void ADDWF(int file, Pic pic)
         {
-            int tempADDWF = pic.WReg + pic.Ram[file & 0b0111_1111];
+            int tempADDWF = pic.WReg + readByte(file & 0b0111_1111, pic);
             if (tempADDWF == 0)
             {
                 setZeroFlag(pic);
@@ -171,7 +171,7 @@ namespace PicSimulator
             {
                 clearCarryFlag(pic);
             }
-            if ((pic.WReg & 15) + (pic.Ram[file & 0b0111_1111] & 15) > 15)
+            if ((pic.WReg & 15) + (readByte(file & 0b0111_1111, pic) & 15) > 15)
             {
                 setDigitCarryFlag(pic);
             }
@@ -185,13 +185,13 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempADDWF;
+                writeByte(tempADDWF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
         public static void ANDWF(int file, Pic pic)
         {
-            int tempANDWF = pic.WReg & pic.Ram[file & 0b0111_1111];
+            int tempANDWF = pic.WReg & readByte(file & 0b0111_1111, pic);
             if (tempANDWF == 0)
             {
                 setZeroFlag(pic);
@@ -206,20 +206,20 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempANDWF;
+                writeByte(tempANDWF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
         public static void CLRF(int file, Pic pic)
         {
-            pic.Ram[file & 0b0111_1111] = 0;
+            writeByte(0, file & 0b0111_1111, pic);
             setZeroFlag(pic);
             pic.CodeTimer++;
         }
 
         public static void COMF(int file, Pic pic)
         {
-            int tempCOMF = pic.Ram[file & 0b0111_1111];
+            int tempCOMF = readByte(file & 0b0111_1111, pic);                                                                                     
             tempCOMF = ~tempCOMF;
             if (tempCOMF == 0)
             {
@@ -235,13 +235,13 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempCOMF;
+                writeByte(tempCOMF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
         public static void DECF(int file, Pic pic)
         {
-            int tempDECF = pic.Ram[file & 0b0111_1111] - 1;
+            int tempDECF = readByte(file & 0b0111_1111, pic) - 1;
             if (tempDECF == 0)
             {
                 setZeroFlag(pic);
@@ -256,20 +256,20 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempDECF;
+                writeByte(tempDECF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
         public static void INCF(int file, Pic pic)
         {
-            int tempINCF = pic.Ram[file & 0b0111_1111] + 1;
+            int tempINCF = readByte(file & 0b0111_1111, pic) + 1;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempINCF;
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempINCF;
+                writeByte(tempINCF, file & 0b0111_1111, pic);                      
             }
             if (tempINCF == 0)
             {
@@ -284,14 +284,14 @@ namespace PicSimulator
 
         public static void MOVF(int file, Pic pic)
         {
-            int tempMOVF = pic.Ram[file & 0b0111_1111];
+            int tempMOVF = readByte(file & 0b0111_1111, pic);
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempMOVF;
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempMOVF;
+                writeByte(tempMOVF, file & 0b0111_1111, pic);
             }
 
             if (tempMOVF == 0)
@@ -306,14 +306,14 @@ namespace PicSimulator
         }
         public static void IORWF(int file, Pic pic)
         {
-            int tempIORWF = pic.Ram[file & 0b0111_1111] | pic.WReg;
+            int tempIORWF = readByte(file & 0b0111_1111, pic) | pic.WReg;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempIORWF;
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempIORWF;
+                writeByte(tempIORWF, file & 0b0111_1111, pic);
             }
             if (tempIORWF == 0)
             {
@@ -327,7 +327,7 @@ namespace PicSimulator
         }
         public static void SUBWF(int file, Pic pic)
         {
-            int tempSUBWF = pic.Ram[file & 0b0111_1111] - pic.WReg;
+            int tempSUBWF = readByte(file & 0b0111_1111, pic) - pic.WReg;
             if (tempSUBWF == 0)
             {
                 setZeroFlag(pic);
@@ -344,7 +344,7 @@ namespace PicSimulator
             {
                 setCarryFlag(pic);
             }
-            if ((pic.Ram[file & 0b0111_1111] & 15) - (pic.WReg & 15) < 0)
+            if ((readByte(file & 0b0111_1111, pic) & 15) - (pic.WReg & 15) < 0)
             {
                 clearDigitCarryFlag(pic);
             }
@@ -359,13 +359,13 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempSUBWF;
+                writeByte(tempSUBWF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
         public static void SWAPF(int file, Pic pic)
         {
-            int tempSWAPF = pic.Ram[file & 0b0111_1111];
+            int tempSWAPF = readByte(file & 0b0111_1111, pic);
             tempSWAPF = ((tempSWAPF & 0b0000_1111) << 4) | ((tempSWAPF & 0b1111_0000) >> 4);
             if ((file & 0b1000_0000) == 0)
             {
@@ -373,7 +373,7 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempSWAPF;
+                writeByte(tempSWAPF, file & 0b0111_1111, pic);
             }
             if (tempSWAPF == 0)
             {
@@ -387,14 +387,14 @@ namespace PicSimulator
         }
         public static void XORWF(int file, Pic pic)
         {
-            int tempXORWF = pic.Ram[file & 0b0111_1111] ^ pic.WReg;
+            int tempXORWF = readByte(file & 0b0111_1111, pic) ^ pic.WReg;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempXORWF;
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempXORWF;
+                writeByte(tempXORWF, file & 0b0111_1111, pic);
             }
             if (tempXORWF == 0)
             {
@@ -415,7 +415,7 @@ namespace PicSimulator
 
         public static void RLF(int file, Pic pic)
         {
-            int tempRLF = pic.Ram[file & 0b0111_1111];
+            int tempRLF = readByte(file & 0b0111_1111, pic);
             tempRLF = (tempRLF << 1) | ((pic.Ram[3] & 1) == 1 ? 1 : 0);
             if ((tempRLF & 256) == 256)
             {
@@ -432,16 +432,16 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempRLF;
+                writeByte(tempRLF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
 
         public static void RRF(int file, Pic pic)
         {
-            int tempRRF = pic.Ram[file & 0b0111_1111];
+            int tempRRF = readByte(file & 0b0111_1111, pic);
             tempRRF = (tempRRF >> 1) | ((pic.Ram[3] & 1) == 1 ? 128 : 0);
-            if ((pic.Ram[file & 0b0111_1111] & 1) == 1)
+            if ((readByte(file & 0b0111_1111, pic) & 1) == 1)
             {
                 setCarryFlag(pic);
             }
@@ -455,14 +455,14 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempRRF;
+                writeByte(tempRRF, file & 0b0111_1111, pic);
             }
             pic.CodeTimer++;
         }
 
         public static void DECFSZ(int file, Pic pic)
         {
-            int tempDECFSZ = pic.Ram[file & 0b0111_1111] - 1;
+            int tempDECFSZ = readByte(file & 0b0111_1111, pic) - 1;
             if (tempDECFSZ == 0)
             {
                 setZeroFlag(pic);
@@ -478,7 +478,7 @@ namespace PicSimulator
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempDECFSZ;
+                writeByte(tempDECFSZ, file & 0b0111_1111, pic);
             }
             if (tempDECFSZ == 0)
             {
@@ -489,14 +489,14 @@ namespace PicSimulator
 
         public static void INCFSZ(int file, Pic pic)
         {
-            int tempINCFSZ = (pic.Ram[file & 0b0111_1111] + 1) & 255;
+            int tempINCFSZ = (readByte(file & 0b0111_1111, pic) + 1) & 255;
             if ((file & 0b1000_0000) == 0)
             {
                 pic.WReg = tempINCFSZ;
             }
             else
             {
-                pic.Ram[file & 0b0111_1111] = tempINCFSZ;
+                writeByte(tempINCFSZ, file & 0b0111_1111, pic);
             }
             if (tempINCFSZ == 0)
             {
@@ -524,7 +524,7 @@ namespace PicSimulator
         {
             int file = arg & 0b0111_1111;
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
-            if ((pic.Ram[file] & (1 << bit)) == 0)
+            if ((readByte(file, pic) & (1 << bit)) == 0)
             {
                 pic.PCL++;
                 NOP(pic);
@@ -535,7 +535,7 @@ namespace PicSimulator
         {
             int file = arg & 0b0111_1111;
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
-            if ((pic.Ram[file] & (1 << bit)) != 0)
+            if ((readByte(file, pic) & (1 << bit)) != 0)
             {
                 pic.PCL++;
                 NOP(pic);
@@ -550,21 +550,43 @@ namespace PicSimulator
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
-            if ((pic.Ram[3] & 32) == 32)
+            if(address == 0)
+            {
+                address = pic.Ram[4];
+            }
+            else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
             pic.Ram[address] |= 1 << bit;
         }
         private static void clearBit(int bit, int address, Pic pic)
         {
-            if ((pic.Ram[3] & 32) == 32)
+            if (address == 0)
+            {
+                address = pic.Ram[4];
+            }
+            else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
             pic.Ram[address] &= ~(1 << bit);
         }
         private static void writeByte(int value, int address, Pic pic)
         {
-            if ((pic.Ram[3] & 32) == 32)
+            if(address == 0)
+            {
+                address = pic.Ram[4];
+            }
+            else if ((pic.Ram[3] & 32) == 32)
                 address += 128;
             pic.Ram[address] = value;
+        }
+        private static int readByte(int address, Pic pic)
+        {
+            if (address == 0)
+            {
+                address = pic.Ram[4];
+            }
+            else if ((pic.Ram[3] & 32) == 32)
+                address += 128;
+            return pic.Ram[address];
         }
         private static void setZeroFlag(Pic pic)
         {
