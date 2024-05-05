@@ -119,7 +119,8 @@ namespace PicSimulator
         {
             pic.PCL &= 0b1111_1000_0000_0000;
             pic.PCL += literal;
-            pic.CodeTimer += 2;
+            IncTimer(pic);
+            IncTimer(pic);
         }
         public static void CALL(int literal, Pic pic)
         {
@@ -136,7 +137,8 @@ namespace PicSimulator
             if (pic.StackPointer < 0)
                 pic.StackPointer = 7;
             pic.PCL = pic.Stack[pic.StackPointer];
-            pic.CodeTimer += 2;
+            IncTimer(pic);
+            IncTimer(pic);
         }
         public static void RETLW(int literal, Pic pic)
         {
@@ -578,7 +580,8 @@ namespace PicSimulator
                     pic.Ram[address - 128] = pic.Ram[address];
                     break;
                 case 1:
-                    pic.Ram[address] |= 1 << (bit - 1);   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
+                    pic.Ram[address] |= 1 << bit;
+                    PicTimer = 0;
                     break;
                 default:
                     pic.Ram[address] |= 1 << bit;
@@ -614,7 +617,8 @@ namespace PicSimulator
                     pic.Ram[address - 128] = pic.Ram[address];
                     break;
                 case 1:
-                    pic.Ram[address] &= ~(1 << (bit - 1));   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
+                    pic.Ram[address] &= ~(1 << bit);
+                    PicTimer = 0;
                     break;
                 default:
                     pic.Ram[address] &= ~(1 << bit);
@@ -623,7 +627,8 @@ namespace PicSimulator
         }
         private static void writeByte(int value, int address, Pic pic)
         {
-            if(address == 0)
+            value &= 255;
+            if (address == 0)
             {
                 address = pic.Ram[4];
             }
@@ -650,7 +655,8 @@ namespace PicSimulator
                     pic.Ram[address - 128] = pic.Ram[address];
                     break;
                 case 1:
-                    pic.Ram[address] = value - 1;   //Timer wird um 1 verringert, weil er durch IncTimer() wieder um 1 erhöht wird
+                    pic.Ram[address] = value;
+                    PicTimer = 0;
                     break;
                 default:
                     pic.Ram[address] = value;
@@ -697,10 +703,58 @@ namespace PicSimulator
             pic.Ram[3] &= 253;
             pic.Ram[131] = pic.Ram[3];
         }
+        public static void Reset(Pic pic)
+        {
+            pic.CodeTimer = 0;
+            PicTimer = 0;
+        }
+        private static int PicTimer;
         private static void IncTimer(Pic pic)
         {
             pic.CodeTimer++;
-            pic.Ram[1] = (pic.Ram[1] + 1) & 255;
+            if ((pic.Ram[0x81] & 32) == 0)
+            {
+                PicTimer++;
+            }
+            if ((pic.Ram[0x81] & 8) == 0)
+            {
+                switch(pic.Ram[0x81] & 7)
+                {
+                    case 0:
+                        if(PicTimer % 2 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 1:
+                        if (PicTimer % 4 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 2:
+                        if (PicTimer % 8 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 3:
+                        if (PicTimer % 16 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 4:
+                        if (PicTimer % 32 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 5:
+                        if (PicTimer % 64 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 6:
+                        if (PicTimer % 128 == 0)
+                            pic.Ram[1]++;
+                        break;
+                    case 7:
+                        if (PicTimer % 256 == 0)
+                            pic.Ram[1]++;
+                        break;
+                }
+            }
+            pic.Ram[1] &= 255;
         }
 
     }
