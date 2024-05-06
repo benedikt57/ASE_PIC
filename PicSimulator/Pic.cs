@@ -53,7 +53,7 @@ namespace PicSimulator
             get { return stackPointer; }
             set
             {
-                StackPointer = value;
+                stackPointer = value;
                 OnPropertyChanged(nameof(StackPointer));
             }
         }
