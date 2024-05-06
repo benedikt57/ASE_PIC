@@ -715,7 +715,11 @@ namespace PicSimulator
             if ((pic.Ram[0x81] & 32) == 0)
             {
                 PicTimer++;
+                setTimer(pic);
             }
+        }
+        private static void setTimer(Pic pic)
+        {
             if ((pic.Ram[0x81] & 8) == 0)
             {
                 switch(pic.Ram[0x81] & 7)
@@ -754,7 +758,24 @@ namespace PicSimulator
                         break;
                 }
             }
+            else
+            {
+                pic.Ram[1]++;
+            }
             pic.Ram[1] &= 255;
+        }
+        private static int lastRA4;
+        public static void RA4(Pic pic)
+        {
+            if ((pic.Ram[0x81] & 32) == 32)
+            {
+                if ((pic.Ram[5] & 16) == 0 && lastRA4 == 1)
+                {
+                PicTimer++;
+                setTimer(pic);
+                }
+            }
+            lastRA4 = (pic.Ram[5] & 16) >> 4;
         }
 
     }
