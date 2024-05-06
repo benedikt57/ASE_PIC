@@ -204,6 +204,7 @@ namespace PicSimulator
             PCL++;
             Code[activLine].IsHighlighted = true;
             Decode(Code[activLine].HexCode);
+            Commands.RA4(this);
             if (Code[activLine].Breakpoint)
             {
                 return false;
