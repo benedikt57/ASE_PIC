@@ -47,7 +47,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Stack));
             }
         }
-        public int StackPointer { get; set; }
+        private int stackPointer;
+        public int StackPointer
+        {
+            get { return stackPointer; }
+            set
+            {
+                StackPointer = value;
+                OnPropertyChanged(nameof(StackPointer));
+            }
+        }
         private int pcl;
         public int PCL
         {
