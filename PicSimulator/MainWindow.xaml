@@ -97,8 +97,8 @@
                     <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True"/>
                     <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[5], StringFormat='0000'}"/>
 
-                    <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True" Text="StackPtr:"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding StackPointer}"/>
                     <TextBox Grid.Row="4" Grid.Column="2" IsReadOnly="True"/>
                     <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[4], StringFormat='0000'}"/>
 
