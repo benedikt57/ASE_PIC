@@ -77,6 +77,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Stack));
             }
         }
+        private int stackPointer;
+        public int StackPointer
+        {
+            get { return stackPointer; }
+            set
+            {
+                StackPointer = value;
+                OnPropertyChanged(nameof(StackPointer));
+            }
+        }
         private int pcl;
         public int PCL
         {
@@ -194,6 +204,8 @@ namespace PicSimulator
             WReg = pic.WReg;
             Code = pic.Code;
             CodeTimer = pic.CodeTimer;
+            Stack = pic.Stack;
+            StackPointer = pic.StackPointer;
             CodeTimerFormat();
             OnPropertyChanged(nameof(Code));
         }
@@ -264,6 +276,12 @@ namespace PicSimulator
                     break;
                 case nameof(pic.CodeTimer):
                     CodeTimer = pic.CodeTimer;
+                    break;
+                case nameof(pic.Stack):
+                    Stack = pic.Stack;
+                    break;
+                case nameof(pic.StackPointer):
+                    StackPointer = pic.StackPointer;
                     break;
             }
         }

@@ -47,7 +47,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Stack));
             }
         }
-        public int StackPointer { get; set; }
+        private int stackPointer;
+        public int StackPointer
+        {
+            get { return stackPointer; }
+            set
+            {
+                StackPointer = value;
+                OnPropertyChanged(nameof(StackPointer));
+            }
+        }
         private int pcl;
         public int PCL
         {
@@ -98,6 +107,7 @@ namespace PicSimulator
 
         public Pic()
         {
+            Ram[0x81] = 0xFF;
             Ram[0x85] = 0xFF;
             Ram[0x86] = 0xFF;
         }
@@ -105,6 +115,7 @@ namespace PicSimulator
         {
             Code.Clear();
             activLine = 0;
+            Commands.Reset(this);
             string filename = string.Empty;
             // Konfiguriere das Dialogfeld "Datei öffnen"
             var dialog = new OpenFileDialog();
