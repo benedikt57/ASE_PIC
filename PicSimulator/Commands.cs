@@ -46,7 +46,7 @@ namespace PicSimulator
         {
             int tempSUBLW = literal - pic.WReg;
             
-            if (pic.WReg == 0)
+            if (tempSUBLW == 0)
             {
                 setZeroFlag(pic);
             }
@@ -54,7 +54,7 @@ namespace PicSimulator
             {
                 clearZeroFlag(pic);
             }
-            if (pic.WReg < 0)
+            if (tempSUBLW < 0)
             {
                 clearCarryFlag(pic);
             }
@@ -62,7 +62,7 @@ namespace PicSimulator
             {
                 setCarryFlag(pic);
             }
-            if ((pic.WReg & 15) - (literal & 15) < 0)
+            if ((tempSUBLW & 15) - (literal & 15) > 15)
             {
                 clearDigitCarryFlag(pic);
             }
