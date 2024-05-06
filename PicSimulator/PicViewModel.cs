@@ -66,6 +66,7 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(CarryBit));
                 OnPropertyChanged(nameof(DCBit));
                 OnPropertyChanged(nameof(ZeroBit));
+                OnPropertyChanged(nameof(LED));
             }
         }
         private int[] stack = new int[8];
@@ -101,6 +102,65 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(PCL));
             }
         }
+
+        private bool _isPortAChecked;
+        public bool IsPortAChecked
+        {
+            get { return _isPortAChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    IsPortBChecked = false;
+                }
+                _isPortAChecked = value;
+                if (value)
+                {
+                    PortAuswahl = 5;
+                }
+                OnPropertyChanged("IsPortAChecked");
+            }
+        }
+
+        private bool _isPortBChecked;
+        public bool IsPortBChecked
+        {
+            get { return _isPortBChecked; }
+            set
+            {
+                if (value == true)
+                {
+                    IsPortAChecked = false;
+                }
+                _isPortBChecked = value;
+                if (value)
+                {
+                    PortAuswahl = 6;
+                }
+                OnPropertyChanged("IsPortBChecked");
+            }
+        }
+
+        private int portAuswahl = 6;
+        public int PortAuswahl
+        {
+            get => portAuswahl;
+            set
+            {
+                portAuswahl = value;
+                OnPropertyChanged(nameof(PortAuswahl));
+            }
+        }
+
+        public int LED
+        {
+            get
+            {
+                return Ram[PortAuswahl];
+            }
+        }
+
+
         public ObservableCollection<string> InOutA
         {
             get
@@ -478,6 +538,6 @@ namespace PicSimulator
         private string dateiPfad;
 
         public string DateiPfad { get => dateiPfad; set => SetProperty(ref dateiPfad, value); }
-
+        
     }
 }

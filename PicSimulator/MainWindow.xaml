@@ -27,6 +27,10 @@
                     <MenuItem Header="8 MHz" IsCheckable="True" IsChecked="{Binding Is8MHzChecked}"/>
                     <MenuItem Header="16 MHz" IsCheckable="True" IsChecked="{Binding Is16MHzChecked}"/>
                 </MenuItem>
+                <MenuItem Header="Portwahl">
+                    <MenuItem Header="Port A" IsCheckable="True" IsChecked="{Binding IsPortAChecked}"/>
+                    <MenuItem Header="Port B" IsCheckable="True" IsChecked="{Binding IsPortBChecked}"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <!--StatusBar-->
@@ -156,14 +160,14 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse Grid.Column="0" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=7}"/>
-                <Ellipse Grid.Column="1" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=6}"/>
-                <Ellipse Grid.Column="2" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=5}"/>
-                <Ellipse Grid.Column="3" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=4}"/>
-                <Ellipse Grid.Column="4" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=3}"/>
-                <Ellipse Grid.Column="5" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=2}"/>
-                <Ellipse Grid.Column="6" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=1}"/>
-                <Ellipse Grid.Column="7" Width="20" Height="20" Fill="{Binding Ram[5], Converter={StaticResource LEDArrayConverter}, ConverterParameter=0}"/>
+                <Ellipse Grid.Column="0" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=7}"/>
+                <Ellipse Grid.Column="1" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=6}"/>
+                <Ellipse Grid.Column="2" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=5}"/>
+                <Ellipse Grid.Column="3" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=4}"/>
+                <Ellipse Grid.Column="4" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=3}"/>
+                <Ellipse Grid.Column="5" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=2}"/>
+                <Ellipse Grid.Column="6" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=1}"/>
+                <Ellipse Grid.Column="7" Width="20" Height="20" Fill="{Binding LED, Converter={StaticResource LEDArrayConverter}, ConverterParameter=0}"/>
             </Grid>
             <!--Output Register  - Aufgeteilt in drei Einzelne Register-->
             <!--<DataGrid x:Name="OutputRegister" Grid.Column="2" Height="50" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Right" AutoGenerateColumns="False" RowBackground="Black" IsManipulationEnabled="True" Width="185">
