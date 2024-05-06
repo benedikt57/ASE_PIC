@@ -194,6 +194,7 @@ namespace PicSimulator
             WReg = pic.WReg;
             Code = pic.Code;
             CodeTimer = pic.CodeTimer;
+            Stack = pic.Stack;
             CodeTimerFormat();
             OnPropertyChanged(nameof(Code));
         }
@@ -264,6 +265,9 @@ namespace PicSimulator
                     break;
                 case nameof(pic.CodeTimer):
                     CodeTimer = pic.CodeTimer;
+                    break;
+                case nameof(pic.Stack):
+                    Stack = pic.Stack;
                     break;
             }
         }
