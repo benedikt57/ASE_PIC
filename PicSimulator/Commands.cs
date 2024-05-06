@@ -548,7 +548,44 @@ namespace PicSimulator
 
 
 
+        public static void PowerOnReset (Pic pic)
+        {
+            pic.WReg = 0;
+            pic.Ram[0x00] = 0;
+            pic.Ram[0x01] = 0;
+            pic.Ram[0x02] = 0x00;
+            pic.Ram[0x03] = 0b0001_1000;
+            pic.Ram[0x04] = 0;
+            pic.Ram[0x05] = 0;
+            pic.Ram[0x06] = 0;
+            pic.Ram[0x07] = 0; //7 gibt es nicht
+            pic.Ram[0x08] = 0;
+            pic.Ram[0x09] = 0;
+            pic.Ram[0x0A] = 0;
+            pic.Ram[0x0B] = 0;
+            pic.Ram[0x80] = 0;
+            pic.Ram[0x81] = 0b1111_1111;
+            pic.Ram[0x82] = 0;
+            pic.Ram[0x83] = 0b0001_1000;
+            pic.Ram[0x84] = 0;
+            pic.Ram[0x85] = 0b0001_1111;
+            pic.Ram[0x86] = 0b1111_1111;
+            pic.Ram[0x87] = 0; //87 gibt es nicht
+            pic.Ram[0x88] = 0;
+            pic.Ram[0x89] = 0;
+            pic.Ram[0x8A] = 0;
+            pic.Ram[0x8B] = 0;
+        }
 
+        public static void MCLR (Pic pic)
+        {
+
+        }
+
+        public static void WakeUpFromSleep (Pic pic)
+        {
+
+        }
 
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
