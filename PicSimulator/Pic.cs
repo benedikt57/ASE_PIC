@@ -204,7 +204,10 @@ namespace PicSimulator
             PCL++;
             Code[activLine].IsHighlighted = true;
             Decode(Code[activLine].HexCode);
-            Commands.RA4(this);
+            Commands.RA4(this); //RA4 prüfen um Timer zu zählen
+            Commands.RB0(this); //RB0 Flag setzten
+            Commands.PORTBINT(this); //PORTBINT Flag setzten
+            Commands.InterruptTest(this); //Interrupt prüfen
             if (Code[activLine].Breakpoint)
             {
                 return false;
@@ -329,6 +332,9 @@ namespace PicSimulator
             {
                 case 0b0000_0000_0000_1000:
                     Commands.RETURN(this);
+                    return;
+                case 0b0000_0000_0000_1001:
+                    Commands.RETFIE(this);
                     return;
                 case 0b0000_0000_0000_0000:
                     Commands.NOP(this);

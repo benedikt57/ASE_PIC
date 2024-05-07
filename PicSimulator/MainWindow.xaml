@@ -91,42 +91,42 @@
                     <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="Carry:"/>
                     <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding CarryBit, Mode=OneWay}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" IsReadOnly="True"  HorizontalAlignment="Center" Width="50" Text="{Binding Stack[7], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" IsReadOnly="True"  HorizontalAlignment="Center" Width="50" Text="{Binding Stack[7], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="DC:"/>
                     <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="{Binding DCBit, Mode=OneWay}"/>
                     <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[6], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[6], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="Zero:"/>
                     <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding ZeroBit, Mode=OneWay}"/>
                     <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[5], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[5], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True" Text="StackPtr:"/>
                     <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding StackPointer}"/>
                     <TextBox Grid.Row="4" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[4], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[4], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="5" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True"/>
                     <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="5" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[3], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="5" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[3], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="6" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True"/>
                     <TextBox Grid.Row="6" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="6" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[2], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="6" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[2], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="7" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True"/>
                     <TextBox Grid.Row="7" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="7" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[1], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="7" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[1], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True"/>
                     <TextBox Grid.Row="8" Grid.Column="1" IsReadOnly="True"/>
                     <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True"/>
-                    <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='0000'}"/>
+                    <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='{}{0:X4}h'}"/>
 
                 </Grid>
             </StackPanel>
