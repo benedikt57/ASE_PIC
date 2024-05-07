@@ -762,6 +762,8 @@ namespace PicSimulator
             {
                 pic.Ram[1]++;
             }
+            if (pic.Ram[1] > 255)
+                setBit(2, 0x0B, pic);
             pic.Ram[1] &= 255;
         }
         private static int lastRA4;
