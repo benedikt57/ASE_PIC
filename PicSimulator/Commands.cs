@@ -548,7 +548,96 @@ namespace PicSimulator
 
 
 
+        public static void PowerOnReset (Pic pic)
+        {
+            pic.WReg = 0;
+            pic.Ram[0x00] = 0;
+            pic.Ram[0x01] = 0;
+            pic.Ram[0x02] = 0x00;
+            pic.Ram[0x03] = 0b0001_1000;
+            pic.Ram[0x04] = 0;
+            pic.Ram[0x05] = 0;
+            pic.Ram[0x06] = 0;
+            pic.Ram[0x07] = 0; //7 gibt es nicht
+            pic.Ram[0x08] = 0;
+            pic.Ram[0x09] = 0;
+            pic.Ram[0x0A] = 0;
+            pic.Ram[0x0B] = 0;
+            pic.Ram[0x80] = 0;
+            pic.Ram[0x81] = 0b1111_1111;
+            pic.Ram[0x82] = 0;
+            pic.Ram[0x83] = 0b0001_1000;
+            pic.Ram[0x84] = 0;
+            pic.Ram[0x85] = 0b0001_1111;
+            pic.Ram[0x86] = 0b1111_1111;
+            pic.Ram[0x87] = 0; //87 gibt es nicht
+            pic.Ram[0x88] = 0;
+            pic.Ram[0x89] = 0;
+            pic.Ram[0x8A] = 0;
+            pic.Ram[0x8B] = 0;
+        }
 
+        public static void MCLR (Pic pic)
+        {
+            pic.WReg = pic.WReg;
+            pic.Ram[0x00] = 0;
+            pic.Ram[0x01] = pic.Ram[0x01];
+            pic.Ram[0x02] = 0x00; 
+            //pic.Ram[0x03] = 000q_uuuu; //Jonas
+            pic.Ram[0x04] = pic.Ram[0x04];
+            //pic.Ram[0x05] = 000u_uuuu; //Jonas
+            pic.Ram[0x06] = pic.Ram[0x06];
+            pic.Ram[0x07] = 0; //7 gibt es nicht
+            pic.Ram[0x08] = pic.Ram[0x08];
+            pic.Ram[0x09] = pic.Ram[0x09];
+            pic.Ram[0x0A] = 0b0000_0000;
+            //pic.Ram[0x0B] = 0000_000u; //Jonas
+            pic.Ram[0x80] = 0;
+            pic.Ram[0x81] = 0b1111_1111;
+            pic.Ram[0x82] = 0x00;
+            //pic.Ram[0x83] = 000q_quuu; //Jonas
+            pic.Ram[0x84] = pic.Ram[0x84];
+            pic.Ram[0x85] = 0b0001_1111;
+            pic.Ram[0x86] = 0b1111_1111;
+            pic.Ram[0x87] = 0; //87 gibt es nicht
+            //pic.Ram[0x88] = 0000_q000; //Jonas
+            pic.Ram[0x89] = 0b0000_0000;
+            pic.Ram[0x8A] = 0;
+            //pic.Ram[0x8B] = 0000_000u; //Jonas
+        }
+
+        public static void WakeUpFromSleep (Pic pic)
+        {
+            pic.WReg = pic.WReg;
+            pic.Ram[0x00] = 0;
+            pic.Ram[0x01] = pic.Ram[0x01];
+            //pic.Ram[0x02] = PC + 1; //Jonas
+            //pic.Ram[0x03] = uuuq_quuu; //Jonas
+            pic.Ram[0x04] = pic.Ram[0x04];
+            //pic.Ram[0x05] = 000u_uuuu; //Jonas
+            pic.Ram[0x06] = pic.Ram[0x06];
+            pic.Ram[0x07] = 0; //7 gibt es nicht
+            pic.Ram[0x08] = pic.Ram[0x08];
+            pic.Ram[0x09] = pic.Ram[0x09];
+            //pic.Ram[0x0A] = 000u_uuuu; //Jonas
+            pic.Ram[0x0B] = pic.Ram[0x0B];
+            pic.Ram[0x80] = 0;
+            pic.Ram[0x81] = pic.Ram[0x81];
+            //pic.Ram[0x82] = PC + 1; //Jonas
+            //pic.Ram[0x83] = uuuq_quuu; //Jonas
+            pic.Ram[0x84] = pic.Ram[0x84];
+            //pic.Ram[0x85] = 000u_uuuu; //Jonas
+            pic.Ram[0x86] = pic.Ram[0x86];
+            pic.Ram[0x87] = 0; //87 gibt es nicht
+            //pic.Ram[0x88] = 0000_uuuu; //Jonas
+            pic.Ram[0x89] = pic.Ram[0x89];
+            //pic.Ram[0x8A] = 000u_uuuu; //Jonas
+            pic.Ram[0x8B] = pic.Ram[0x8B];
+
+
+
+
+        }
 
         //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
