@@ -148,7 +148,7 @@ namespace PicSimulator
         }
         public static void RETFIE(Pic pic)
         {
-            pic.Ram[0x8B] |= 128;
+            setBit(7, 0x0B, pic);
             RETURN(pic);
             //Codetimer wird in RETURN() erhöht
         }
@@ -589,6 +589,18 @@ namespace PicSimulator
                     pic.Ram[address] |= 1 << bit;
                     PicTimer = 0;
                     break;
+                case 5:
+                    if ((pic.Ram[0x85] & (1 << bit)) == 0)
+                    {
+                        pic.Ram[address] |= 1 << bit;
+                    }
+                    break;
+                case 6:
+                    if ((pic.Ram[0x86] & (1 << bit)) == 0)
+                    {
+                        pic.Ram[address] |= 1 << bit;
+                    }
+                    break;
                 default:
                     pic.Ram[address] |= 1 << bit;
                     break;
@@ -626,10 +638,29 @@ namespace PicSimulator
                     pic.Ram[address] &= ~(1 << bit);
                     PicTimer = 0;
                     break;
+                case 5:
+                    if ((pic.Ram[0x85] & (1 << bit)) == 0)
+                    {
+                        pic.Ram[address] &= ~(1 << bit);
+                    }
+                    break;
+                case 6:
+                    if ((pic.Ram[0x86] & (1 << bit)) == 0)
+                    {
+                        pic.Ram[address] &= ~(1 << bit);
+                    }
+                    break;
                 default:
                     pic.Ram[address] &= ~(1 << bit);
                     break;
             }
+        }
+        private static void writeBit(int value, int bit, int address, Pic pic)
+        {
+            if (value == 0)
+                clearBit(bit, address, pic);
+            else
+                setBit(bit, address, pic);
         }
         private static void writeByte(int value, int address, Pic pic)
         {
@@ -663,6 +694,26 @@ namespace PicSimulator
                 case 1:
                     pic.Ram[address] = value;
                     PicTimer = 0;
+                    break;
+                case 5:
+                    writeBit(value & 1,        0, 5, pic);
+                    writeBit((value & 2) >> 1, 1, 5, pic);
+                    writeBit((value & 4) >> 2, 2, 5, pic);
+                    writeBit((value & 8) >> 3, 3, 5, pic);
+                    writeBit((value & 16) >> 4, 4, 5, pic);
+                    writeBit((value & 32) >> 5, 5, 5, pic);
+                    writeBit((value & 64) >> 6, 6, 5, pic);
+                    writeBit((value & 128) >> 7, 7, 5, pic);
+                    break;
+                case 6:
+                    writeBit(value & 1,        0, 6, pic);
+                    writeBit((value & 2) >> 1, 1, 6, pic);
+                    writeBit((value & 4) >> 2, 2, 6, pic);
+                    writeBit((value & 8) >> 3, 3, 6, pic);
+                    writeBit((value & 16) >> 4, 4, 6, pic);
+                    writeBit((value & 32) >> 5, 5, 6, pic);
+                    writeBit((value & 64) >> 6, 6, 6, pic);
+                    writeBit((value & 128) >> 7, 7, 6, pic);
                     break;
                 default:
                     pic.Ram[address] = value;
@@ -785,6 +836,31 @@ namespace PicSimulator
             }
             lastRA4 = (pic.Ram[5] & 16) >> 4;
         }
+        private static int lastRB0;
+        public static void RB0(Pic pic)
+        {
+            if ((pic.Ram[6] & 1) != lastRB0)
+            {
+                lastRB0 = pic.Ram[6] & 1;
+                if ((pic.Ram[0x81] & 64) == 64 && lastRB0 == 1
+                    || (pic.Ram[0x81] & 64) == 0 && lastRB0 == 0)
+                {
+                    setBit(1, 0x0B, pic);
+                }
+            }
+        }
+        private static int lastRB7_4;
+        public static void PORTBINT(Pic pic)
+        {
+            if ((pic.Ram[6] & 0xF0) != lastRB7_4)
+            {
+                lastRB7_4 = pic.Ram[6] & 0xF0;
+                if ((pic.Ram[0x81] & 8) == 8)
+                {
+                    setBit(0, 0x0B, pic);
+                }
+            }
+        }
         public static void InterruptTest(Pic pic)
         {
             if ((pic.Ram[0x8B] & 128) == 128) // GIE prüfen
@@ -793,7 +869,7 @@ namespace PicSimulator
                 {
                     if ((pic.Ram[0x8B] & 4) == 4) // TOIF prüfen
                     {
-                        pic.Ram[0x8B] &= 127; // GIE löschen
+                        clearBit(7, 0x0B, pic); // GIE löschen
                         pic.Stack[pic.StackPointer] = pic.PCL;
                         pic.StackPointer++;
                         if (pic.StackPointer > 7)
@@ -801,7 +877,30 @@ namespace PicSimulator
                         pic.PCL = 4;
                     }
                 }
-
+                if ((pic.Ram[0x8B] & 16) == 16) // INTE prüfen
+                {
+                    if ((pic.Ram[0x8B] & 2) == 2) // INTF prüfen
+                    {
+                        clearBit(7, 0x0B, pic); // GIE löschen
+                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.StackPointer++;
+                        if (pic.StackPointer > 7)
+                            pic.StackPointer = 0;
+                        pic.PCL = 4;
+                    }
+                }
+                if ((pic.Ram[0x8B] & 8) == 8) // RBIE prüfen
+                {
+                    if ((pic.Ram[0x8B] & 1) == 1) // RBIF prüfen
+                    {
+                        clearBit(7, 0x0B, pic); // GIE löschen
+                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.StackPointer++;
+                        if (pic.StackPointer > 7)
+                            pic.StackPointer = 0;
+                        pic.PCL = 4;
+                    }
+                }
             }
         }
 
