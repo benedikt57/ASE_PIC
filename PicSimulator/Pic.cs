@@ -205,6 +205,7 @@ namespace PicSimulator
             Code[activLine].IsHighlighted = true;
             Decode(Code[activLine].HexCode);
             Commands.RA4(this);
+            Commands.InterruptTest(this);
             if (Code[activLine].Breakpoint)
             {
                 return false;
@@ -329,6 +330,9 @@ namespace PicSimulator
             {
                 case 0b0000_0000_0000_1000:
                     Commands.RETURN(this);
+                    return;
+                case 0b0000_0000_0000_1001:
+                    Commands.RETFIE(this);
                     return;
                 case 0b0000_0000_0000_0000:
                     Commands.NOP(this);

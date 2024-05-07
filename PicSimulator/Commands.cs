@@ -146,6 +146,12 @@ namespace PicSimulator
             RETURN(pic);
             //Codetimer wird in RETURN() erhöht
         }
+        public static void RETFIE(Pic pic)
+        {
+            pic.Ram[0x8B] |= 128;
+            RETURN(pic);
+            //Codetimer wird in RETURN() erhöht
+        }
         public static void NOP(Pic pic)
         {
             IncTimer(pic);
@@ -778,6 +784,25 @@ namespace PicSimulator
                 }
             }
             lastRA4 = (pic.Ram[5] & 16) >> 4;
+        }
+        public static void InterruptTest(Pic pic)
+        {
+            if ((pic.Ram[0x8B] & 128) == 128) // GIE prüfen
+            {
+                if ((pic.Ram[0x8B] & 32) == 32) // TOIE prüfen
+                {
+                    if ((pic.Ram[0x8B] & 4) == 4) // TOIF prüfen
+                    {
+                        pic.Ram[0x8B] &= 127; // GIE löschen
+                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.StackPointer++;
+                        if (pic.StackPointer > 7)
+                            pic.StackPointer = 0;
+                        pic.PCL = 4;
+                    }
+                }
+
+            }
         }
 
     }
