@@ -13,6 +13,7 @@
         <local:InOutToBoolConverter x:Key="InOutToBoolConverter"/>
         <local:LEDArrayConverter x:Key="LEDArrayConverter"/>
         <local:StackPointerConverter x:Key="StackPointerConverter"/>
+        <local:StartButtonTextConverter x:Key="StartButtonTextConverter"/>
         <!-- Hier wird der Konverter als Ressource deklariert -->
     </Window.Resources>
     <DockPanel>
@@ -124,8 +125,8 @@
                     <TextBox Grid.Row="7" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=1}" TextAlignment="Right"/>
                     <TextBox Grid.Row="7" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[1], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="8" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True" Text="WDT"/>
+                    <CheckBox Grid.Row="8" Grid.Column="1"/>
                     <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=0}" TextAlignment="Right"/>
                     <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='{}{0:X4}h'}"/>
 
@@ -216,7 +217,7 @@
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="105,30,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding CodeTimerString}" VerticalAlignment="Top" Width="50"/>
 
             <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="3" Margin="5,307,5,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <Button DockPanel.Dock="Left" Content=" Start " Command="{Binding StartCommand}" Margin="10,2,10,2"/>
+                <Button DockPanel.Dock="Left" Content="{Binding Started, Converter={StaticResource StartButtonTextConverter}}" Command="{Binding StartCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Pause " Command="{Binding PauseCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Stop "  Command="{Binding StopCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Step "  Command="{Binding StepCommand}" Margin="10,2,10,2"/>

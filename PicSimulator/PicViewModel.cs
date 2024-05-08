@@ -38,7 +38,16 @@ namespace PicSimulator
         {
             OnPropertyChanged(e.PropertyName);
         }
-        public bool started = false;
+        private bool started = false;
+        public bool Started
+        {
+            get { return started; }
+            set
+            {
+                started = value;
+                OnPropertyChanged(nameof(Started));
+            }
+        }
 
         //Variablen
         private ObservableCollection<CodeLine> code;
@@ -259,8 +268,8 @@ namespace PicSimulator
         public ICommand StepCommand { get; }
         public void StepButton()
         {
-            if(!pic.Step() && started)
-                started = false;
+            if(!pic.Step() && Started)
+                Started = false;
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
@@ -273,10 +282,11 @@ namespace PicSimulator
         public ICommand StartCommand { get; }
         public async void StartButton()
         {
-            started = !started;
+            Started = !Started;
+            OnPropertyChanged(nameof(Started));
             await Task.Run(() =>
             { 
-                while (started)
+                while (Started)
                 {
                     StepButton();
                 }
