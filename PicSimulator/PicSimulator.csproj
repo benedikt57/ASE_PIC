@@ -67,6 +67,7 @@
     <Compile Include="RAMGrid.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="LEDArrayConverter.cs" />
+    <Compile Include="StackPointerConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
