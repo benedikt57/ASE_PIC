@@ -132,8 +132,18 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(WDTPrescaler));
             }
         }
+        private double ausgewaehlteQuarzfrequenzInt;
+        public double AusgewaehlteQuarzfrequenzInt
+        {
+            get => ausgewaehlteQuarzfrequenzInt;
+            set
+            {
+                ausgewaehlteQuarzfrequenzInt = value;
+                OnPropertyChanged(nameof(AusgewaehlteQuarzfrequenzInt));
+            }
+        }
 
-        
+
 
 
         public Pic()
@@ -248,6 +258,7 @@ namespace PicSimulator
             Commands.RA4(this); //RA4 prüfen um Timer zu zählen
             Commands.RB0(this); //RB0 Flag setzten
             Commands.PORTBINT(this); //PORTBINT Flag setzten
+            Commands.Watchdog(this); //Watchdog prüfen
             Commands.WakeUpTest(this);
             if (Code[activLine].Breakpoint)
             {

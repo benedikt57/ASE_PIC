@@ -679,8 +679,27 @@ namespace PicSimulator
                 pic.isSleeping = true;
             }
         }
+        public static void Watchdog(Pic pic)
+        {
+            var tmp = ((4 / (pic.AusgewaehlteQuarzfrequenzInt * 1e6)) * pic.WDTTimer);
+            setWDTprescaler(pic);
+            if(tmp >= (0.018 * pic.WDTPrescaler))
+            {
+                MessageBox.Show("Watchdog Timer Reset");
+                pic.WDTTimer = 0;
+                if (pic.isSleeping)
+                {
+                    WakeUpFromSleep(false, pic);
+                }
+                else
+                {
+                    MCLR(pic);
+                    clearBit(4, 0x03, pic);
+                    setBit(3, 0x03, pic);
+                }
+            }
+        }
 
-        //Hier müssen die ganzen Commands hin
         private static void setBit(int bit, int address, Pic pic)
         {
             if(address == 0)
@@ -786,15 +805,18 @@ namespace PicSimulator
             else
                 setBit(bit, address, pic);
         }
-        public static void writeByte(int value, int address, Pic pic)
+        public static void writeByte(int value, int address, Pic pic, bool checkbank = true)
         {
             value &= 255;
-            if (address == 0)
+            if (checkbank)
             {
-                address = pic.Ram[4];
+                if (address == 0)
+                {
+                    address = pic.Ram[4];
+                }
+                else if ((pic.Ram[3] & 32) == 32)
+                    address += 128; 
             }
-            else if ((pic.Ram[3] & 32) == 32)
-                address += 128;
             switch (address)
             {
                 case 0:
@@ -1060,6 +1082,43 @@ namespace PicSimulator
                         WakeUpFromSleep(true, pic);
                     }
                 }
+            }
+        }
+        private static void setWDTprescaler(Pic pic)
+        {
+            if ((pic.Ram[0x81] & 8) == 8)
+            {
+                switch (pic.Ram[0x81] & 7)
+                {
+                    case 0:
+                        pic.WDTPrescaler = 1;
+                        break;
+                    case 1:
+                        pic.WDTPrescaler = 2;
+                        break;
+                    case 2:
+                        pic.WDTPrescaler = 4;
+                        break;
+                    case 3:
+                        pic.WDTPrescaler = 8;
+                        break;
+                    case 4:
+                        pic.WDTPrescaler = 16;
+                        break;
+                    case 5:
+                        pic.WDTPrescaler = 32;
+                        break;
+                    case 6:
+                        pic.WDTPrescaler = 64;
+                        break;
+                    case 7:
+                        pic.WDTPrescaler = 128;
+                        break;
+                }
+            }
+            else
+            {
+                pic.WDTPrescaler = 1;
             }
         }
     }

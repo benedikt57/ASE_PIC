@@ -35,6 +35,9 @@ namespace PicSimulator
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
+            AusgewaehlteQuarzfrequenzInt = 4;
+
+            // Start View aktualisieren
         }
         private void Pic_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -290,6 +293,8 @@ namespace PicSimulator
         public void LoadFileButton()
         {
             pic = new Pic();
+            pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+            WDTActive = false;
             pic.LoadFile();
             Code = pic.Code;
             DateiPfad = pic.SourceFilePath;
@@ -362,7 +367,7 @@ namespace PicSimulator
                         result = 255;
                     if (result < 0)
                         result = 0;
-                    Commands.writeByte(result, index, pic);
+                    Commands.writeByte(result, index, pic, false);
                     Ram = pic.Ram;
                 }
             }
@@ -435,6 +440,7 @@ namespace PicSimulator
                 {
                     AusgewaehlteQuarzfrequenz = "32 KHz";
                     AusgewaehlteQuarzfrequenzInt = 0.032;
+                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
                 }
                 OnPropertyChanged("Is032MHzChecked");
             }
@@ -458,6 +464,7 @@ namespace PicSimulator
                 {
                     AusgewaehlteQuarzfrequenz = "1 MHz";
                     AusgewaehlteQuarzfrequenzInt = 1;
+                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
                 }
                 OnPropertyChanged("Is1MHzChecked");
             }
@@ -480,6 +487,7 @@ namespace PicSimulator
                 {
                     AusgewaehlteQuarzfrequenz = "4 MHz";
                     AusgewaehlteQuarzfrequenzInt = 4;
+                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
                 }
                 OnPropertyChanged("Is4MHzChecked");
             }
@@ -503,6 +511,7 @@ namespace PicSimulator
                 {
                     AusgewaehlteQuarzfrequenz = "8 MHz";
                     AusgewaehlteQuarzfrequenzInt = 8;
+                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
                 }
                 OnPropertyChanged("Is8MHzChecked");
             }
@@ -526,6 +535,7 @@ namespace PicSimulator
                 {
                     AusgewaehlteQuarzfrequenz = "16 MHz";
                     AusgewaehlteQuarzfrequenzInt = 16;
+                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
                 }
                 OnPropertyChanged("Is16MHzChecked");
             }
@@ -573,7 +583,7 @@ namespace PicSimulator
             
             }
         }
-        private string wdtTimerString;
+        private string wdtTimerString = "0";
         public string WDTTimerString
         {
             get { return wdtTimerString; }
