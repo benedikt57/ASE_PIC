@@ -620,44 +620,64 @@ namespace PicSimulator
             pic.Ram[0x8B] &= 0b0000_0001;
         }
 
-        public static void WakeUpFromSleep (Pic pic)
+        public static void WakeUpFromSleep (bool interrupt, Pic pic)
         {
+            pic.isSleeping = false;
             pic.WReg = pic.WReg;
             pic.Ram[0x00] = 0;
             pic.Ram[0x01] = pic.Ram[0x01];
-            //pic.Ram[0x02] = PC + 1; //Jonas
+            //pic.Ram[0x02] = PC + 1;
             //pic.Ram[0x03] = uuuq_quuu; //Jonas
+            if (interrupt)
+            {
+                setBit(4, 0x03, pic);
+                clearBit(3, 0x03, pic);
+            }
+            else
+            {
+                clearBit(4, 0x03, pic);
+                clearBit(3, 0x03, pic);
+            }
             pic.Ram[0x04] = pic.Ram[0x04];
-            //pic.Ram[0x05] = 000u_uuuu; //Jonas
+            pic.Ram[0x05] &= 0b0001_1111;
             pic.Ram[0x06] = pic.Ram[0x06];
             pic.Ram[0x07] = 0; //7 gibt es nicht
             pic.Ram[0x08] = pic.Ram[0x08];
             pic.Ram[0x09] = pic.Ram[0x09];
-            //pic.Ram[0x0A] = 000u_uuuu; //Jonas
+            pic.Ram[0x0A] &= 0b0001_1111;
             pic.Ram[0x0B] = pic.Ram[0x0B];
             pic.Ram[0x80] = 0;
             pic.Ram[0x81] = pic.Ram[0x81];
-            //pic.Ram[0x82] = PC + 1; //Jonas
+            //pic.Ram[0x82] = PC + 1;
             //pic.Ram[0x83] = uuuq_quuu; //Jonas
+            pic.Ram[0x83] = pic.Ram[0x03];
             pic.Ram[0x84] = pic.Ram[0x84];
-            //pic.Ram[0x85] = 000u_uuuu; //Jonas
+            pic.Ram[0x85] &= 0b0001_1111;
             pic.Ram[0x86] = pic.Ram[0x86];
             pic.Ram[0x87] = 0; //87 gibt es nicht
-            //pic.Ram[0x88] = 0000_uuuu; //Jonas
+            pic.Ram[0x88] &= 0b0000_1111;
             pic.Ram[0x89] = pic.Ram[0x89];
-            //pic.Ram[0x8A] = 000u_uuuu; //Jonas
+            pic.Ram[0x8A] &= 0b0001_1111;
             pic.Ram[0x8B] = pic.Ram[0x8B];
         }
         public static void SLEEP (Pic pic)
         {
-            clearBit(3, 0x03, pic);
-            setBit(4, 0x03, pic);
-            if (pic.WDTActive)
+            if (((pic.Ram[0x0B] & 16) == 16 && (pic.Ram[0x0B] & 2) == 2)
+                || ((pic.Ram[0x0B] & 8) == 8 && (pic.Ram[0x0B] & 1) == 1))
             {
-                pic.WDTTimer = 0;
-                pic.WDTPrescaler = 0;
+                NOP(pic);
             }
-            pic.isSleeping = true;
+            else
+            {
+                clearBit(3, 0x03, pic);
+                setBit(4, 0x03, pic);
+                if (pic.WDTActive)
+                {
+                    pic.WDTTimer = 0;
+                    pic.WDTPrescaler = 0;
+                }
+                pic.isSleeping = true;
+            }
         }
 
         //Hier müssen die ganzen Commands hin
@@ -766,7 +786,7 @@ namespace PicSimulator
             else
                 setBit(bit, address, pic);
         }
-        private static void writeByte(int value, int address, Pic pic)
+        public static void writeByte(int value, int address, Pic pic)
         {
             value &= 255;
             if (address == 0)
@@ -1013,7 +1033,34 @@ namespace PicSimulator
         }
         public static void WakeUpTest(Pic pic)
         {
-
+            if ((pic.Ram[0x8B] & 16) == 16) // INTE prüfen
+            {
+                if ((pic.Ram[0x8B] & 2) == 2) // INTF prüfen
+                {
+                    if ((pic.Ram[0x8B] & 128) == 128) // GIE prüfen
+                    {
+                        WakeUpFromSleep(true, pic);
+                    }
+                    else
+                    {
+                        WakeUpFromSleep(true, pic);
+                    }
+                }
+            }
+            if ((pic.Ram[0x8B] & 8) == 8) // RBIE prüfen
+            {
+                if ((pic.Ram[0x8B] & 1) == 1) // RBIF prüfen
+                {
+                    if ((pic.Ram[0x8B] & 128) == 128) // GIE prüfen
+                    {
+                        WakeUpFromSleep(true, pic);
+                    }
+                    else
+                    {
+                        WakeUpFromSleep(true, pic);
+                    }
+                }
+            }
         }
     }
 }

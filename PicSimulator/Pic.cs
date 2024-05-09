@@ -243,12 +243,12 @@ namespace PicSimulator
             else
             {
                 Commands.IncTimer(this);
-                Commands.WakeUpTest(this);
             }
 
             Commands.RA4(this); //RA4 prüfen um Timer zu zählen
             Commands.RB0(this); //RB0 Flag setzten
             Commands.PORTBINT(this); //PORTBINT Flag setzten
+            Commands.WakeUpTest(this);
             if (Code[activLine].Breakpoint)
             {
                 return false;

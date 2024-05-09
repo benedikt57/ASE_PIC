@@ -306,6 +306,7 @@ namespace PicSimulator
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
+            PCL = pic.PCL;
             CodeTimer = pic.CodeTimer;
             Stack = pic.Stack;
             StackPointer = pic.StackPointer;
@@ -361,8 +362,8 @@ namespace PicSimulator
                         result = 255;
                     if (result < 0)
                         result = 0;
-                    Ram[index] = result;
-                    Ram = Ram;
+                    Commands.writeByte(result, index, pic);
+                    Ram = pic.Ram;
                 }
             }
         }
