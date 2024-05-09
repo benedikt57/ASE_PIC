@@ -16,6 +16,7 @@ namespace PicSimulator
     public class Pic : INotifyPropertyChanged
     {
         private int activLine = 0;
+        public bool isSleeping = false;
 
         private ObservableCollection<CodeLine> code = new ObservableCollection<CodeLine>();
         public ObservableCollection<CodeLine> Code
@@ -101,15 +102,46 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(CodeTimer));
             }
         }
+        private bool wdtActive;
+        public bool WDTActive
+        {
+            get { return wdtActive; }
+            set
+            {
+                wdtActive = value;
+                OnPropertyChanged(nameof(WDTActive));
+            }
+        }
+        private int wdtTimer;
+        public int WDTTimer
+        {
+            get { return wdtTimer; }
+            set
+            {
+                wdtTimer = value;
+                OnPropertyChanged(nameof(WDTTimer));
+            }
+        }
+        private int wdtPrescaler;
+        public int WDTPrescaler
+        {
+            get { return wdtPrescaler; }
+            set
+            {
+                wdtPrescaler = value;
+                OnPropertyChanged(nameof(WDTPrescaler));
+            }
+        }
 
         
 
 
         public Pic()
         {
-            Ram[0x81] = 0xFF;
-            Ram[0x85] = 0xFF;
-            Ram[0x86] = 0xFF;
+            //Ram[0x81] = 0xFF;
+            //Ram[0x85] = 0xFF;
+            //Ram[0x86] = 0xFF;
+            Commands.PowerOnReset(this);
         }
         public void LoadFile()
         {
@@ -194,20 +226,29 @@ namespace PicSimulator
         }
         public bool Step()
         {
-            do
+            if (!isSleeping)
             {
-                Code[activLine].IsHighlighted = false;
-                activLine++;
-                if(activLine >= Code.Count)
-                    activLine = 0;
-            } while (Code[activLine].ProgAdrress != PCL);
-            PCL++;
-            Code[activLine].IsHighlighted = true;
-            Decode(Code[activLine].HexCode);
+                do
+                {
+                    Code[activLine].IsHighlighted = false;
+                    activLine++;
+                    if(activLine >= Code.Count)
+                        activLine = 0;
+                } while (Code[activLine].ProgAdrress != PCL);
+                PCL++;
+                Code[activLine].IsHighlighted = true;
+                Decode(Code[activLine].HexCode);
+                Commands.InterruptTest(this); //Interrupt prüfen
+            }
+            else
+            {
+                Commands.IncTimer(this);
+                Commands.WakeUpTest(this);
+            }
+
             Commands.RA4(this); //RA4 prüfen um Timer zu zählen
             Commands.RB0(this); //RB0 Flag setzten
             Commands.PORTBINT(this); //PORTBINT Flag setzten
-            Commands.InterruptTest(this); //Interrupt prüfen
             if (Code[activLine].Breakpoint)
             {
                 return false;
@@ -335,6 +376,9 @@ namespace PicSimulator
                     return;
                 case 0b0000_0000_0000_1001:
                     Commands.RETFIE(this);
+                    return;
+                case 0b0000_0000_0110_0011:
+                    Commands.SLEEP(this);
                     return;
                 case 0b0000_0000_0000_0000:
                     Commands.NOP(this);

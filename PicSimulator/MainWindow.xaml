@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PicSimulator" d:DataContext="{d:DesignInstance Type=local:PicViewModel}"
         xmlns:my="clr-namespace:CustomControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="PicSimulator" Height="800" Width="1200">
     <Window.Resources>
         <local:BooleanToBrushConverter x:Key="BooleanToBrushConverter"/>
         <local:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
@@ -68,15 +68,15 @@
             <StackPanel Grid.Row="3" Margin="0,20,0,0" Grid.RowSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -115,18 +115,18 @@
                     <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=3}" TextAlignment="Right"/>
                     <TextBox Grid.Row="5" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[3], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="6" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBox Grid.Row="6" Grid.Column="0" IsReadOnly="True" Text="WDT TM"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True" Text="{Binding WDTTimerString}"/>
                     <TextBox Grid.Row="6" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=2}" TextAlignment="Right"/>
                     <TextBox Grid.Row="6" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[2], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="7" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBox Grid.Row="7" Grid.Column="0" IsReadOnly="True" Text="WDT VT"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True" Text="{Binding WDTPrescaler}"/>
                     <TextBox Grid.Row="7" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=1}" TextAlignment="Right"/>
                     <TextBox Grid.Row="7" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[1], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True" Text="WDT"/>
-                    <CheckBox Grid.Row="8" Grid.Column="1"/>
+                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True" Text="WDT ac"/>
+                    <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding WDTActive}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=0}" TextAlignment="Right"/>
                     <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='{}{0:X4}h'}"/>
 
@@ -218,9 +218,8 @@
 
             <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="3" Margin="5,307,5,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Button DockPanel.Dock="Left" Content="{Binding Started, Converter={StaticResource StartButtonTextConverter}}" Command="{Binding StartCommand}" Margin="10,2,10,2"/>
-                <Button DockPanel.Dock="Left" Content=" Pause " Command="{Binding PauseCommand}" Margin="10,2,10,2"/>
-                <Button DockPanel.Dock="Left" Content=" Stop "  Command="{Binding StopCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Step "  Command="{Binding StepCommand}" Margin="10,2,10,2"/>
+                <Button DockPanel.Dock="Left" Content=" Reset " Command="{Binding ResetCommand}" Margin="10,2,10,2"/>
 
             </DockPanel>
 

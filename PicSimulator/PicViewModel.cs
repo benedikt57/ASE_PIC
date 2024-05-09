@@ -24,10 +24,12 @@ namespace PicSimulator
         {
             pic = new Pic();
             pic.PropertyChanged += Pic_PropertyChanged;
+            Ram = pic.Ram;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
             StepCommand = new RelayCommand(_ => StepButton());
             StartCommand = new RelayCommand(_ => StartButton());
+            ResetCommand = new RelayCommand(_ => ResetButton());
             InputCommand = new RelayCommand(parameter => InputButton(parameter));
             RamEditCommand = new RelayCommand(parameter => RamEdit(parameter));
 
@@ -240,7 +242,38 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(WReg));
             }
         }
-        
+        private bool wdtActive;
+        public bool WDTActive
+        {
+            get { return wdtActive; }
+            set
+            {
+                wdtActive = value;
+                OnPropertyChanged(nameof(WDTActive));
+                pic.WDTActive = value;
+            }
+        }
+        private int wdtTimer;
+        public int WDTTimer
+        {
+            get { return wdtTimer; }
+            set
+            {
+                wdtTimer = value;
+                OnPropertyChanged(nameof(WDTTimer));
+            }
+        }
+        private int wdtPrescaler;
+        public int WDTPrescaler
+        {
+            get { return wdtPrescaler; }
+            set
+            {
+                wdtPrescaler = value;
+                OnPropertyChanged(nameof(WDTPrescaler));
+            }
+        }
+
 
         private string testString;
         public string TestString
@@ -276,7 +309,10 @@ namespace PicSimulator
             CodeTimer = pic.CodeTimer;
             Stack = pic.Stack;
             StackPointer = pic.StackPointer;
-            CodeTimerFormat();
+            WDTTimer = pic.WDTTimer;
+            WDTPrescaler = pic.WDTPrescaler;
+            CodeTimerString = CodeTimerFormat(CodeTimer);
+            WDTTimerString = CodeTimerFormat(WDTTimer);
             OnPropertyChanged(nameof(Code));
         }
         public ICommand StartCommand { get; }
@@ -291,6 +327,12 @@ namespace PicSimulator
                     StepButton();
                 }
             });
+        }
+        public ICommand ResetCommand { get; }
+        public void ResetButton()
+        {
+            Commands.MCLR(pic);
+            Ram = pic.Ram;
         }
         public ICommand InputCommand { get; }
         public void InputButton(object parameter)
@@ -530,19 +572,29 @@ namespace PicSimulator
             
             }
         }
-        private void CodeTimerFormat()
+        private string wdtTimerString;
+        public string WDTTimerString
         {
-            var tmp = ((4/(AusgewaehlteQuarzfrequenzInt * 1e6))*CodeTimer);
+            get { return wdtTimerString; }
+            set
+            {
+                wdtTimerString = value;
+                OnPropertyChanged(nameof(WDTTimerString));
+            }
+        }
+        private string CodeTimerFormat(int timer)
+        {
+            var tmp = ((4/(AusgewaehlteQuarzfrequenzInt * 1e6))*timer);
             if(tmp >= 1)
-                CodeTimerString = tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
+                return tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
             else if(tmp >= 1e-1)
-                CodeTimerString = (tmp * 1e3).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+                return (tmp * 1e3).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
             else if(tmp >= 1e-2)
-                CodeTimerString = (tmp * 1e3).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+                return (tmp * 1e3).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
             else if(tmp >= 1e-3)
-                CodeTimerString = (tmp * 1e3).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
+                return (tmp * 1e3).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " ms";
             else
-                CodeTimerString = (tmp * 1e6).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " µs";
+                return (tmp * 1e6).ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " µs";
         }
 
         private string dateiPfad;

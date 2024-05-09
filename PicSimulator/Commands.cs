@@ -560,6 +560,7 @@ namespace PicSimulator
             pic.Ram[0x00] = 0;
             pic.Ram[0x01] = 0;
             pic.Ram[0x02] = 0x00;
+            pic.PCL = 0;
             pic.Ram[0x03] = 0b0001_1000;
             pic.Ram[0x04] = 0;
             pic.Ram[0x05] = 0;
@@ -588,28 +589,35 @@ namespace PicSimulator
             pic.WReg = pic.WReg;
             pic.Ram[0x00] = 0;
             pic.Ram[0x01] = pic.Ram[0x01];
-            pic.Ram[0x02] = 0x00; 
-            //pic.Ram[0x03] = 000q_uuuu; //Jonas
+            pic.Ram[0x02] = 0x00;
+            pic.PCL = 0;
+            pic.Ram[0x03] &= 0b0001_1111;
+            if (pic.isSleeping)
+            {
+                setBit(4, 0x03, pic);
+                clearBit(3, 0x03, pic);
+                pic.isSleeping = false;
+            }
             pic.Ram[0x04] = pic.Ram[0x04];
-            //pic.Ram[0x05] = 000u_uuuu; //Jonas
+            pic.Ram[0x05] &= 0b0001_1111;
             pic.Ram[0x06] = pic.Ram[0x06];
             pic.Ram[0x07] = 0; //7 gibt es nicht
             pic.Ram[0x08] = pic.Ram[0x08];
             pic.Ram[0x09] = pic.Ram[0x09];
             pic.Ram[0x0A] = 0b0000_0000;
-            //pic.Ram[0x0B] = 0000_000u; //Jonas
+            pic.Ram[0x0B] &= 0b0000_0001;
             pic.Ram[0x80] = 0;
             pic.Ram[0x81] = 0b1111_1111;
             pic.Ram[0x82] = 0x00;
-            //pic.Ram[0x83] = 000q_quuu; //Jonas
+            pic.Ram[0x83] = pic.Ram[0x03];
             pic.Ram[0x84] = pic.Ram[0x84];
             pic.Ram[0x85] = 0b0001_1111;
             pic.Ram[0x86] = 0b1111_1111;
             pic.Ram[0x87] = 0; //87 gibt es nicht
-            //pic.Ram[0x88] = 0000_q000; //Jonas
+            pic.Ram[0x88] &= 0b0000_1000; // q wird zu unchanged, weil EEPROM nicht im Simulator
             pic.Ram[0x89] = 0b0000_0000;
             pic.Ram[0x8A] = 0;
-            //pic.Ram[0x8B] = 0000_000u; //Jonas
+            pic.Ram[0x8B] &= 0b0000_0001;
         }
 
         public static void WakeUpFromSleep (Pic pic)
@@ -639,10 +647,17 @@ namespace PicSimulator
             pic.Ram[0x89] = pic.Ram[0x89];
             //pic.Ram[0x8A] = 000u_uuuu; //Jonas
             pic.Ram[0x8B] = pic.Ram[0x8B];
-
-
-
-
+        }
+        public static void SLEEP (Pic pic)
+        {
+            clearBit(3, 0x03, pic);
+            setBit(4, 0x03, pic);
+            if (pic.WDTActive)
+            {
+                pic.WDTTimer = 0;
+                pic.WDTPrescaler = 0;
+            }
+            pic.isSleeping = true;
         }
 
         //Hier müssen die ganzen Commands hin
@@ -855,13 +870,17 @@ namespace PicSimulator
             PicTimer = 0;
         }
         private static int PicTimer;
-        private static void IncTimer(Pic pic)
+        public static void IncTimer(Pic pic)
         {
             pic.CodeTimer++;
             if ((pic.Ram[0x81] & 32) == 0)
             {
                 PicTimer++;
                 setTimer(pic);
+            }
+            if (pic.WDTActive)
+            {
+                pic.WDTTimer++;
             }
         }
         private static void setTimer(Pic pic)
@@ -992,6 +1011,9 @@ namespace PicSimulator
                 }
             }
         }
+        public static void WakeUpTest(Pic pic)
+        {
 
+        }
     }
 }
