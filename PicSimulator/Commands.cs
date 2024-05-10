@@ -117,14 +117,15 @@ namespace PicSimulator
         }
         public static void GOTO(int literal, Pic pic)
         {
-            pic.PCL &= 0b1111_1000_0000_0000;
-            pic.PCL += literal;
+            pic.PC &= 0b1111_1000_0000_0000;
+            pic.PC += literal;
+            pic.PC += ((pic.PCLATCH & 0b0001_1000) << 8);
             IncTimer(pic);
             IncTimer(pic);
         }
         public static void CALL(int literal, Pic pic)
         {
-            pic.Stack[pic.StackPointer] = pic.PCL;
+            pic.Stack[pic.StackPointer] = pic.PC;
             pic.StackPointer++;
             if(pic.StackPointer > 7)
                 pic.StackPointer = 0;
@@ -136,7 +137,7 @@ namespace PicSimulator
             pic.StackPointer--;
             if (pic.StackPointer < 0)
                 pic.StackPointer = 7;
-            pic.PCL = pic.Stack[pic.StackPointer];
+            pic.PC = pic.Stack[pic.StackPointer];
             IncTimer(pic);
             IncTimer(pic);
         }
@@ -491,7 +492,7 @@ namespace PicSimulator
             }
             if (tempDECFSZ == 0)
             {
-                pic.PCL++;
+                pic.PC++;
             }
             IncTimer(pic); //Timer wird nur um 1 erhöht da bei DECFSZ ein NOP() ausgeführt wird
         }
@@ -509,7 +510,7 @@ namespace PicSimulator
             }
             if (tempINCFSZ == 0)
             {
-                pic.PCL++;
+                pic.PC++;
                 NOP(pic);
             }
             IncTimer(pic); //Timer wird nur um 1 erhöht da bei INCFSZ ein NOP() ausgeführt wird
@@ -535,7 +536,7 @@ namespace PicSimulator
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             if ((readByte(file, pic) & (1 << bit)) == 0)
             {
-                pic.PCL++;
+                pic.PC++;
                 NOP(pic);
             }
             IncTimer(pic); //Timer wird nur um 1 erhöht da bei BTFSC ein NOP() ausgeführt wird
@@ -546,7 +547,7 @@ namespace PicSimulator
             int bit = (arg & 0b0000_0011_1000_0000) >> 7;
             if ((readByte(file, pic) & (1 << bit)) != 0)
             {
-                pic.PCL++;
+                pic.PC++;
                 NOP(pic);
             }
             IncTimer(pic); //Timer wird nur um 1 erhöht da bei BTFSS ein NOP() ausgeführt wird
@@ -560,7 +561,7 @@ namespace PicSimulator
             pic.Ram[0x00] = 0;
             pic.Ram[0x01] = 0;
             pic.Ram[0x02] = 0x00;
-            pic.PCL = 0;
+            pic.PC = 0;
             pic.Ram[0x03] = 0b0001_1000;
             pic.Ram[0x04] = 0;
             pic.Ram[0x05] = 0;
@@ -575,7 +576,7 @@ namespace PicSimulator
             pic.Ram[0x82] = 0;
             pic.Ram[0x83] = 0b0001_1000;
             pic.Ram[0x84] = 0;
-            pic.Ram[0x85] = 0b0001_1111;
+            pic.Ram[0x85] = 0b1111_1111;
             pic.Ram[0x86] = 0b1111_1111;
             pic.Ram[0x87] = 0; //87 gibt es nicht
             pic.Ram[0x88] = 0;
@@ -590,7 +591,7 @@ namespace PicSimulator
             pic.Ram[0x00] = 0;
             pic.Ram[0x01] = pic.Ram[0x01];
             pic.Ram[0x02] = 0x00;
-            pic.PCL = 0;
+            pic.PC = 0;
             pic.Ram[0x03] &= 0b0001_1111;
             if (pic.isSleeping)
             {
@@ -599,7 +600,7 @@ namespace PicSimulator
                 pic.isSleeping = false;
             }
             pic.Ram[0x04] = pic.Ram[0x04];
-            pic.Ram[0x05] &= 0b0001_1111;
+            pic.Ram[0x05] = pic.Ram[0x05];
             pic.Ram[0x06] = pic.Ram[0x06];
             pic.Ram[0x07] = 0; //7 gibt es nicht
             pic.Ram[0x08] = pic.Ram[0x08];
@@ -611,7 +612,7 @@ namespace PicSimulator
             pic.Ram[0x82] = 0x00;
             pic.Ram[0x83] = pic.Ram[0x03];
             pic.Ram[0x84] = pic.Ram[0x84];
-            pic.Ram[0x85] = 0b0001_1111;
+            pic.Ram[0x85] = 0b1111_1111;
             pic.Ram[0x86] = 0b1111_1111;
             pic.Ram[0x87] = 0; //87 gibt es nicht
             pic.Ram[0x88] &= 0b0000_1000; // q wird zu unchanged, weil EEPROM nicht im Simulator
@@ -639,7 +640,7 @@ namespace PicSimulator
                 clearBit(3, 0x03, pic);
             }
             pic.Ram[0x04] = pic.Ram[0x04];
-            pic.Ram[0x05] &= 0b0001_1111;
+            pic.Ram[0x05] = pic.Ram[0x05];
             pic.Ram[0x06] = pic.Ram[0x06];
             pic.Ram[0x07] = 0; //7 gibt es nicht
             pic.Ram[0x08] = pic.Ram[0x08];
@@ -652,7 +653,7 @@ namespace PicSimulator
             //pic.Ram[0x83] = uuuq_quuu; //Jonas
             pic.Ram[0x83] = pic.Ram[0x03];
             pic.Ram[0x84] = pic.Ram[0x84];
-            pic.Ram[0x85] &= 0b0001_1111;
+            pic.Ram[0x85] = pic.Ram[0x85];
             pic.Ram[0x86] = pic.Ram[0x86];
             pic.Ram[0x87] = 0; //87 gibt es nicht
             pic.Ram[0x88] &= 0b0000_1111;
@@ -711,7 +712,6 @@ namespace PicSimulator
             switch (address)
             {
                 case 0:
-                case 2:
                 case 3:
                 case 4:
                 case 10:
@@ -720,7 +720,6 @@ namespace PicSimulator
                     pic.Ram[address + 128] = pic.Ram[address];
                     break;
                 case 0x80:
-                case 0x82:
                 case 0x83:
                 case 0x84:
                 case 0x8A:
@@ -743,6 +742,13 @@ namespace PicSimulator
                     {
                         pic.Ram[address] |= 1 << bit;
                     }
+                    break;
+                case 2:
+                case 0x82:
+                    pic.Ram[2] |= 1 << bit;
+                    pic.Ram[2] &= 255;
+                    pic.Ram[0x82] = pic.Ram[2];
+                    pic.PC = pic.Ram[2] + (pic.PCLATCH << 8);
                     break;
                 default:
                     pic.Ram[address] |= 1 << bit;
@@ -760,7 +766,6 @@ namespace PicSimulator
             switch (address)
             {
                 case 0:
-                case 2:
                 case 3:
                 case 4:
                 case 10:
@@ -769,7 +774,6 @@ namespace PicSimulator
                     pic.Ram[address + 128] = pic.Ram[address];
                     break;
                 case 0x80:
-                case 0x82:
                 case 0x83:
                 case 0x84:
                 case 0x8A:
@@ -792,6 +796,13 @@ namespace PicSimulator
                     {
                         pic.Ram[address] &= ~(1 << bit);
                     }
+                    break;
+                case 2:
+                case 0x82:
+                    pic.Ram[2] &= ~(1 << bit);
+                    pic.Ram[2] &= 255;
+                    pic.Ram[0x82] = pic.Ram[2];
+                    pic.PC = pic.Ram[2] + (pic.PCLATCH << 8);
                     break;
                 default:
                     pic.Ram[address] &= ~(1 << bit);
@@ -820,7 +831,6 @@ namespace PicSimulator
             switch (address)
             {
                 case 0:
-                case 2:
                 case 3:
                 case 4:
                 case 10:
@@ -829,7 +839,6 @@ namespace PicSimulator
                     pic.Ram[address + 128] = pic.Ram[address];
                     break;
                 case 0x80:
-                case 0x82:
                 case 0x83:
                 case 0x84:
                 case 0x8A:
@@ -860,6 +869,13 @@ namespace PicSimulator
                     writeBit((value & 32) >> 5, 5, 6, pic);
                     writeBit((value & 64) >> 6, 6, 6, pic);
                     writeBit((value & 128) >> 7, 7, 6, pic);
+                    break;
+                case 2:
+                case 0x82:
+                    pic.Ram[2] = value;
+                    pic.Ram[2] &= 255;
+                    pic.Ram[0x82] = pic.Ram[2];
+                    pic.PC = pic.Ram[2] + (pic.PCLATCH << 8);
                     break;
                 default:
                     pic.Ram[address] = value;
@@ -1020,11 +1036,11 @@ namespace PicSimulator
                     if ((pic.Ram[0x8B] & 4) == 4) // TOIF prüfen
                     {
                         clearBit(7, 0x0B, pic); // GIE löschen
-                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.Stack[pic.StackPointer] = pic.PC;
                         pic.StackPointer++;
                         if (pic.StackPointer > 7)
                             pic.StackPointer = 0;
-                        pic.PCL = 4;
+                        pic.PC = 4;
                     }
                 }
                 if ((pic.Ram[0x8B] & 16) == 16) // INTE prüfen
@@ -1032,11 +1048,11 @@ namespace PicSimulator
                     if ((pic.Ram[0x8B] & 2) == 2) // INTF prüfen
                     {
                         clearBit(7, 0x0B, pic); // GIE löschen
-                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.Stack[pic.StackPointer] = pic.PC;
                         pic.StackPointer++;
                         if (pic.StackPointer > 7)
                             pic.StackPointer = 0;
-                        pic.PCL = 4;
+                        pic.PC = 4;
                     }
                 }
                 if ((pic.Ram[0x8B] & 8) == 8) // RBIE prüfen
@@ -1044,11 +1060,11 @@ namespace PicSimulator
                     if ((pic.Ram[0x8B] & 1) == 1) // RBIF prüfen
                     {
                         clearBit(7, 0x0B, pic); // GIE löschen
-                        pic.Stack[pic.StackPointer] = pic.PCL;
+                        pic.Stack[pic.StackPointer] = pic.PC;
                         pic.StackPointer++;
                         if (pic.StackPointer > 7)
                             pic.StackPointer = 0;
-                        pic.PCL = 4;
+                        pic.PC = 4;
                     }
                 }
             }

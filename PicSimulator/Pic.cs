@@ -58,17 +58,28 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(StackPointer));
             }
         }
-        private int pcl;
-        public int PCL
+        private int pc;
+        public int PC
         {
-            get { return pcl; }
+            get { return pc; }
             set
             {
-                pcl = value;
-                Ram[2] = pcl & 255;
+                pc = value;
+                Ram[2] = pc & 255;
                 Ram[130] = Ram[2];
                 OnPropertyChanged(nameof(Ram));
-                OnPropertyChanged(nameof(PCL));
+                OnPropertyChanged(nameof(PC));
+            }
+        }
+        public int PCLATCH
+        {
+            get { return Ram[0x0A]; }
+            set
+            {
+                value &= 0x1F;
+                Commands.writeByte(value, 0x0A, this);
+                OnPropertyChanged(nameof(Ram));
+                OnPropertyChanged(nameof(PCLATCH));
             }
         }
         private int wReg;
@@ -244,8 +255,8 @@ namespace PicSimulator
                     activLine++;
                     if(activLine >= Code.Count)
                         activLine = 0;
-                } while (Code[activLine].ProgAdrress != PCL);
-                PCL++;
+                } while (Code[activLine].ProgAdrress != PC);
+                PC++;
                 Code[activLine].IsHighlighted = true;
                 Decode(Code[activLine].HexCode);
                 Commands.InterruptTest(this); //Interrupt prüfen

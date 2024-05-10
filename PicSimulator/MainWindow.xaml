@@ -79,10 +79,10 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="76*"/>
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Text="W-Reg:"/>
@@ -92,42 +92,42 @@
 
                     <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="Carry:"/>
                     <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding CarryBit, Mode=OneWay}"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=7}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=7}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="1" Grid.Column="3" IsReadOnly="True"  HorizontalAlignment="Center" Width="50" Text="{Binding Stack[7], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="DC:"/>
                     <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="{Binding DCBit, Mode=OneWay}"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=6}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=6}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="2" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[6], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="Zero:"/>
                     <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding ZeroBit, Mode=OneWay}"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=5}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=5}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[5], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True" Text="StackPtr:"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding StackPointer}"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=4}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True" Text="PCLATCH:"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding PCLATCH}"/>
+                    <TextBox Grid.Row="4" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=4}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[4], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="5" Grid.Column="0" IsReadOnly="True"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True"/>
-                    <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=3}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="5" Grid.Column="0" IsReadOnly="True" Text="PC:"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True" Text="{Binding PC, StringFormat='{}{0:X4}h'}"/>
+                    <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=3}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="5" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[3], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="6" Grid.Column="0" IsReadOnly="True" Text="WDT TM"/>
+                    <TextBox Grid.Row="6" Grid.Column="0" IsReadOnly="True" Text="WDT TM:"/>
                     <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True" Text="{Binding WDTTimerString}"/>
-                    <TextBox Grid.Row="6" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=2}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="6" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=2}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="6" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[2], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="7" Grid.Column="0" IsReadOnly="True" Text="WDT VT"/>
+                    <TextBox Grid.Row="7" Grid.Column="0" IsReadOnly="True" Text="WDT VT:"/>
                     <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True" Text="{Binding WDTPrescaler}"/>
-                    <TextBox Grid.Row="7" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=1}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="7" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=1}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="7" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[1], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True" Text="WDT ac"/>
+                    <TextBox Grid.Row="8" Grid.Column="0" IsReadOnly="True" Text="WDT aktiv:"/>
                     <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding WDTActive}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x2192;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=0}" TextAlignment="Right"/>
+                    <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=0}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='{}{0:X4}h'}"/>
 
                 </Grid>

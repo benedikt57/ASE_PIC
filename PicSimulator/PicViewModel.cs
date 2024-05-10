@@ -103,17 +103,27 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(StackPointer));
             }
         }
-        private int pcl;
-        public int PCL
+        private int pc;
+        public int PC
         {
-            get { return pcl; }
+            get { return pc; }
             set
             {
-                pcl = value;
-                Ram[2] = pcl & 255;
+                pc = value;
+                Ram[2] = pc & 255;
                 Ram[130] = Ram[2];
                 OnPropertyChanged(nameof(Ram));
-                OnPropertyChanged(nameof(PCL));
+                OnPropertyChanged(nameof(PC));
+            }
+        }
+        private int pcLatch;
+        public int PCLATCH
+        {
+            get { return pcLatch; }
+            set
+            {
+                pcLatch = value;
+                OnPropertyChanged(nameof(PCLATCH));
             }
         }
 
@@ -311,7 +321,8 @@ namespace PicSimulator
             Ram = pic.Ram;
             WReg = pic.WReg;
             Code = pic.Code;
-            PCL = pic.PCL;
+            PC = pic.PC;
+            PCLATCH = pic.PCLATCH;
             CodeTimer = pic.CodeTimer;
             Stack = pic.Stack;
             StackPointer = pic.StackPointer;
