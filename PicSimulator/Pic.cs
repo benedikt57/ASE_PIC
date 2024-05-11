@@ -239,6 +239,8 @@ namespace PicSimulator
                         }
                     }
                 }
+                CodeTimer = 0;
+                WDTTimer = 0;
             }
             catch (FileNotFoundException ex)
             {

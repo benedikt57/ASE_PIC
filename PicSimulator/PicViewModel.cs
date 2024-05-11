@@ -337,6 +337,10 @@ namespace PicSimulator
             DateiPfad = pic.SourceFilePath;
             Ram = pic.Ram;
             WReg = pic.WReg;
+            CodeTimer = pic.CodeTimer;
+            WDTTimer = pic.WDTTimer;
+            CodeTimerString = CodeTimerFormat(CodeTimer);
+            WDTTimerString = CodeTimerFormat(WDTTimer);
             pic.ChangeString();
             TestString = pic.TestString;
         }
