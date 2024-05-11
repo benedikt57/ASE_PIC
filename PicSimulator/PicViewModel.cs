@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -32,6 +33,7 @@ namespace PicSimulator
             ResetCommand = new RelayCommand(_ => ResetButton());
             InputCommand = new RelayCommand(parameter => InputButton(parameter));
             RamEditCommand = new RelayCommand(parameter => RamEdit(parameter));
+            SFRCommand = new RelayCommand(parameter => SFRButton(parameter));
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
@@ -176,11 +178,18 @@ namespace PicSimulator
             }
         }
 
-        public int LED
+        public ObservableCollection<int> LED
         {
             get
             {
-                return Ram[PortAuswahl];
+                if(PortAuswahl == 5)
+                {
+                    return WertA;
+                }
+                else
+                {
+                    return WertB;
+                }
             }
         }
 
@@ -197,6 +206,7 @@ namespace PicSimulator
                 return inOut;
             }
         }
+        private ObservableCollection<int> wertAInput = new ObservableCollection<int>() {0, 0, 0, 0, 0, 0, 0, 0};
         public ObservableCollection<int> WertA
         {
             get
@@ -204,7 +214,15 @@ namespace PicSimulator
                 ObservableCollection<int> wert = new ObservableCollection<int>();
                 for (int i = 0; i < 8; i++)
                 {
-                    wert.Add((Ram[0x5] & (1 << i)) == 0 ? 0 : 1);
+                    if ((Ram[0x85] & (1 << i)) == 0)
+                    {
+                        wert.Add((Ram[0x5] & (1 << i)) == 0 ? 0 : 1);
+                        wertAInput[i] = wert[i];
+                    }
+                    else
+                    {
+                        wert.Add(wertAInput[i]);
+                    }
                 }
                 return wert;
             }
@@ -221,6 +239,7 @@ namespace PicSimulator
                 return inOut;
             }
         }
+        private ObservableCollection<int> wertBInput = new ObservableCollection<int>() { 0, 0, 0, 0, 0, 0, 0, 0 };
         public ObservableCollection<int> WertB
         {
             get
@@ -228,7 +247,15 @@ namespace PicSimulator
                 ObservableCollection<int> wert = new ObservableCollection<int>();
                 for (int i = 0; i < 8; i++)
                 {
-                    wert.Add((Ram[0x6] & (1 << i)) == 0 ? 0 : 1);
+                    if ((Ram[0x86] & (1 << i)) == 0)
+                    {
+                        wert.Add((Ram[0x6] & (1 << i)) == 0 ? 0 : 1);
+                        wertBInput[i] = wert[i];
+                    }
+                    else
+                    {
+                        wert.Add(wertBInput[i]);
+                    }
                 }
                 return wert;
             }
@@ -359,9 +386,17 @@ namespace PicSimulator
                 var port = str.Substring(3, 1);
                 int index = int.Parse(str.Substring(4));
                 if (port == "A")
-                    Ram[0x5] ^= 1 << index;
+                {
+                    int value = (WertA[index] == 0) ? 1 : 0;
+                    wertAInput[index] = value;
+                    Commands.writeBit(value, index, 0x05, pic);
+                }
                 else if (port == "B")
-                    Ram[0x6] ^= 1 << index;
+                {
+                    int value = (WertB[index] == 0) ? 1 : 0;
+                    wertBInput[index] = value;
+                    Commands.writeBit(value, index, 0x06, pic);
+                }
                 Ram = Ram;
             }
         }
@@ -380,6 +415,30 @@ namespace PicSimulator
                         result = 0;
                     Commands.writeByte(result, index, pic, false);
                     Ram = pic.Ram;
+                }
+            }
+        }
+        public ICommand SFRCommand { get; }
+        public void SFRButton(object parameter)
+        {
+            if (parameter is string str)
+            {
+                int index = int.Parse(str.Substring(1));
+                string register = str.Substring(0, 1);
+                switch (register)
+                {
+                    case "S":
+                        Commands.writeBit((Ram[0x03] & (1 << index)) == 0 ? 1: 0, index, 0x03, pic);
+                        Ram = pic.Ram;
+                        return;
+                    case "O":
+                        Commands.writeBit((Ram[0x81] & (1 << index)) == 0 ? 1 : 0, index, 0x81, pic);
+                        Ram = pic.Ram;
+                        return;
+                    case "I":
+                        Commands.writeBit((Ram[0x0B] & (1 << index)) == 0 ? 1 : 0, index, 0x0B, pic);
+                        Ram = pic.Ram;
+                        return;
                 }
             }
         }

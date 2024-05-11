@@ -1,34 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace PicSimulator
 {
-    public class LEDArrayConverter : IValueConverter
+    public class SFRConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter is string str)
+            if (parameter is int par && value is int intValue)
             {
-                if ((value is ObservableCollection<int> intCollection))
+                if ((intValue & (1 << par)) != 0)
                 {
-                    if (intCollection[int.Parse(str)] == 1)
-                    {
-                        return Brushes.Red;
-                    }
-                    else
-                    {
-                        return Brushes.Gray;
-                    }
+                    return "1";
+                }
+                else
+                {
+                    return "0";
                 }
             }
-            return Brushes.Green;
+            return "-1";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -62,11 +62,15 @@
     <Compile Include="InOutputGridA.cs" />
     <Compile Include="InOutputGridB.cs" />
     <Compile Include="InOutToBoolConverter.cs" />
+    <Compile Include="INTCONGrid.cs" />
     <Compile Include="NumberToVisibilityConverter.cs" />
+    <Compile Include="OptionGrid.cs" />
     <Compile Include="Pic.cs" />
     <Compile Include="RAMGrid.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="LEDArrayConverter.cs" />
+    <Compile Include="SFRConverter.cs" />
+    <Compile Include="StatusGrid.cs" />
     <Compile Include="StackPointerConverter.cs" />
     <Compile Include="StartButtonTextConverter.cs" />
     <Page Include="MainWindow.xaml">

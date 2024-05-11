@@ -731,18 +731,6 @@ namespace PicSimulator
                     pic.Ram[address] |= 1 << bit;
                     PicTimer = 0;
                     break;
-                case 5:
-                    if ((pic.Ram[0x85] & (1 << bit)) == 0)
-                    {
-                        pic.Ram[address] |= 1 << bit;
-                    }
-                    break;
-                case 6:
-                    if ((pic.Ram[0x86] & (1 << bit)) == 0)
-                    {
-                        pic.Ram[address] |= 1 << bit;
-                    }
-                    break;
                 case 2:
                 case 0x82:
                     pic.Ram[2] |= 1 << bit;
@@ -785,18 +773,6 @@ namespace PicSimulator
                     pic.Ram[address] &= ~(1 << bit);
                     PicTimer = 0;
                     break;
-                case 5:
-                    if ((pic.Ram[0x85] & (1 << bit)) == 0)
-                    {
-                        pic.Ram[address] &= ~(1 << bit);
-                    }
-                    break;
-                case 6:
-                    if ((pic.Ram[0x86] & (1 << bit)) == 0)
-                    {
-                        pic.Ram[address] &= ~(1 << bit);
-                    }
-                    break;
                 case 2:
                 case 0x82:
                     pic.Ram[2] &= ~(1 << bit);
@@ -809,7 +785,7 @@ namespace PicSimulator
                     break;
             }
         }
-        private static void writeBit(int value, int bit, int address, Pic pic)
+        public static void writeBit(int value, int bit, int address, Pic pic)
         {
             if (value == 0)
                 clearBit(bit, address, pic);
@@ -849,26 +825,6 @@ namespace PicSimulator
                 case 1:
                     pic.Ram[address] = value;
                     PicTimer = 0;
-                    break;
-                case 5:
-                    writeBit(value & 1,        0, 5, pic);
-                    writeBit((value & 2) >> 1, 1, 5, pic);
-                    writeBit((value & 4) >> 2, 2, 5, pic);
-                    writeBit((value & 8) >> 3, 3, 5, pic);
-                    writeBit((value & 16) >> 4, 4, 5, pic);
-                    writeBit((value & 32) >> 5, 5, 5, pic);
-                    writeBit((value & 64) >> 6, 6, 5, pic);
-                    writeBit((value & 128) >> 7, 7, 5, pic);
-                    break;
-                case 6:
-                    writeBit(value & 1,        0, 6, pic);
-                    writeBit((value & 2) >> 1, 1, 6, pic);
-                    writeBit((value & 4) >> 2, 2, 6, pic);
-                    writeBit((value & 8) >> 3, 3, 6, pic);
-                    writeBit((value & 16) >> 4, 4, 6, pic);
-                    writeBit((value & 32) >> 5, 5, 6, pic);
-                    writeBit((value & 64) >> 6, 6, 6, pic);
-                    writeBit((value & 128) >> 7, 7, 6, pic);
                     break;
                 case 2:
                 case 0x82:

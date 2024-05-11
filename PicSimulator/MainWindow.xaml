@@ -51,7 +51,7 @@
         <!--Gesamt Grid-->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200px"/>
+                <ColumnDefinition Width="250px"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="200"/>
@@ -77,6 +77,9 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="76*"/>
@@ -90,23 +93,23 @@
                     <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" BorderThickness="0"/>
                     <TextBox Grid.Row="0" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" FontWeight="DemiBold" Width="50" Text="Stack"/>
 
-                    <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="Carry:"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding CarryBit, Mode=OneWay}"/>
+                    <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="FSR:"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Ram[4], StringFormat='{}{0:X2}h'}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=7}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="1" Grid.Column="3" IsReadOnly="True"  HorizontalAlignment="Center" Width="50" Text="{Binding Stack[7], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="DC:"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="{Binding DCBit, Mode=OneWay}"/>
+                    <TextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="Stackpointer:"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="{Binding StackPointer}"/>
                     <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=6}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="2" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[6], StringFormat='{}{0:X4}h'}"/>
 
-                    <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="Zero:"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding ZeroBit, Mode=OneWay}"/>
+                    <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="PCL:"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Ram[2], StringFormat='{}{0:X2}h'}"/>
                     <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=5}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[5], StringFormat='{}{0:X4}h'}"/>
 
                     <TextBox Grid.Row="4" Grid.Column="0" IsReadOnly="True" Text="PCLATCH:"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding PCLATCH}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding PCLATCH, StringFormat='{}{0:X2}h'}"/>
                     <TextBox Grid.Row="4" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=4}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[4], StringFormat='{}{0:X4}h'}"/>
 
@@ -130,6 +133,9 @@
                     <TextBox Grid.Row="8" Grid.Column="2" IsReadOnly="True" BorderThickness="0" Text="&#x21E8;" Visibility="{Binding StackPointer, Converter={StaticResource StackPointerConverter}, ConverterParameter=0}" TextAlignment="Right" FontSize="13" FontWeight="Bold"/>
                     <TextBox Grid.Row="8" Grid.Column="3" IsReadOnly="True" HorizontalAlignment="Center" Width="50" Text="{Binding Stack[0], StringFormat='{}{0:X4}h'}"/>
 
+                    <my:StatusGrid Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 0"/>
+                    <my:OptionGrid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 0"/>
+                    <my:INTCONGrid Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 0"/>
                 </Grid>
             </StackPanel>
 
@@ -216,7 +222,7 @@
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="5,30,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Laufzeitzähler:" VerticalAlignment="Top" Width="90"/>
             <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="105,30,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding CodeTimerString}" VerticalAlignment="Top" Width="50"/>
 
-            <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="3" Margin="5,307,5,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="4" Margin="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Button DockPanel.Dock="Left" Content="{Binding Started, Converter={StaticResource StartButtonTextConverter}}" Command="{Binding StartCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Step "  Command="{Binding StepCommand}" Margin="10,2,10,2"/>
                 <Button DockPanel.Dock="Left" Content=" Reset " Command="{Binding ResetCommand}" Margin="10,2,10,2"/>
