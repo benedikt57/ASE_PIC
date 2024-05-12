@@ -329,6 +329,7 @@ namespace PicSimulator
         public ICommand LoadFileCommand { get; }
         public void LoadFileButton()
         {
+            started = false;
             pic = new Pic();
             pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
             WDTActive = false;
