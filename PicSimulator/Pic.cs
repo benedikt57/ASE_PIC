@@ -186,8 +186,8 @@ namespace PicSimulator
                 filename = dialog.FileName;
                 // Verwende den Dateipfad in deiner Anwendung
                 SourceFilePath = filename;
+                Load(filename);
             }
-            Load(filename);
         
         }
         
