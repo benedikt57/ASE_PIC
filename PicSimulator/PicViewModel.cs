@@ -37,6 +37,7 @@ namespace PicSimulator
 
             // Set default value to 4 MHz
             Is4MHzChecked = true;
+            IsPortBChecked = true;
             AusgewaehlteQuarzfrequenzInt = 4;
 
             // Start View aktualisieren
