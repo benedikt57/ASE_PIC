@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicSimulator", "PicSimulator\PicSimulator.csproj", "{7401BE63-F4E1-4976-B567-072B9F63ADBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "PicSimulator\Plugins.csproj", "{7401BE63-F4E1-4976-B567-072B9F63ADBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{EBA358F6-7212-447E-8E9E-350C9F6C75D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7401BE63-F4E1-4976-B567-072B9F63ADBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7401BE63-F4E1-4976-B567-072B9F63ADBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7401BE63-F4E1-4976-B567-072B9F63ADBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

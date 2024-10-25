@@ -56,23 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BooleanToBrushConverter.cs" />
-    <Compile Include="CodeLine.cs" />
-    <Compile Include="Commands.cs" />
-    <Compile Include="InOutputGridA.cs" />
-    <Compile Include="InOutputGridB.cs" />
-    <Compile Include="InOutToBoolConverter.cs" />
-    <Compile Include="INTCONGrid.cs" />
-    <Compile Include="NumberToVisibilityConverter.cs" />
-    <Compile Include="OptionGrid.cs" />
-    <Compile Include="Pic.cs" />
-    <Compile Include="RAMGrid.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="LEDArrayConverter.cs" />
-    <Compile Include="SFRConverter.cs" />
-    <Compile Include="StatusGrid.cs" />
-    <Compile Include="StackPointerConverter.cs" />
-    <Compile Include="StartButtonTextConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,7 +70,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PicViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,6 +94,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adapter\Adapter.csproj">
+      <Project>{eba358f6-7212-447e-8e9e-350c9f6c75d4}</Project>
+      <Name>Adapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
