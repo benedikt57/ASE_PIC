@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "PicSimulator\Plu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{EBA358F6-7212-447E-8E9E-350C9F6C75D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{EA6C3EF1-4634-495A-B05A-68B111FB29D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBA358F6-7212-447E-8E9E-350C9F6C75D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6C3EF1-4634-495A-B05A-68B111FB29D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6C3EF1-4634-495A-B05A-68B111FB29D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6C3EF1-4634-495A-B05A-68B111FB29D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6C3EF1-4634-495A-B05A-68B111FB29D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
