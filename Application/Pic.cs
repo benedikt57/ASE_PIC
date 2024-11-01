@@ -15,158 +15,142 @@ namespace PicSimulator
 {
     public class Pic : INotifyPropertyChanged
     {
+        public IPicViewModel picViewModel;
+
         private int activLine = 0;
         public bool isSleeping = false;
 
-        private ObservableCollection<CodeLine> code = new ObservableCollection<CodeLine>();
-        public ObservableCollection<CodeLine> Code
-        {
-            get { return code; }
-            set
-            {
-                code = value;
-                OnPropertyChanged(nameof(Code));
-            }
-        }
-        private int[] ram = new int[256];
-        public int[] Ram
-        {
-            get { return ram; }
-            set
-            {
-                ram = value;
-                OnPropertyChanged(nameof(Ram));
-            }
-        }
-        private int[] stack = new int[8];
-        public int[] Stack
-        {
-            get { return stack; }
-            set
-            {
-                stack = value;
-                OnPropertyChanged(nameof(Stack));
-            }
-        }
-        private int stackPointer;
-        public int StackPointer
-        {
-            get { return stackPointer; }
-            set
-            {
-                stackPointer = value;
-                OnPropertyChanged(nameof(StackPointer));
-            }
-        }
-        private int pc;
-        public int PC
-        {
-            get { return pc; }
-            set
-            {
-                pc = value;
-                Ram[2] = pc & 255;
-                Ram[130] = Ram[2];
-                OnPropertyChanged(nameof(Ram));
-                OnPropertyChanged(nameof(PC));
-            }
-        }
-        public int PCLATCH
-        {
-            get { return Ram[0x0A]; }
-            set
-            {
-                value &= 0x1F;
-                Commands.writeByte(value, 0x0A, this);
-                OnPropertyChanged(nameof(Ram));
-                OnPropertyChanged(nameof(PCLATCH));
-            }
-        }
-        private int wReg;
-        public int WReg
-        {
-            get { return wReg; }
-            set
-            {
-                wReg = value & 255;
-                OnPropertyChanged(nameof(WReg));
-            }
-        }
-        private string testString = "blabla";
-        public string TestString
-        {
-            get { return testString; }
-            set
-            {
-                testString = value;
-                OnPropertyChanged(nameof(TestString));
-            }
-        }
-        private int codeTimer;
+        
+        //private int[] ram = new int[256];
+        //public int[] Ram
+        //{
+        //    get { return ram; }
+        //    set
+        //    {
+        //        ram = value;
+        //        OnPropertyChanged(nameof(Ram));
+        //    }
+        //}
+        //private int[] stack = new int[8];
+        //public int[] Stack
+        //{
+        //    get { return stack; }
+        //    set
+        //    {
+        //        stack = value;
+        //        OnPropertyChanged(nameof(Stack));
+        //    }
+        //}
+        //private int stackPointer;
+        //public int StackPointer
+        //{
+        //    get { return stackPointer; }
+        //    set
+        //    {
+        //        stackPointer = value;
+        //        OnPropertyChanged(nameof(StackPointer));
+        //    }
+        //}
+        //private int pc;
+        //public int PC
+        //{
+        //    get { return pc; }
+        //    set
+        //    {
+        //        pc = value;
+        //        Ram[2] = pc & 255;
+        //        Ram[130] = Ram[2];
+        //        OnPropertyChanged(nameof(Ram));
+        //        OnPropertyChanged(nameof(PC));
+        //    }
+        //}
+        //public int PCLATCH
+        //{
+        //    get { return Ram[0x0A]; }
+        //    set
+        //    {
+        //        value &= 0x1F;
+        //        Commands.writeByte(value, 0x0A, this);
+        //        OnPropertyChanged(nameof(Ram));
+        //        OnPropertyChanged(nameof(PCLATCH));
+        //    }
+        //}
+        //private int wReg;
+        //public int WReg
+        //{
+        //    get { return wReg; }
+        //    set
+        //    {
+        //        wReg = value & 255;
+        //        OnPropertyChanged(nameof(WReg));
+        //    }
+        //}
+        //private int codeTimer;
 
-        public int CodeTimer
-        {
-            get { return codeTimer; }
-            set
-            {
-                codeTimer = value;
-                OnPropertyChanged(nameof(CodeTimer));
-            }
-        }
-        private bool wdtActive;
-        public bool WDTActive
-        {
-            get { return wdtActive; }
-            set
-            {
-                wdtActive = value;
-                OnPropertyChanged(nameof(WDTActive));
-            }
-        }
-        private int wdtTimer;
-        public int WDTTimer
-        {
-            get { return wdtTimer; }
-            set
-            {
-                wdtTimer = value;
-                OnPropertyChanged(nameof(WDTTimer));
-            }
-        }
-        private int wdtPrescaler;
-        public int WDTPrescaler
-        {
-            get { return wdtPrescaler; }
-            set
-            {
-                wdtPrescaler = value;
-                OnPropertyChanged(nameof(WDTPrescaler));
-            }
-        }
-        private double ausgewaehlteQuarzfrequenzInt;
-        public double AusgewaehlteQuarzfrequenzInt
-        {
-            get => ausgewaehlteQuarzfrequenzInt;
-            set
-            {
-                ausgewaehlteQuarzfrequenzInt = value;
-                OnPropertyChanged(nameof(AusgewaehlteQuarzfrequenzInt));
-            }
-        }
+        //public int CodeTimer
+        //{
+        //    get { return codeTimer; }
+        //    set
+        //    {
+        //        codeTimer = value;
+        //        OnPropertyChanged(nameof(CodeTimer));
+        //    }
+        //}
+        //private bool wdtActive;
+        //public bool WDTActive
+        //{
+        //    get { return wdtActive; }
+        //    set
+        //    {
+        //        wdtActive = value;
+        //        OnPropertyChanged(nameof(WDTActive));
+        //    }
+        //}
+        //private int wdtTimer;
+        //public int WDTTimer
+        //{
+        //    get { return wdtTimer; }
+        //    set
+        //    {
+        //        wdtTimer = value;
+        //        OnPropertyChanged(nameof(WDTTimer));
+        //    }
+        //}
+        //private int wdtPrescaler;
+        //public int WDTPrescaler
+        //{
+        //    get { return wdtPrescaler; }
+        //    set
+        //    {
+        //        wdtPrescaler = value;
+        //        OnPropertyChanged(nameof(WDTPrescaler));
+        //    }
+        //}
+        //private double ausgewaehlteQuarzfrequenzInt;
+        //public double AusgewaehlteQuarzfrequenzInt
+        //{
+        //    get => ausgewaehlteQuarzfrequenzInt;
+        //    set
+        //    {
+        //        ausgewaehlteQuarzfrequenzInt = value;
+        //        OnPropertyChanged(nameof(AusgewaehlteQuarzfrequenzInt));
+        //    }
+        //}
 
 
 
 
-        public Pic()
+        public Pic(IPicViewModel viewModel)
         {
             //Ram[0x81] = 0xFF;
             //Ram[0x85] = 0xFF;
             //Ram[0x86] = 0xFF;
+            picViewModel = viewModel;
             Commands.PowerOnReset(this);
         }
         public void LoadFile()
         {
-            Code.Clear();
+            picViewModel.Code.Clear();
             activLine = 0;
             Commands.Reset(this);
             string filename = string.Empty;
@@ -202,14 +186,6 @@ namespace PicSimulator
                 }
         }
         
-
-
-
-
-        public void ChangeString()
-        {
-            TestString = "Hallo";
-        }
         private void Load(string path)
         {
             try
@@ -235,12 +211,12 @@ namespace PicSimulator
                                 line.ProgAdrress = -1;
                                 line.HexCode = -1;
                             }
-                            Code.Add(line);
+                            picViewModel.Code.Add(line);
                         }
                     }
                 }
-                CodeTimer = 0;
-                WDTTimer = 0;
+                picViewModel.CodeTimer = 0;
+                picViewModel.WDTTimer = 0;
             }
             catch (FileNotFoundException ex)
             {
@@ -253,14 +229,14 @@ namespace PicSimulator
             {
                 do
                 {
-                    Code[activLine].IsHighlighted = false;
+                    picViewModel.Code[activLine].IsHighlighted = false;
                     activLine++;
-                    if(activLine >= Code.Count)
+                    if(activLine >= picViewModel.Code.Count)
                         activLine = 0;
-                } while (Code[activLine].ProgAdrress != PC);
-                PC++;
-                Code[activLine].IsHighlighted = true;
-                Decode(Code[activLine].HexCode);
+                } while (picViewModel.Code[activLine].ProgAdrress != picViewModel.PC);
+                picViewModel.PC++;
+                picViewModel.Code[activLine].IsHighlighted = true;
+                Decode(picViewModel.Code[activLine].HexCode);
                 Commands.InterruptTest(this); //Interrupt prüfen
             }
             else
@@ -273,7 +249,7 @@ namespace PicSimulator
             Commands.PORTBINT(this); //PORTBINT Flag setzten
             Commands.Watchdog(this); //Watchdog prüfen
             Commands.WakeUpTest(this);
-            if (Code[activLine].Breakpoint)
+            if (picViewModel.Code[activLine].Breakpoint)
             {
                 return false;
             }
@@ -418,16 +394,16 @@ namespace PicSimulator
         }
 
         //Array
-        public void BoolArray()
-        {
-            int[] array = new int[8];
-            array[0] = 1;
-            array[1] = 0;
-            array[2] = 1;
-            array[3] = 0;
-            array[5] = 1;
-            array[6] = 0;
-            array[7] = 1;
-        }
+        //public void BoolArray()
+        //{
+        //    int[] array = new int[8];
+        //    array[0] = 1;
+        //    array[1] = 0;
+        //    array[2] = 1;
+        //    array[3] = 0;
+        //    array[5] = 1;
+        //    array[6] = 0;
+        //    array[7] = 1;
+        //}
     }
 }

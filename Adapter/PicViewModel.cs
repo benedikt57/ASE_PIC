@@ -18,14 +18,14 @@ using System.Windows.Shapes;
 
 namespace PicSimulator
 {
-    public class PicViewModel : INotifyPropertyChanged
+    public class PicViewModel : INotifyPropertyChanged, IPicViewModel
     {
         private Pic pic;
         public PicViewModel()
         {
-            pic = new Pic();
+            Code = new ObservableCollection<CodeLine>();
+            pic = new Pic(this);
             pic.PropertyChanged += Pic_PropertyChanged;
-            Ram = pic.Ram;
             //Commands
             LoadFileCommand = new RelayCommand(_ => LoadFileButton());
             StepCommand = new RelayCommand(_ => StepButton());
@@ -38,7 +38,7 @@ namespace PicSimulator
             // Set default value to 4 MHz
             Is4MHzChecked = true;
             IsPortBChecked = true;
-            AusgewaehlteQuarzfrequenzInt = 4;
+            AusgewaehlteQuarzfrequenz = 4;
 
             // Start View aktualisieren
         }
@@ -291,7 +291,6 @@ namespace PicSimulator
             {
                 wdtActive = value;
                 OnPropertyChanged(nameof(WDTActive));
-                pic.WDTActive = value;
             }
         }
         private int wdtTimer;
@@ -331,36 +330,19 @@ namespace PicSimulator
         public void LoadFileButton()
         {
             started = false;
-            pic = new Pic();
-            pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+            pic = new Pic(this);
             WDTActive = false;
             pic.LoadFile();
-            Code = pic.Code;
+            //Code = pic.Code;
             DateiPfad = pic.SourceFilePath;
-            Ram = pic.Ram;
-            WReg = pic.WReg;
-            CodeTimer = pic.CodeTimer;
-            WDTTimer = pic.WDTTimer;
             CodeTimerString = CodeTimerFormat(CodeTimer);
             WDTTimerString = CodeTimerFormat(WDTTimer);
-            pic.ChangeString();
-            TestString = pic.TestString;
         }
         public ICommand StepCommand { get; }
         public void StepButton()
         {
             if(!pic.Step() && Started)
                 Started = false;
-            Ram = pic.Ram;
-            WReg = pic.WReg;
-            Code = pic.Code;
-            PC = pic.PC;
-            PCLATCH = pic.PCLATCH;
-            CodeTimer = pic.CodeTimer;
-            Stack = pic.Stack;
-            StackPointer = pic.StackPointer;
-            WDTTimer = pic.WDTTimer;
-            WDTPrescaler = pic.WDTPrescaler;
             CodeTimerString = CodeTimerFormat(CodeTimer);
             WDTTimerString = CodeTimerFormat(WDTTimer);
             OnPropertyChanged(nameof(Code));
@@ -382,7 +364,6 @@ namespace PicSimulator
         public void ResetButton()
         {
             Commands.MCLR(pic);
-            Ram = pic.Ram;
         }
         public ICommand InputCommand { get; }
         public void InputButton(object parameter)
@@ -420,7 +401,6 @@ namespace PicSimulator
                     if (result < 0)
                         result = 0;
                     Commands.writeByte(result, index, pic, false);
-                    Ram = pic.Ram;
                 }
             }
         }
@@ -435,15 +415,12 @@ namespace PicSimulator
                 {
                     case "S":
                         Commands.writeBit((Ram[0x03] & (1 << index)) == 0 ? 1: 0, index, 0x03, pic);
-                        Ram = pic.Ram;
                         return;
                     case "O":
                         Commands.writeBit((Ram[0x81] & (1 << index)) == 0 ? 1 : 0, index, 0x81, pic);
-                        Ram = pic.Ram;
                         return;
                     case "I":
                         Commands.writeBit((Ram[0x0B] & (1 << index)) == 0 ? 1 : 0, index, 0x0B, pic);
-                        Ram = pic.Ram;
                         return;
                 }
             }
@@ -454,29 +431,8 @@ namespace PicSimulator
         {
             switch (e.PropertyName)
             {
-                case nameof(pic.Code):
-                    Code = pic.Code;
-                    break;
-                case nameof(pic.TestString):
-                    TestString = pic.TestString;
-                    break;
-                case nameof(pic.Ram):
-                    Ram = pic.Ram;
-                    break;
-                case nameof(pic.WReg):
-                    WReg = pic.WReg;
-                    break;
                 case nameof (pic.SourceFilePath):
                     DateiPfad = pic.SourceFilePath;
-                    break;
-                case nameof(pic.CodeTimer):
-                    CodeTimer = pic.CodeTimer;
-                    break;
-                case nameof(pic.Stack):
-                    Stack = pic.Stack;
-                    break;
-                case nameof(pic.StackPointer):
-                    StackPointer = pic.StackPointer;
                     break;
             }
         }
@@ -514,9 +470,8 @@ namespace PicSimulator
                 _is032MHzChecked = value;
                 if (value)
                 {
-                    AusgewaehlteQuarzfrequenz = "32 KHz";
-                    AusgewaehlteQuarzfrequenzInt = 0.032;
-                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+                    AusgewaehlteQuarzfrequenzString = "32 KHz";
+                    AusgewaehlteQuarzfrequenz = 0.032;
                 }
                 OnPropertyChanged("Is032MHzChecked");
             }
@@ -538,9 +493,8 @@ namespace PicSimulator
                 _is1MHzChecked = value;
                 if (value)
                 {
-                    AusgewaehlteQuarzfrequenz = "1 MHz";
-                    AusgewaehlteQuarzfrequenzInt = 1;
-                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+                    AusgewaehlteQuarzfrequenzString = "1 MHz";
+                    AusgewaehlteQuarzfrequenz = 1;
                 }
                 OnPropertyChanged("Is1MHzChecked");
             }
@@ -561,9 +515,8 @@ namespace PicSimulator
                 _is4MHzChecked = value;
                 if (value)
                 {
-                    AusgewaehlteQuarzfrequenz = "4 MHz";
-                    AusgewaehlteQuarzfrequenzInt = 4;
-                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+                    AusgewaehlteQuarzfrequenzString = "4 MHz";
+                    AusgewaehlteQuarzfrequenz = 4;
                 }
                 OnPropertyChanged("Is4MHzChecked");
             }
@@ -585,9 +538,8 @@ namespace PicSimulator
                 _is8MHzChecked = value;
                 if (value)
                 {
-                    AusgewaehlteQuarzfrequenz = "8 MHz";
-                    AusgewaehlteQuarzfrequenzInt = 8;
-                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+                    AusgewaehlteQuarzfrequenzString = "8 MHz";
+                    AusgewaehlteQuarzfrequenz = 8;
                 }
                 OnPropertyChanged("Is8MHzChecked");
             }
@@ -609,31 +561,30 @@ namespace PicSimulator
                 _is16MHzChecked = value;
                 if (value)
                 {
-                    AusgewaehlteQuarzfrequenz = "16 MHz";
-                    AusgewaehlteQuarzfrequenzInt = 16;
-                    pic.AusgewaehlteQuarzfrequenzInt = AusgewaehlteQuarzfrequenzInt;
+                    AusgewaehlteQuarzfrequenzString = "16 MHz";
+                    AusgewaehlteQuarzfrequenz = 16;
                 }
                 OnPropertyChanged("Is16MHzChecked");
             }
         }
 
 
-        private string ausgewaehlteQuarzfrequenz;
-        public string AusgewaehlteQuarzfrequenz
+        private string ausgewaehlteQuarzfrequenzString;
+        public string AusgewaehlteQuarzfrequenzString
+        {
+            get => ausgewaehlteQuarzfrequenzString;
+            set
+            {
+                SetProperty(ref ausgewaehlteQuarzfrequenzString, value);
+            }
+        }
+        private double ausgewaehlteQuarzfrequenz;
+        public double AusgewaehlteQuarzfrequenz
         {
             get => ausgewaehlteQuarzfrequenz;
             set
             {
                 SetProperty(ref ausgewaehlteQuarzfrequenz, value);
-            }
-        }
-        private double ausgewaehlteQuarzfrequenzInt;
-        public double AusgewaehlteQuarzfrequenzInt
-        {
-            get => ausgewaehlteQuarzfrequenzInt;
-            set
-            {
-                SetProperty(ref ausgewaehlteQuarzfrequenzInt, value);
             }
         }
 
@@ -671,7 +622,7 @@ namespace PicSimulator
         }
         private string CodeTimerFormat(int timer)
         {
-            var tmp = ((4/(AusgewaehlteQuarzfrequenzInt * 1e6))*timer);
+            var tmp = ((4/(AusgewaehlteQuarzfrequenz * 1e6))*timer);
             if(tmp >= 1)
                 return tmp.ToString("0.###", CultureInfo.InvariantCulture).Replace(".", ",") + " s";
             else if(tmp >= 1e-1)

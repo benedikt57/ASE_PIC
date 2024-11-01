@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="CodeLine.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="IPicViewModel.cs" />
     <Compile Include="Pic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
