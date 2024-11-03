@@ -56,6 +56,16 @@ namespace PicSimulator
                 OnPropertyChanged(nameof(Started));
             }
         }
+        private bool isSleeping = false;
+        public bool IsSleeping
+        {
+            get { return isSleeping; }
+            set
+            {
+                isSleeping = value;
+                OnPropertyChanged(nameof(IsSleeping));
+            }
+        }
 
         //Variablen
         private ObservableCollection<CodeLine> code;
@@ -346,6 +356,7 @@ namespace PicSimulator
             CodeTimerString = CodeTimerFormat(CodeTimer);
             WDTTimerString = CodeTimerFormat(WDTTimer);
             OnPropertyChanged(nameof(Code));
+            Ram = Ram;
         }
         public ICommand StartCommand { get; }
         public async void StartButton()
@@ -363,7 +374,8 @@ namespace PicSimulator
         public ICommand ResetCommand { get; }
         public void ResetButton()
         {
-            Commands.MCLR(pic);
+            pic.commands.MCLR();
+            Ram = Ram;
         }
         public ICommand InputCommand { get; }
         public void InputButton(object parameter)
@@ -376,13 +388,13 @@ namespace PicSimulator
                 {
                     int value = (WertA[index] == 0) ? 1 : 0;
                     wertAInput[index] = value;
-                    Commands.writeBit(value, index, 0x05, pic);
+                    pic.commands.writeBit(value, index, 0x05);
                 }
                 else if (port == "B")
                 {
                     int value = (WertB[index] == 0) ? 1 : 0;
                     wertBInput[index] = value;
-                    Commands.writeBit(value, index, 0x06, pic);
+                    pic.commands.writeBit(value, index, 0x06);
                 }
                 Ram = Ram;
             }
@@ -400,7 +412,8 @@ namespace PicSimulator
                         result = 255;
                     if (result < 0)
                         result = 0;
-                    Commands.writeByte(result, index, pic, false);
+                    pic.commands.writeByte(result, index, false);
+                    Ram = Ram;
                 }
             }
         }
@@ -414,15 +427,16 @@ namespace PicSimulator
                 switch (register)
                 {
                     case "S":
-                        Commands.writeBit((Ram[0x03] & (1 << index)) == 0 ? 1: 0, index, 0x03, pic);
+                        pic.commands.writeBit((Ram[0x03] & (1 << index)) == 0 ? 1: 0, index, 0x03);
                         return;
                     case "O":
-                        Commands.writeBit((Ram[0x81] & (1 << index)) == 0 ? 1 : 0, index, 0x81, pic);
+                        pic.commands.writeBit((Ram[0x81] & (1 << index)) == 0 ? 1 : 0, index, 0x81);
                         return;
                     case "I":
-                        Commands.writeBit((Ram[0x0B] & (1 << index)) == 0 ? 1 : 0, index, 0x0B, pic);
+                        pic.commands.writeBit((Ram[0x0B] & (1 << index)) == 0 ? 1 : 0, index, 0x0B);
                         return;
                 }
+                Ram = Ram;
             }
         }
 

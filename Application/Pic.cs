@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Domain;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,132 +14,24 @@ using System.Windows;
 
 namespace PicSimulator
 {
-    public class Pic : INotifyPropertyChanged
+    public class Pic : INotifyPropertyChanged, IPic
     {
         public IPicViewModel picViewModel;
+        public int[] Ram {get => picViewModel.Ram;set => picViewModel.Ram = value; }
+        public int[] Stack { get => picViewModel.Stack; set => picViewModel.Stack = value; }
+        public int StackPointer { get => picViewModel.StackPointer; set => picViewModel.StackPointer = value; }
+        public int PC { get => picViewModel.PC; set => picViewModel.PC = value; }
+        public int PCLATCH { get => picViewModel.PCLATCH; set => picViewModel.PCLATCH = value; }
+        public int WReg { get => picViewModel.WReg; set => picViewModel.WReg = value; }
+        public int CodeTimer { get => picViewModel.CodeTimer; set => picViewModel.CodeTimer = value; }
+        public bool WDTActive { get => picViewModel.WDTActive; set => picViewModel.WDTActive = value; }
+        public int WDTTimer { get => picViewModel.WDTTimer; set => picViewModel.WDTTimer = value; }
+        public int WDTPrescaler { get => picViewModel.WDTPrescaler; set => picViewModel.WDTPrescaler = value; }
+        public double AusgewaehlteQuarzfrequenz { get => picViewModel.AusgewaehlteQuarzfrequenz; set => picViewModel.AusgewaehlteQuarzfrequenz = value; }
+        public bool IsSleeping { get => picViewModel.IsSleeping; set => picViewModel.IsSleeping = value; }
 
+        public Commands commands;
         private int activLine = 0;
-        public bool isSleeping = false;
-
-        
-        //private int[] ram = new int[256];
-        //public int[] Ram
-        //{
-        //    get { return ram; }
-        //    set
-        //    {
-        //        ram = value;
-        //        OnPropertyChanged(nameof(Ram));
-        //    }
-        //}
-        //private int[] stack = new int[8];
-        //public int[] Stack
-        //{
-        //    get { return stack; }
-        //    set
-        //    {
-        //        stack = value;
-        //        OnPropertyChanged(nameof(Stack));
-        //    }
-        //}
-        //private int stackPointer;
-        //public int StackPointer
-        //{
-        //    get { return stackPointer; }
-        //    set
-        //    {
-        //        stackPointer = value;
-        //        OnPropertyChanged(nameof(StackPointer));
-        //    }
-        //}
-        //private int pc;
-        //public int PC
-        //{
-        //    get { return pc; }
-        //    set
-        //    {
-        //        pc = value;
-        //        Ram[2] = pc & 255;
-        //        Ram[130] = Ram[2];
-        //        OnPropertyChanged(nameof(Ram));
-        //        OnPropertyChanged(nameof(PC));
-        //    }
-        //}
-        //public int PCLATCH
-        //{
-        //    get { return Ram[0x0A]; }
-        //    set
-        //    {
-        //        value &= 0x1F;
-        //        Commands.writeByte(value, 0x0A, this);
-        //        OnPropertyChanged(nameof(Ram));
-        //        OnPropertyChanged(nameof(PCLATCH));
-        //    }
-        //}
-        //private int wReg;
-        //public int WReg
-        //{
-        //    get { return wReg; }
-        //    set
-        //    {
-        //        wReg = value & 255;
-        //        OnPropertyChanged(nameof(WReg));
-        //    }
-        //}
-        //private int codeTimer;
-
-        //public int CodeTimer
-        //{
-        //    get { return codeTimer; }
-        //    set
-        //    {
-        //        codeTimer = value;
-        //        OnPropertyChanged(nameof(CodeTimer));
-        //    }
-        //}
-        //private bool wdtActive;
-        //public bool WDTActive
-        //{
-        //    get { return wdtActive; }
-        //    set
-        //    {
-        //        wdtActive = value;
-        //        OnPropertyChanged(nameof(WDTActive));
-        //    }
-        //}
-        //private int wdtTimer;
-        //public int WDTTimer
-        //{
-        //    get { return wdtTimer; }
-        //    set
-        //    {
-        //        wdtTimer = value;
-        //        OnPropertyChanged(nameof(WDTTimer));
-        //    }
-        //}
-        //private int wdtPrescaler;
-        //public int WDTPrescaler
-        //{
-        //    get { return wdtPrescaler; }
-        //    set
-        //    {
-        //        wdtPrescaler = value;
-        //        OnPropertyChanged(nameof(WDTPrescaler));
-        //    }
-        //}
-        //private double ausgewaehlteQuarzfrequenzInt;
-        //public double AusgewaehlteQuarzfrequenzInt
-        //{
-        //    get => ausgewaehlteQuarzfrequenzInt;
-        //    set
-        //    {
-        //        ausgewaehlteQuarzfrequenzInt = value;
-        //        OnPropertyChanged(nameof(AusgewaehlteQuarzfrequenzInt));
-        //    }
-        //}
-
-
-
 
         public Pic(IPicViewModel viewModel)
         {
@@ -146,13 +39,14 @@ namespace PicSimulator
             //Ram[0x85] = 0xFF;
             //Ram[0x86] = 0xFF;
             picViewModel = viewModel;
-            Commands.PowerOnReset(this);
+            commands = new Commands(picViewModel);
+            commands.PowerOnReset();
         }
         public void LoadFile()
         {
             picViewModel.Code.Clear();
             activLine = 0;
-            Commands.Reset(this);
+            commands.Reset();
             string filename = string.Empty;
             // Konfiguriere das Dialogfeld "Datei öffnen"
             var dialog = new OpenFileDialog();
@@ -185,7 +79,7 @@ namespace PicSimulator
             OnPropertyChanged(nameof(SourceFilePath));
                 }
         }
-        
+
         private void Load(string path)
         {
             try
@@ -215,8 +109,8 @@ namespace PicSimulator
                         }
                     }
                 }
-                picViewModel.CodeTimer = 0;
-                picViewModel.WDTTimer = 0;
+                CodeTimer = 0;
+                WDTTimer = 0;
             }
             catch (FileNotFoundException ex)
             {
@@ -225,7 +119,7 @@ namespace PicSimulator
         }
         public bool Step()
         {
-            if (!isSleeping)
+            if (!IsSleeping)
             {
                 do
                 {
@@ -233,22 +127,22 @@ namespace PicSimulator
                     activLine++;
                     if(activLine >= picViewModel.Code.Count)
                         activLine = 0;
-                } while (picViewModel.Code[activLine].ProgAdrress != picViewModel.PC);
-                picViewModel.PC++;
+                } while (picViewModel.Code[activLine].ProgAdrress != PC);
+                PC++;
                 picViewModel.Code[activLine].IsHighlighted = true;
                 Decode(picViewModel.Code[activLine].HexCode);
-                Commands.InterruptTest(this); //Interrupt prüfen
+                commands.InterruptTest(); //Interrupt prüfen
             }
             else
             {
-                Commands.IncTimer(this);
+                commands.IncTimer();
             }
 
-            Commands.RA4(this); //RA4 prüfen um Timer zu zählen
-            Commands.RB0(this); //RB0 Flag setzten
-            Commands.PORTBINT(this); //PORTBINT Flag setzten
-            Commands.Watchdog(this); //Watchdog prüfen
-            Commands.WakeUpTest(this);
+            commands.RA4(); //RA4 prüfen um Timer zu zählen
+            commands.RB0(); //RB0 Flag setzten
+            commands.PORTBINT(); //PORTBINT Flag setzten
+            commands.Watchdog(); //Watchdog prüfen
+            commands.WakeUpTest();
             if (picViewModel.Code[activLine].Breakpoint)
             {
                 return false;
@@ -262,10 +156,10 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0010_1000_0000_0000:
-                    Commands.GOTO(code & 0b0000_0111_1111_1111, this);
+                    commands.GOTO(code & 0b0000_0111_1111_1111);
                     return;
                 case 0b0010_0000_0000_0000:
-                    Commands.CALL(code & 0b0000_0111_1111_1111, this);
+                    commands.CALL(code & 0b0000_0111_1111_1111);
                     return;
             }
             //erste 4 Bit Maskieren
@@ -273,16 +167,16 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0001_0100_0000_0000:
-                    Commands.BSF(code & 0b0000_0011_1111_1111, this);
+                    commands.BSF(code & 0b0000_0011_1111_1111);
                     return;
                 case 0b0001_0000_0000_0000:
-                    Commands.BCF(code & 0b0000_0011_1111_1111, this);
+                    commands.BCF(code & 0b0000_0011_1111_1111);
                     return;
                 case 0b0001_1100_0000_0000:
-                    Commands.BTFSS(code & 0b0000_0011_1111_1111, this);
+                    commands.BTFSS(code & 0b0000_0011_1111_1111);
                     return;
                 case 0b0001_1000_0000_0000:
-                    Commands.BTFSC(code & 0b0000_0011_1111_1111, this);
+                    commands.BTFSC(code & 0b0000_0011_1111_1111);
                     return;
             }
             //erste 6 Bit Maskieren
@@ -290,67 +184,67 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0011_0000_0000_0000:
-                    Commands.MOVLW(code & 0b0000_0000_1111_1111, this);
+                    commands.MOVLW(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0011_1001_0000_0000:
-                    Commands.ANDLW(code & 0b0000_0000_1111_1111, this);
+                    commands.ANDLW(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0011_1000_0000_0000:
-                    Commands.IORLW(code & 0b0000_0000_1111_1111, this);
+                    commands.IORLW(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0011_1100_0000_0000:
-                    Commands.SUBLW(code & 0b0000_0000_1111_1111, this);
+                    commands.SUBLW(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0011_1010_0000_0000:
-                    Commands.XORLW(code & 0b0000_0000_1111_1111, this);
+                    commands.XORLW(code & 0b0000_0000_1111_1111);
                     break;
                 case 0b0011_1110_0000_0000:
-                    Commands.ADDLW(code & 0b0000_0000_1111_1111, this);
+                    commands.ADDLW(code & 0b0000_0000_1111_1111);
                     break;
                 case 0b0011_0100_0000_0000:
-                    Commands.RETLW(code & 0b0000_0000_1111_1111, this);
+                    commands.RETLW(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_0111_0000_0000:
-                    Commands.ADDWF(code & 0b0000_0000_1111_1111, this);
+                    commands.ADDWF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_0101_0000_0000:
-                    Commands.ANDWF(code & 0b0000_0000_1111_1111, this);
+                    commands.ANDWF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1001_0000_0000:
-                    Commands.COMF(code & 0b0000_0000_1111_1111, this);
+                    commands.COMF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_0011_0000_0000:
-                    Commands.DECF(code & 0b0000_0000_1111_1111, this);
+                    commands.DECF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1010_0000_0000:
-                    Commands.INCF(code & 0b0000_0000_1111_1111, this);
+                    commands.INCF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1000_0000_0000:
-                    Commands.MOVF(code & 0b0000_0000_1111_1111, this);
+                    commands.MOVF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_0100_0000_0000:
-                    Commands.IORWF(code & 0b0000_00000_1111_1111, this);
+                    commands.IORWF(code & 0b0000_00000_1111_1111);
                     return;
                 case 0b0000_0010_0000_0000:
-                    Commands.SUBWF(code & 0b0000_0000_1111_1111, this);
+                    commands.SUBWF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1110_0000_0000:
-                    Commands.SWAPF(code & 0b0000_0000_1111_1111, this);
+                    commands.SWAPF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_0110_0000_0000:
-                    Commands.XORWF(code & 0b0000_0000_1111_1111, this);
+                    commands.XORWF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1101_0000_0000:
-                    Commands.RLF(code & 0b0000_0000_1111_1111, this);
+                    commands.RLF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1100_0000_0000:
-                    Commands.RRF(code & 0b0000_0000_1111_1111, this);
+                    commands.RRF(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1011_0000_0000:
-                    Commands.DECFSZ(code & 0b0000_0000_1111_1111, this);
+                    commands.DECFSZ(code & 0b0000_0000_1111_1111);
                     return;
                 case 0b0000_1111_0000_0000:
-                    Commands.INCFSZ(code & 0b0000_0000_1111_1111, this);
+                    commands.INCFSZ(code & 0b0000_0000_1111_1111);
                     return;
             }
             //erste 7 Bit Maskieren
@@ -358,13 +252,13 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0000_0000_1000_0000:
-                    Commands.MOVWF(code & 0b0000_0000_0111_1111, this);
+                    commands.MOVWF(code & 0b0000_0000_0111_1111);
                     return;
                 case 0b0000_0001_1000_0000:
-                    Commands.CLRF(code & 0b0000_0000_0111_1111, this);
+                    commands.CLRF(code & 0b0000_0000_0111_1111);
                     return;
                 case 0b0000_0001_0000_0000:
-                    Commands.CLRW(code & 0b0000_0000_0111_1111, this);
+                    commands.CLRW(code & 0b0000_0000_0111_1111);
                     return;
             }
             //erste 14 Bit Maskieren
@@ -372,16 +266,16 @@ namespace PicSimulator
             switch (opcode)
             {
                 case 0b0000_0000_0000_1000:
-                    Commands.RETURN(this);
+                    commands.RETURN();
                     return;
                 case 0b0000_0000_0000_1001:
-                    Commands.RETFIE(this);
+                    commands.RETFIE();
                     return;
                 case 0b0000_0000_0110_0011:
-                    Commands.SLEEP(this);
+                    commands.SLEEP();
                     return;
                 case 0b0000_0000_0000_0000:
-                    Commands.NOP(this);
+                    commands.NOP();
                     return;
             }
         }

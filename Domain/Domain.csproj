@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EA6C3EF1-4634-495A-B05A-68B111FB29D4}</ProjectGuid>
+    <ProjectGuid>{A7EAD41B-045A-40E1-9039-39FC80113810}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Application</RootNamespace>
-    <AssemblyName>Application</AssemblyName>
+    <RootNamespace>Domain</RootNamespace>
+    <AssemblyName>Domain</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,16 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeLine.cs" />
-    <Compile Include="IPicViewModel.cs" />
-    <Compile Include="Pic.cs" />
+    <Compile Include="Commands.cs" />
+    <Compile Include="IPic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{a7ead41b-045a-40e1-9039-39fc80113810}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
