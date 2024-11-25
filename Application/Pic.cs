@@ -48,27 +48,45 @@ namespace PicSimulator
             activLine = 0;
             commands.Reset();
             string filename = string.Empty;
-            // Konfiguriere das Dialogfeld "Datei öffnen"
-            var dialog = new OpenFileDialog();
-            dialog.FileName = "Document"; // Standarddateiname
-            dialog.DefaultExt = ".LST"; // Standarddateierweiterung
-            dialog.Filter = "Textdokumente (.LST)|*.LST"; // Filter für Dateierweiterungen
 
-            // Zeige das Dialogfeld "Datei öffnen" an
-            bool? result = dialog.ShowDialog();
-
-            // Verarbeite die Ergebnisse des Dialogfelds
-            if (result == true)
+            if (IsConsoleApplication())
             {
-                // Der ausgewählte Dateipfad
-                filename = dialog.FileName;
+                Console.WriteLine("Bitte geben Sie den Dateipfad ein:");
+                filename = Console.ReadLine();
+            }
+            else
+            {
+                // Konfiguriere das Dialogfeld "Datei öffnen"
+                var dialog = new OpenFileDialog();
+                dialog.FileName = "Document"; // Standarddateiname
+                dialog.DefaultExt = ".LST"; // Standarddateierweiterung
+                dialog.Filter = "Textdokumente (.LST)|*.LST"; // Filter für Dateierweiterungen
+
+                // Zeige das Dialogfeld "Datei öffnen" an
+                bool? result = dialog.ShowDialog();
+
+                // Verarbeite die Ergebnisse des Dialogfelds
+                if (result == true)
+                {
+                    // Der ausgewählte Dateipfad
+                    filename = dialog.FileName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filename))
+            {
                 // Verwende den Dateipfad in deiner Anwendung
                 SourceFilePath = filename;
                 Load(filename);
             }
-        
         }
-        
+
+        private bool IsConsoleApplication()
+        {
+            return Console.OpenStandardInput(1) != Stream.Null;
+        }
+
+
         private string _sourceFilePath;
         public string SourceFilePath
         {
