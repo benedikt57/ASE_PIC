@@ -45,6 +45,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="ICommands.cs" />
     <Compile Include="IPic.cs" />
+    <Compile Include="LoggingCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

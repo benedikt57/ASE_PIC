@@ -30,7 +30,7 @@ namespace PicSimulator
         public double AusgewaehlteQuarzfrequenz { get => picViewModel.AusgewaehlteQuarzfrequenz; set => picViewModel.AusgewaehlteQuarzfrequenz = value; }
         public bool IsSleeping { get => picViewModel.IsSleeping; set => picViewModel.IsSleeping = value; }
 
-        public Commands commands;
+        public ICommands commands;
         private int activLine = 0;
 
         public Pic(IPicViewModel viewModel)
@@ -39,7 +39,7 @@ namespace PicSimulator
             //Ram[0x85] = 0xFF;
             //Ram[0x86] = 0xFF;
             picViewModel = viewModel;
-            commands = new Commands(picViewModel);
+            commands = new LoggingCommands(new Commands(picViewModel));
             commands.PowerOnReset();
         }
         public void LoadFile()

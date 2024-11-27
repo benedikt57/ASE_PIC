@@ -19,6 +19,8 @@
         void GOTO(int literal);
         void INCF(int file);
         void INCFSZ(int file);
+        void IncTimer();
+        void InterruptTest();
         void IORLW(int literal);
         void IORWF(int file);
         void MCLR();
@@ -26,7 +28,10 @@
         void MOVLW(int literal);
         void MOVWF(int file);
         void NOP();
+        void PORTBINT();
         void PowerOnReset();
+        void RA4();
+        void RB0();
         void Reset();
         void RETFIE();
         void RETLW(int literal);
@@ -38,6 +43,10 @@
         void SUBWF(int file);
         void SWAPF(int file);
         void WakeUpFromSleep(bool interrupt);
+        void WakeUpTest();
+        void Watchdog();
+        void writeBit(int value, int bit, int address);
+        void writeByte(int value, int address, bool checkbank = true);
         void XORLW(int literal);
         void XORWF(int file);
     }
