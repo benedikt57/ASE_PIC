@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace PicSimulator
 {
-    public class Commands
+    public class Commands : ICommands
     {
         private IPic pic;
         public Commands(IPic _pic)

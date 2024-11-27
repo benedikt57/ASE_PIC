@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="ICommands.cs" />
     <Compile Include="IPic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
