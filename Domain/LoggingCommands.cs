@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PicSimulator
 {
-    public class LoggingCommands : ICommands
+    public class LoggingCommands : ICommandsDecorator
     {
-        private readonly ICommands _innerCommands;
+        public ICommands _innerCommands { get; }
 
         public LoggingCommands(ICommands innerCommands)
         {

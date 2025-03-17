@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="ICommands.cs" />
+    <Compile Include="ICommandsDecorator.cs" />
     <Compile Include="IPic.cs" />
     <Compile Include="LoggingCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
