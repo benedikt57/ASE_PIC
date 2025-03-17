@@ -15,7 +15,6 @@ namespace PicSimulator
         private int progAdrress;
         private int hexCode;
         private string code;
-        private int CodeTimer;
 
         public bool Breakpoint
         {
@@ -79,17 +78,6 @@ namespace PicSimulator
                     code = value;
                     OnPropertyChanged(nameof(Code));
                 }
-            }
-        }
-
-        public int GetCodeTimer()
-        { return GetCodeTimer(); }
-        public void SetCodeTimer(int value)
-        {
-            if (GetCodeTimer() != value)
-            {
-                SetCodeTimer(value);
-                OnPropertyChanged(nameof(CodeTimer));
             }
         }
 
