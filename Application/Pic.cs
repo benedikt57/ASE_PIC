@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application;
+using Domain;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace PicSimulator
 
         public ICommands commands;
         private int activLine = 0;
+        private List<IDecoder> decoders;
 
         public Pic(IPicViewModel viewModel)
         {
@@ -41,6 +43,11 @@ namespace PicSimulator
             picViewModel = viewModel;
             commands = new LoggingCommands(new Commands(picViewModel));
             commands.PowerOnReset();
+            decoders = new List<IDecoder>
+            {
+                new GotoDecoder(),
+                new CallDecoder()
+            };
         }
         public void LoadFile()
         {
@@ -170,18 +177,15 @@ namespace PicSimulator
         private void Decode(int code)
         {
             //erste 3 Bit Maskieren
-            int opcode = code & 0b0011_1000_0000_0000;
-            switch (opcode)
+            foreach (var decoder in decoders)
             {
-                case 0b0010_1000_0000_0000:
-                    commands.GOTO(code & 0b0000_0111_1111_1111);
+                if (decoder.Decode(code, commands))
+                {
                     return;
-                case 0b0010_0000_0000_0000:
-                    commands.CALL(code & 0b0000_0111_1111_1111);
-                    return;
+                }
             }
             //erste 4 Bit Maskieren
-            opcode = code & 0b0011_1100_0000_0000;
+            int opcode = code & 0b0011_1100_0000_0000;
             switch (opcode)
             {
                 case 0b0001_0100_0000_0000:
