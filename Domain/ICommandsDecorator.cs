@@ -8,6 +8,6 @@ namespace PicSimulator
 {
     interface ICommandsDecorator : ICommands
     {
-        ICommands _innerCommands { get; }
+        ICommands _inner { get; }
     }
 }
