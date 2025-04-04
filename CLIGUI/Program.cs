@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CLIGUI
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void StartCLIGUI()
         {
             PicViewModel picViewModel = new PicViewModel();
 
