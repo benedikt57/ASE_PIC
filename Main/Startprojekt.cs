@@ -15,7 +15,7 @@ namespace Main
         {
             if (args.Length == 0)
             {
-                Process.Start("C:\\Users\\jonas\\Source\\Repos\\ASE_PIC\\PicSimulator\\bin\\Debug\\PicSimulator.exe");
+                Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\PicSimulator.exe");
             }
             else
             {
