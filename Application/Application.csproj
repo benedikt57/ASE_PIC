@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeLine.cs" />
+    <Compile Include="Decoder.cs" />
+    <Compile Include="IDecoder.cs" />
     <Compile Include="IPicViewModel.cs" />
     <Compile Include="Pic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
